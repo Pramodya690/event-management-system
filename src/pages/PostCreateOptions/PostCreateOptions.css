@@ -1,0 +1,33 @@
+.post-create-container {
+  max-width: 600px;
+  margin: 60px auto;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.post-create-container h2 {
+  font-size: 28px;
+  margin-bottom: 32px;
+  color: #1a1a1a;
+}
+
+.option-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.option-btn {
+  padding: 16px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background-color: #38a169;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.option-btn:hover {
+  background-color: #2f855a;
+}
