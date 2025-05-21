@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "heading": "Epic Comic Con",
+    "organizer": "ComicVerse India",
+    "date": { "year": 2023, "month": "July" },
+    "location": "Mumbai, India",
+    "venue": 1,
+    "description": "Experience the most anticipated gathering of comic enthusiasts!",
+    "img": "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=500",
+    "vendors": [1, 2],
+    "speakers": [1, 3]
+  },
+  {
+    "id": 2,
+    "heading": "Fantasy Gaming Expo",
+    "organizer": "FantasyCore",
+    "date": { "year": 2024, "month": "May" },
+    "location": "Delhi, India",
+    "venue": 2,
+    "description": "Embark on a journey through fantastical realms at the Fantasy Gaming Expo!",
+    "img": "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80",
+    "vendors": [2, 3],
+    "speakers": [2]
+  },
+  {
+    "id": 3,
+    "heading": "Cosplay Carnival",
+    "organizer": "CosWorld India",
+    "date": { "year": 2023, "month": "September" },
+    "location": "Bangalore, India",
+    "venue": 3,
+    "description": "Welcome to the Cosplay Carnival!",
+    "img": "https://images.unsplash.com/photo-1502136969935-8d8eef54d77b?q=80",
+    "vendors": [1],
+    "speakers": [3]
+  },
+  {
+    "id": 4,
+    "heading": "Sci-Fi Symposium",
+    "organizer": "FutureScope",
+    "date": { "year": 2024, "month": "March" },
+    "location": "Hyderabad, India",
+    "venue": null,
+    "description": "Dive into the future at the Sci-Fi Symposium!",
+    "img": "https://images.unsplash.com/photo-1589254065878-42c9da997008?q=80",
+    "vendors": [3],
+    "speakers": [1, 2]
+  }
+]

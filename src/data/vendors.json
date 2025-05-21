@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "GreenLeaf Supplies",
+    "email": "contact@greenleaf.com",
+    "phone": "+91-9876543210",
+    "active": true,
+    "events": [1, 3]
+  },
+  {
+    "id": 2,
+    "name": "Techno Events",
+    "email": "info@technoevents.com",
+    "phone": "+91-9123456780",
+    "active": true,
+    "events": [2, 4]
+  },
+  {
+    "id": 3,
+    "name": "Creative Concepts",
+    "email": "hello@creativeconcepts.in",
+    "phone": "+91-9988776655",
+    "active": false,
+    "events": [5]
+  }
+]

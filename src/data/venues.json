@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Mumbai Convention Center",
+    "address": "123 Marine Drive, Mumbai, India",
+    "capacity": 5000,
+    "contact_email": "contact@mumbaicc.in",
+    "contact_phone": "+91-2233445566",
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "Delhi Expo Hall",
+    "address": "45 Ring Road, New Delhi, India",
+    "capacity": 3500,
+    "contact_email": "info@delhiexpo.in",
+    "contact_phone": "+91-1122334455",
+    "active": true
+  },
+  {
+    "id": 3,
+    "name": "Bangalore Grand Hall",
+    "address": "789 MG Road, Bangalore, India",
+    "capacity": 4000,
+    "contact_email": "support@bangaloregh.in",
+    "contact_phone": "+91-9988776655",
+    "active": false
+  }
+]
