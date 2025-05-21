@@ -12,7 +12,12 @@ function Signup() {
     e.preventDefault();
     console.log(`Signing up as ${role} with`, email, password);
     // Redirect after signup
-    navigate('/login');
+
+    if (role === 'organizer') {
+      navigate('/organizer-welcome');
+    } else {
+      navigate('/login');
+    }
   };
 
   return (

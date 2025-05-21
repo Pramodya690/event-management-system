@@ -5,7 +5,8 @@ import Login from "../pages/Login/Login"
 import RoleSelect from "../pages/Signup/RoleSelect/RoleSelect"
 import Signup from "../pages/Signup/SignUp/Signup"
 import CreateEvent from "../pages/CreateEvent/CreateEvent";
-import PostCreateOptions from "../pages/PostCreateOptions/PostCreateOptions";
+import OrganizerWelcome from '../pages/OrganizerWelcome/OrganizerWelcome';
+import CreateEventForm from "../pages/CreateEventForm/CreateEventForm"
 
 export const routes = [
   {path:'/',element:<EventList/>},
@@ -15,6 +16,8 @@ export const routes = [
   { path: '/signup', element: <RoleSelect /> },
   { path: '/signup/:role', element: <Signup /> }, 
   { path: '/create-event', element: <CreateEvent /> },
-  { path: '/post-create', element: <PostCreateOptions /> },
+  { path: '/organizer-welcome', element: <OrganizerWelcome /> },
+  { path: '/create-event-form', element: <CreateEventForm /> },
+  
   
 ];
