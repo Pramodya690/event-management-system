@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CreateEvent.css';
+import './OrganizerDetails.css';
 
-function CreateEvent() {
+function OrganizerDetails() {
   const [selected, setSelected] = useState([]);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [numEvents, setNumEvents] = useState('');
@@ -29,12 +29,12 @@ function CreateEvent() {
 
     const handleNext = () => {
         if (goal) {
-        navigate('/post-create');
+        navigate('/organizer-welcome');
         }
     };
 
   return (
-    <div className="create-event-container">
+    <div className="organizer-details-container">
       <h1>Let's get to know you first!</h1>
       <p>Tell us what kind of events you want to host and we’ll help make it happen.</p>
 
@@ -158,4 +158,4 @@ function CreateEvent() {
   );
 }
 
-export default CreateEvent;
+export default OrganizerDetails;

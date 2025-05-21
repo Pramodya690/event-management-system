@@ -14,7 +14,7 @@ function OrganizerWelcome() {
           <img src="/create.jpg" alt="Create event" />
           <h3>Create my first event</h3>
           <p>There's no time like the present – let's go!</p>
-          <button onClick={() => navigate('/create-event')}>Build event</button>
+          <button onClick={() => navigate('/create-event-form')}>Build event</button>
         </div>
         <div className="card">
           <img src="/explore.jpg" alt="Discover Eventbrite" />

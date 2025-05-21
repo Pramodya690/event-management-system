@@ -14,7 +14,7 @@ function Signup() {
     // Redirect after signup
 
     if (role === 'organizer') {
-      navigate('/organizer-welcome');
+      navigate('/organizer-details');
     } else {
       navigate('/login');
     }
@@ -42,9 +42,9 @@ function Signup() {
         {role === 'vendor' && (
           <input type="text" placeholder="Business Name" required />
         )}
-        {role === 'organizer' && (
+        {/* {role === 'organizer' && (
           <input type="text" placeholder="Organization" required />
-        )}
+        )} */}
 
         <button type="submit">Sign Up</button>
       </form>

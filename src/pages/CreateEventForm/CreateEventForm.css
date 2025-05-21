@@ -1,44 +1,78 @@
-/* CreateEvent.css */
-
 .create-event-container {
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 2rem auto;
   padding: 2rem;
-  font-family: Arial, sans-serif;
   background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h1 {
-  font-size: 1.8rem;
+.create-event-container h1 {
+  font-size: 2rem;
   margin-bottom: 0.5rem;
 }
 
-p {
+.create-event-container p {
+  color: #555;
   font-size: 1rem;
   margin-bottom: 1.5rem;
-  color: #555;
 }
 
-.event-label {
+.create-event-container a {
+  color: #4caf50;
+  text-decoration: underline;
+}
+
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.event-form label {
   font-weight: bold;
+  margin-bottom: 0.3rem;
   display: block;
-  margin: 1.2rem 0 0.5rem;
 }
 
-.event-label span {
-  color: red;
+.event-form input[type="text"],
+.event-form input[type="date"],
+.event-form input[type="time"],
+.event-form input[type="url"],
+.event-form input[type="number"] {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s;
 }
 
-.event-types {
+.event-form input:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+.form-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.form-section > div {
+  flex: 1;
+  min-width: 180px;
+}
+
+.location-options {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
 }
 
-.event-type-btn {
+.location-options button {
   padding: 0.6rem 1rem;
   border: 2px solid #ccc;
   border-radius: 8px;
@@ -47,101 +81,69 @@ p {
   transition: all 0.3s ease;
 }
 
-.event-type-btn.selected {
-  background-color: #4caf50;
-  color: #fff;
-  border-color: #4caf50;
-}
-
-.more-options {
-  margin-top: 1rem;
-  background: none;
-  border: none;
-  color: #4caf50;
-  cursor: pointer;
-  font-size: 0.95rem;
-  text-decoration: underline;
-}
-
-.event-form-section,
-.event-details-section {
-  margin-top: 1.5rem;
-}
-
-.event-dropdown {
-  width: 100%;
-  padding: 0.6rem;
-  margin-bottom: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-.checkbox {
-  display: flex;
-  align-items: center;
-  font-size: 0.95rem;
-  margin-top: 0.5rem;
-}
-
-.radio-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.radio-card {
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  padding: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-}
-
-.radio-card.selected {
-  border-color: #4caf50;
-  background-color: #eaf3ff;
-}
-
-.radio-card input {
-  margin-right: 1rem;
-}
-
-.radio-content {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.radio-content img {
-  width: 32px;
-  height: 32px;
-}
-
-/* Next Button Styling */
-.next-button {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  margin-top: 2rem;
+.location-options button.selected {
   background-color: #4caf50;
   color: white;
-  font-size: 1rem;
+  border-color: #4caf50;
+}
+
+.add-location-details {
+  font-size: 0.9rem;
+  color: #4caf50;
+  margin-top: 0.3rem;
+  cursor: pointer;
+}
+
+.map-placeholder img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.price-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-input-wrapper span {
+  font-size: 1.2rem;
   font-weight: bold;
+}
+
+.free-ticket-note {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  color: #888;
+}
+
+.submit-btn {
+  padding: 0.8rem 1.2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #4caf50;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
+  margin-top: 1.5rem;
 }
 
-.next-button:hover {
+.submit-btn:hover {
   background-color: #43a047;
 }
 
-.next-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+/* Responsive Design */
+@media (max-width: 600px) {
+  .form-section {
+    flex-direction: column;
+  }
+
+  .location-options {
+    flex-direction: column;
+  }
 }

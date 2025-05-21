@@ -70,7 +70,7 @@
 .card button {
   margin-top: 12px;
   padding: 12px 24px;
-  background-color: #4a3aff;
+  background-color: #2e7d32;
   color: white;
   border: none;
   border-radius: 8px;
@@ -83,7 +83,7 @@
 }
 
 .card button:hover {
-  background-color: #3a2bd4;
+  background-color: #2e7d32;
   box-shadow: 0 4px 8px rgba(74, 58, 255, 0.2);
 }
 

@@ -1,6 +1,5 @@
-/* CreateEvent.css */
-
-.create-event-container {
+/* Base styles (already defined) */
+.organizer-details-container {
   max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
@@ -121,7 +120,6 @@ p {
   height: 32px;
 }
 
-/* Next Button Styling */
 .next-button {
   display: block;
   width: 100%;
@@ -144,4 +142,71 @@ p {
 .next-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+/* ---------------------- */
+/* Responsive Enhancements */
+/* ---------------------- */
+
+@media (max-width: 768px) {
+  .organizer-details-container {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p, .event-label, .more-options, .checkbox, .radio-card {
+    font-size: 0.95rem;
+  }
+
+  .event-type-btn {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .radio-content {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .radio-content img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .organizer-details-container {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  .event-types {
+    flex-direction: column;
+  }
+
+  .event-type-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .radio-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .radio-content {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+
+  .next-button {
+    font-size: 0.95rem;
+    padding: 0.6rem;
+  }
 }

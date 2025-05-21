@@ -1,18 +1,15 @@
 .event-details-container {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .event-details-wrapper {
-  padding: 40px 80px 80px 80px;
+  padding: 40px 5vw 80px 5vw; /* Use viewport width for responsiveness */
 }
 
 .event-details-wrapper img {
   width: 100%;
   height: 50vh;
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
   object-fit: cover;
   display: block;
   margin-top: 60px;
@@ -21,51 +18,125 @@
 .event-details-content {
   margin-top: 40px;
 }
+
 .event-details-content h3 {
-  font-size: 24px;
+  font-size: 1.5rem;
   text-transform: uppercase;
   color: rgb(61, 61, 61);
   font-weight: 600;
   margin-bottom: 20px;
 }
+
 .font-weight-med {
-  font-size: 18px;
+  font-size: 1.125rem; /* 18px */
 }
+
 .small-details {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 12px;
 }
-.small-details .date {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 8px;
-}
+
+.small-details .date,
 .small-details .location {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
+
 .icon {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
 }
+
 .event-details-content .description {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  font-size: 16px;
+  font-size: 1rem;
   margin-top: 20px;
 }
+
 .description-heading {
-  font-size: 20px !important;
+  font-size: 1.25rem !important;
   color: var(--primary-color);
   font-weight: 500;
   margin-top: 20px;
 }
+
 .description-heading-para {
-  font-size: 16px !important;
+  font-size: 1rem !important;
+}
+
+/* ========== Media Queries ========== */
+
+/* Tablet */
+@media screen and (max-width: 768px) {
+  .event-details-wrapper {
+    padding: 30px 5vw;
+  }
+
+  .event-details-wrapper img {
+    height: 40vh;
+  }
+
+  .event-details-content h3 {
+    font-size: 1.25rem;
+  }
+
+  .font-weight-med {
+    font-size: 1rem;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .description-heading {
+    font-size: 1.125rem !important;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+  .event-details-wrapper {
+    padding: 20px 4vw;
+  }
+
+  .event-details-wrapper img {
+    height: 35vh;
+    margin-top: 40px;
+  }
+
+  .event-details-content h3 {
+    font-size: 1.125rem;
+  }
+
+  .font-weight-med {
+    font-size: 0.95rem;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .description-heading {
+    font-size: 1rem !important;
+  }
+
+  .description-heading-para {
+    font-size: 0.95rem !important;
+  }
+
+  .small-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }

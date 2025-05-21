@@ -1,7 +1,12 @@
+// CreateEventForm.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './CreateEventForm.css';
+import MapPicker from './MapPicker';
 
 function CreateEventForm() {
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -9,10 +14,16 @@ function CreateEventForm() {
   const [locationType, setLocationType] = useState('Venue');
   const [location, setLocation] = useState('');
   const [price, setPrice] = useState('0.00');
+  const [coordinates, setCoordinates] = useState(null);
+  const [isPublished, setIsPublished] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const id = Date.now();
+
     const eventData = {
+      id,
       title,
       date,
       startTime,
@@ -20,18 +31,20 @@ function CreateEventForm() {
       locationType,
       location,
       price,
+      coordinates,
+      isPublished
     };
 
-    alert('Event data submitted:\n' + JSON.stringify(eventData, null, 2));
+    const existingEvents = JSON.parse(localStorage.getItem('events')) || [];
+    existingEvents.push(eventData);
+    localStorage.setItem('events', JSON.stringify(existingEvents));
+
+    navigate(`/events/${id}`);
   };
 
   return (
     <div className="create-event-container">
       <h1>Create an event</h1>
-      <p>
-        Answer a few questions about your event and our AI creation tool will use internal data to build an event page.
-        You can still <a href="#">create an event without AI</a>.
-      </p>
 
       <form onSubmit={handleSubmit} className="event-form">
         <label>Event title *</label>
@@ -88,7 +101,6 @@ function CreateEventForm() {
           </div>
         </div>
 
-        {/* Conditional Location Inputs */}
         {locationType === 'Venue' && (
           <>
             <div>
@@ -101,16 +113,12 @@ function CreateEventForm() {
                 required
               />
             </div>
-
-            <div className="add-location-details">
-              <span>🏠 Add location details</span>
-            </div>
-
-            <div className="map-placeholder">
-              <img
-                src="https://maps.googleapis.com/maps/api/staticmap?center=San+Francisco,CA&zoom=13&size=600x300&key=YOUR_API_KEY"
-                alt="Map placeholder"
-              />
+            <div className="map-picker-wrapper">
+              <label>Select on Map:</label>
+              <MapPicker setCoordinates={setCoordinates} />
+              {coordinates && (
+                <p>📍 Selected: Lat {coordinates.lat.toFixed(5)}, Lng {coordinates.lng.toFixed(5)}</p>
+              )}
             </div>
           </>
         )}
@@ -129,17 +137,10 @@ function CreateEventForm() {
         )}
 
         {locationType === 'To be announced' && (
-          <p style={{ fontStyle: 'italic', color: '#666' }}>
-            Event location will be announced soon.
-          </p>
+          <p style={{ fontStyle: 'italic' }}>Event location will be announced soon.</p>
         )}
 
-        {/* Ticket price section */}
         <div>
-          <h3>How much do you want to charge for tickets?</h3>
-          <p>
-            Our tool can only generate one General Admission ticket for now. You can edit and add more ticket types later.
-          </p>
           <label>Price *</label>
           <div className="price-input-wrapper">
             <span>$</span>
@@ -151,10 +152,16 @@ function CreateEventForm() {
               required
             />
           </div>
-          <div className="free-ticket-note">❌ My tickets are free</div>
         </div>
 
-        <button type="submit" className="submit-btn">Create Event</button>
+        <div className="template-actions">
+          <button type="button" onClick={() => setIsPublished(true)}>
+            Preview Event Page
+          </button>
+          <button type="submit" className="submit-btn">
+            {isPublished ? 'Publish Event' : 'Save Draft'}
+          </button>
+        </div>
       </form>
     </div>
   );
