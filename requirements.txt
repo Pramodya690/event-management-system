@@ -1,0 +1,13 @@
+contourpy       
+cycler          
+deap            
+fonttools       
+kiwisolver      
+matplotlib      
+numpy           
+packaging       
+pillow                       
+pyparsing       
+python-dateutil 
+setuptools      
+six             
