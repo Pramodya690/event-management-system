@@ -137,6 +137,27 @@
   background-color: #43a047;
 }
 
+.dashboard-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.dashboard-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dashboard-btn:hover {
+  background-color: #45a049;
+}
+
+
 /* Responsive Design */
 @media (max-width: 600px) {
   .form-section {

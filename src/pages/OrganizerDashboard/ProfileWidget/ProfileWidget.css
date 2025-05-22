@@ -1,0 +1,19 @@
+.profile-widget {
+  width: 250px;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-left: 1px solid #eee;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.profile-widget h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .profile-widget {
+    display: none; /* Hide on tablets and below */
+  }
+}

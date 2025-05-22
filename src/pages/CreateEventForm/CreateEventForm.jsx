@@ -162,6 +162,16 @@ function CreateEventForm() {
             {isPublished ? 'Publish Event' : 'Save Draft'}
           </button>
         </div>
+
+        <div className="dashboard-button-wrapper">
+          <button
+            type="button"
+            className="dashboard-btn"
+            onClick={() => navigate('/organizer-dashboard')}
+          >
+            Go to Organizer Dashboard
+          </button>
+        </div>
       </form>
     </div>
   );

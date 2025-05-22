@@ -1,0 +1,40 @@
+.sidebar {
+  width: 60px;
+  background-color: #fff;
+  border-right: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar-menu li {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+  }
+
+  .sidebar-menu {
+    flex-direction: row;
+    gap: 1rem;
+    margin: 0;
+  }
+}
