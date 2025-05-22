@@ -167,7 +167,7 @@ function CreateEventForm() {
           <button
             type="button"
             className="dashboard-btn"
-            onClick={() => navigate('/organizer-dashboard')}
+            onClick={() => navigate('/find-speaker-vendor')}
           >
             Go to Organizer Dashboard
           </button>

@@ -11,6 +11,8 @@ import CreateEventForm from "../pages/CreateEventForm/CreateEventForm"
 import OrganizerDetails from "../pages/OrganizerDetails/OrganizerDetails"
 import EventPageCreation from '../pages/EventPageCreation/EventPageCreation';
 import Dashboard from "../pages/OrganizerDashboard/Dashboard/Dashboard"
+import EventSpeakersVendors from "../pages/EventSpeakersVendors/EventSpeakersVendors"
+
 
 
 
@@ -25,7 +27,7 @@ export const routes = [
   { path: '/create-event-form', element: <CreateEventForm /> },
   { path: '/organizer-details', element: <OrganizerDetails /> },
   { path: '/events/:id', element: <EventPageCreation /> },
-   { path: '/organizer-dashboard', element: <Dashboard /> },
+  { path: '/find-speaker-vendor', element: <EventSpeakersVendors /> },
 
 
   
