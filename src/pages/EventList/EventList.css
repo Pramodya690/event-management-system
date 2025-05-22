@@ -1,19 +1,55 @@
+:root {
+  --bg-color: #f0f4f8;
+  --card-bg: #ffffff;
+  --primary-color: #4f46e5;
+  --accent-color: #14b8a6;
+  --text-dark: #1e293b;
+  --text-light: #64748b;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --radius: 16px;
+  --transition: 0.3s ease-in-out;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background: var(--bg-color);
+}
+
 .event-list-wrapper {
   width: 100%;
-  height: auto;
+  
+  padding: 120px 24px 60px;
   background-color: var(--bg-color);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
+
+
+.event-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+
 .event-list {
-  width: 500px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); /* wider cards */
+  gap: 32px;
+  width: 100%;
+  max-width: 1280px;
   justify-content: center;
-  align-items: center;
-  gap: 24px;
-  margin-top: 140px;
-  margin-bottom: 60px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+
+
+
+
+.empty-msg {
+  color: var(--text-light);
+  font-size: 1.25rem;
+  margin-top: 100px;
 }

@@ -2,34 +2,33 @@ import EventCard from "../../components/EventCard/EventCard.jsx";
 import { eventList } from "../../utils/EventDatabase.jsx";
 import Navigation from "../../components/Navigation/Navigation.jsx";
 import "./EventList.css";
+
 const EventList = () => {
-  const renderEventCards = () => {
-    return eventList.map(({ id, date, heading, location, img }) => {
-      return (
-        <EventCard
-          key={id}
-          id={id}
-          date={date}
-          heading={heading}
-          location={location}
-          img={img}
-        />
-      );
-    });
-  };
+  const renderEventCards = () =>
+    eventList.map(({ id, date, heading, location, img }) => (
+      <EventCard
+        key={id}
+        id={id}
+        date={date}
+        heading={heading}
+        location={location}
+        img={img}
+      />
+    ));
+
   return (
     <div>
-      <Navigation/>
+      <Navigation />
       <div className="event-list-wrapper">
-        <div className="event-list">
-          {eventList.length > 0 ? (
-            renderEventCards()
-          ) : (
-            <p>No events available</p>
-          )}
-        </div>
+        <h1 className="event-title">Upcoming Events</h1>
+        {eventList.length > 0 ? (
+          <div className="event-list">{renderEventCards()}</div>
+        ) : (
+          <p className="empty-msg">No events available</p>
+        )}
       </div>
     </div>
   );
 };
+
 export default EventList;
