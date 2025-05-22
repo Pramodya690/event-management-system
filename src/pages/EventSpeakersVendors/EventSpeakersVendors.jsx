@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './EventSpeakersVendors.css';
 
+
 const EventSpeakersVendors = () => {
   // Which tab is currently selected
   const [activeTab, setActiveTab] = useState('speakers');
@@ -18,12 +19,12 @@ const EventSpeakersVendors = () => {
       {/* ---------- LEFT SIDEBAR ---------- */}
       <aside className="sidebar">
         <h3>Create</h3>
-        <nav>
+        <li>
           <div className="nav-item active">Events</div>
           <div className="nav-item">Speakers</div>
           <div className="nav-item">Vendors</div>
           <div className="nav-item">Team</div>
-        </nav>
+        </li>
 
         <button className="new-event-btn">New event</button>
 
