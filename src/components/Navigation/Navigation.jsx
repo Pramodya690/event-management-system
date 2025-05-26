@@ -38,6 +38,9 @@ const Navigation = () => {
               Sign Up
             </Link>
           </li>
+          <li>
+            <Link to="/help-centre" className="hover:text-blue-100 transition">Help Centre</Link>
+          </li>
         </ul>
       </div>
     </nav>

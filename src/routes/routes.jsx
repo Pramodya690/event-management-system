@@ -10,6 +10,7 @@ import OrganizerDetails from "../pages/OrganizerDetails"
 import EventPageCreation from '../pages/EventPageCreation/EventPageCreation';
 import Dashboard from "../pages/OrganizerDashboard/Dashboard/Dashboard"
 import EventSpeakersVendors from "../pages/EventSpeakersVendors"
+import HelpCentre from "../pages/HelpCentre"
 
 
 
@@ -26,6 +27,7 @@ export const routes = [
   { path: '/organizer-details', element: <OrganizerDetails /> },
   { path: '/events/:id', element: <EventPageCreation /> },
   { path: '/find-speaker-vendor', element: <EventSpeakersVendors /> },
+  { path: '/help-centre', element: <HelpCentre /> },
 
 
   
