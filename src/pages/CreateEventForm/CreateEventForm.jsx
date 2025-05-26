@@ -1,7 +1,5 @@
-// CreateEventForm.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CreateEventForm.css';
 import MapPicker from './MapPicker';
 
 function CreateEventForm() {
@@ -21,7 +19,6 @@ function CreateEventForm() {
     e.preventDefault();
 
     const id = Date.now();
-
     const eventData = {
       id,
       title,
@@ -43,57 +40,67 @@ function CreateEventForm() {
   };
 
   return (
-    <div className="create-event-container">
-      <h1>Create an event</h1>
+    <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Create an Event</h1>
 
-      <form onSubmit={handleSubmit} className="event-form">
-        <label>Event title *</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
+      <form onSubmit={handleSubmit} className="max-w-3xl mx-auto bg-white shadow-md p-6 rounded-lg space-y-6">
+        <div>
+          <label className="block font-medium mb-1">Event Title *</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-        <div className="form-section">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label>Date</label>
+            <label className="block font-medium mb-1">Date</label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
               required
+              className="w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
           <div>
-            <label>Start time</label>
+            <label className="block font-medium mb-1">Start Time</label>
             <input
               type="time"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
               required
+              className="w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
           <div>
-            <label>End time</label>
+            <label className="block font-medium mb-1">End Time</label>
             <input
               type="time"
               value={endTime}
               onChange={(e) => setEndTime(e.target.value)}
               required
+              className="w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
         </div>
 
         <div>
-          <label>Where is it located?</label>
-          <div className="location-options">
+          <label className="block font-medium mb-2">Where is it located?</label>
+          <div className="flex gap-2 flex-wrap">
             {['Venue', 'Online event', 'To be announced'].map((option) => (
               <button
                 type="button"
                 key={option}
-                className={locationType === option ? 'selected' : ''}
                 onClick={() => setLocationType(option)}
+                className={`px-4 py-2 rounded-full border ${
+                  locationType === option
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white text-gray-700 border-gray-300'
+                } hover:bg-blue-50`}
               >
                 {option}
               </button>
@@ -104,20 +111,23 @@ function CreateEventForm() {
         {locationType === 'Venue' && (
           <>
             <div>
-              <label>Location *</label>
+              <label className="block font-medium mb-1">Location *</label>
               <input
                 type="text"
                 placeholder="Location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 required
+                className="w-full border border-gray-300 rounded-md px-3 py-2"
               />
             </div>
-            <div className="map-picker-wrapper">
-              <label>Select on Map:</label>
+            <div>
+              <label className="block font-medium mb-1">Select on Map:</label>
               <MapPicker setCoordinates={setCoordinates} />
               {coordinates && (
-                <p>📍 Selected: Lat {coordinates.lat.toFixed(5)}, Lng {coordinates.lng.toFixed(5)}</p>
+                <p className="mt-2 text-sm text-gray-600">
+                  📍 Selected: Lat {coordinates.lat.toFixed(5)}, Lng {coordinates.lng.toFixed(5)}
+                </p>
               )}
             </div>
           </>
@@ -125,48 +135,57 @@ function CreateEventForm() {
 
         {locationType === 'Online event' && (
           <div>
-            <label>Event link *</label>
+            <label className="block font-medium mb-1">Event Link *</label>
             <input
               type="url"
               placeholder="https://your-event-link.com"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               required
+              className="w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
         )}
 
         {locationType === 'To be announced' && (
-          <p style={{ fontStyle: 'italic' }}>Event location will be announced soon.</p>
+          <p className="italic text-gray-500">Event location will be announced soon.</p>
         )}
 
         <div>
-          <label>Price *</label>
-          <div className="price-input-wrapper">
-            <span>$</span>
+          <label className="block font-medium mb-1">Price *</label>
+          <div className="flex items-center gap-2">
+            <span className="text-gray-700">$</span>
             <input
               type="number"
               step="0.01"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
+              className="w-full border border-gray-300 rounded-md px-3 py-2"
             />
           </div>
         </div>
 
-        <div className="template-actions">
-          <button type="button" onClick={() => setIsPublished(true)}>
+        <div className="flex flex-wrap gap-4 justify-between mt-6">
+          <button
+            type="button"
+            onClick={() => setIsPublished(true)}
+            className="bg-gray-200 text-gray-800 px-5 py-2 rounded hover:bg-gray-300"
+          >
             Preview Event Page
           </button>
-          <button type="submit" className="submit-btn">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
+          >
             {isPublished ? 'Publish Event' : 'Save Draft'}
           </button>
         </div>
 
-        <div className="dashboard-button-wrapper">
+        <div className="mt-6 text-center">
           <button
             type="button"
-            className="dashboard-btn"
+            className="text-blue-600 underline hover:text-blue-800"
             onClick={() => navigate('/find-speaker-vendor')}
           >
             Go to Organizer Dashboard

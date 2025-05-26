@@ -1,17 +1,15 @@
-import EventList from "../pages/EventList/EventList"
+import EventList from "../pages/EventList"
 import FilterEvents from "../pages/FilterEvents/FilterEvents"
-import EventDetail from "../pages/EventDetails/EventDetails"
-import Login from "../pages/Login/Login"
-import RoleSelect from "../pages/Signup/RoleSelect/RoleSelect"
-import Signup from "../pages/Signup/SignUp/Signup"
-
-import OrganizerWelcome from '../pages/OrganizerWelcome/OrganizerWelcome';
+import EventDetail from "../pages/EventDetails"
+import Login from "../pages/Login"
+import RoleSelect from "../pages/Signup/RoleSelect"
+import Signup from "../pages/Signup/Signup"
+import OrganizerWelcome from '../pages/OrganizerWelcome';
 import CreateEventForm from "../pages/CreateEventForm/CreateEventForm"
-// import EventDetailPage from "../pages/EventDetailPage/EventDetailPage"
-import OrganizerDetails from "../pages/OrganizerDetails/OrganizerDetails"
+import OrganizerDetails from "../pages/OrganizerDetails"
 import EventPageCreation from '../pages/EventPageCreation/EventPageCreation';
 import Dashboard from "../pages/OrganizerDashboard/Dashboard/Dashboard"
-import EventSpeakersVendors from "../pages/EventSpeakersVendors/EventSpeakersVendors"
+import EventSpeakersVendors from "../pages/EventSpeakersVendors"
 
 
 
