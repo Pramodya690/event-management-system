@@ -1,4 +1,4 @@
-import EventList from "../pages/EventList"
+import EventList from "../pages/Home"
 import FilterEvents from "../pages/FilterEvents/FilterEvents"
 import EventDetail from "../pages/EventDetails"
 import Login from "../pages/Login"

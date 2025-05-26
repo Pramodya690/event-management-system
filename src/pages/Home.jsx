@@ -1,6 +1,7 @@
 import EventCard from "../components/EventCard/EventCard.jsx";
 import { eventList } from "../utils/EventDatabase.jsx";
 import Navigation from "../components/Navigation/Navigation.jsx";
+import ImageSlideshow from "../components/ImageSlideshow.jsx";
 
 const EventList = () => {
   const renderEventCards = () =>
@@ -18,6 +19,8 @@ const EventList = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
+      <ImageSlideshow />
+
       <div className="max-w-6xl mx-auto px-4 py-10">
         <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">
           Upcoming Events
