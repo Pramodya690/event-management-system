@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-blue-500 shadow-md">
       <div className="max-w-6xl mx-auto px-4 py-4">
         <ul className="flex space-x-6 justify-center text-gray-700 font-medium">
           <li>
             <Link
               to="/"
-              className="hover:text-blue-600 transition-colors duration-200"
+              className="hover:text-white transition-colors duration-200"
             >
               Home
             </Link>
@@ -16,7 +16,7 @@ const Navigation = () => {
           <li>
             <Link
               to="/find-events"
-              className="hover:text-blue-600 transition-colors duration-200"
+              className="hover:text-white transition-colors duration-200"
             >
               Find Events
             </Link>
@@ -25,7 +25,7 @@ const Navigation = () => {
           <li>
             <Link
               to="/login"
-              className="hover:text-blue-600 transition-colors duration-200"
+              className="hover:text-white transition-colors duration-200"
             >
               Login
             </Link>
@@ -33,7 +33,7 @@ const Navigation = () => {
           <li>
             <Link
               to="/signup"
-              className="hover:text-blue-600 transition-colors duration-200"
+              className="hover:text-white transition-colors duration-200"
             >
               Sign Up
             </Link>
