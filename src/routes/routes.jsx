@@ -8,9 +8,11 @@ import OrganizerWelcome from '../pages/OrganizerWelcome';
 import CreateEventForm from "../pages/CreateEventForm/CreateEventForm"
 import OrganizerDetails from "../pages/OrganizerDetails"
 import EventPageCreation from '../pages/EventPageCreation/EventPageCreation';
-import Dashboard from "../pages/OrganizerDashboard/Dashboard/Dashboard"
 import EventSpeakersVendors from "../pages/EventSpeakersVendors"
 import HelpCentre from "../pages/HelpCentre"
+import OrganizerDashboardHome from "../pages/OrganizerDashboard/OrganizerDashboardHome"
+import OrganizerDashboardSidebar from "../pages/OrganizerDashboard/OrganizerDashboardSidebar"
+import OrganizerDashboardCreate from "../pages/OrganizerDashboard/OrganizerDashboardCreate"
 
 
 
@@ -28,6 +30,24 @@ export const routes = [
   { path: '/events/:id', element: <EventPageCreation /> },
   { path: '/find-speaker-vendor', element: <EventSpeakersVendors /> },
   { path: '/help-centre', element: <HelpCentre /> },
+  {
+  path: '/organizer-dashboard',
+  element: <OrganizerDashboardSidebar />,
+  children: [
+    {
+      index: true,
+      element: <OrganizerDashboardHome />
+    },
+    {
+      path: 'home',
+      element: <OrganizerDashboardHome />
+    },
+    {
+      path: 'create', //
+      element: <OrganizerDashboardCreate />
+    }
+  ]
+}
 
 
   
