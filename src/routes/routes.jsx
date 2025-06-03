@@ -12,7 +12,8 @@ import EventSpeakersVendors from "../pages/EventSpeakersVendors"
 import HelpCentre from "../pages/HelpCentre"
 import OrganizerDashboardHome from "../pages/OrganizerDashboard/OrganizerDashboardHome"
 import OrganizerDashboardSidebar from "../pages/OrganizerDashboard/OrganizerDashboardSidebar"
-import OrganizerDashboardCreate from "../pages/OrganizerDashboard/OrganizerDashboardCreate"
+import OrganizerCreateEventLanding from "../pages/OrganizerDashboard/OrganizerCreateEventLanding"
+import ExhibitionForm from "../pages/OrganizerDashboard/ExhibitionForm"
 
 
 
@@ -43,8 +44,12 @@ export const routes = [
       element: <OrganizerDashboardHome />
     },
     {
-      path: 'create', //
-      element: <OrganizerDashboardCreate />
+      path: 'create',
+      element: <OrganizerCreateEventLanding />
+    },
+    {
+      path: 'create/exhibition',
+      element: <ExhibitionForm />
     }
   ]
 }

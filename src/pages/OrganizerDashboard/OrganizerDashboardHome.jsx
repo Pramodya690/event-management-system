@@ -15,7 +15,9 @@ const OrganizerDashboardHome = () => {
   return (
     <div className="space-y-12 max-w-7xl mx-auto px-6 py-10">
       {/* Welcome Section */}
-      <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">Oh hello, <span className="text-blue-600">Dileesha</span></h1>
+      <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">
+        Oh hello, <span className="text-blue-600">Dileesha</span>
+      </h1>
 
       {/* Action Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -39,8 +41,8 @@ const OrganizerDashboardHome = () => {
 
         <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-8 flex flex-col justify-between">
           <div>
-            <div className="bg-purple-50 w-12 h-12 flex items-center justify-center rounded-full mb-6">
-              <span className="text-purple-600 text-3xl">✨</span>
+            <div className="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-full mb-6">
+              <span className="text-blue-700 text-3xl">✨</span>
             </div>
             <h2 className="text-2xl font-semibold mb-3 text-gray-900">Create my event faster with AI</h2>
             <p className="text-gray-600 leading-relaxed">
@@ -49,7 +51,7 @@ const OrganizerDashboardHome = () => {
           </div>
           <button
             onClick={handleCreateWithAI}
-            className="mt-6 self-start bg-purple-600 text-white font-semibold rounded-lg px-6 py-3 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 transition"
+            className="mt-6 self-start bg-blue-700 text-white font-semibold rounded-lg px-6 py-3 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-1 transition"
           >
             Create with AI
           </button>
@@ -69,6 +71,7 @@ const OrganizerDashboardHome = () => {
         </div>
       </div>
 
+
       {/* Community Spotlight */}
       <div className="bg-white rounded-2xl shadow-md p-8 max-w-5xl mx-auto">
         <h2 className="text-3xl font-semibold text-gray-900 mb-6">Community spotlight</h2>
@@ -79,7 +82,7 @@ const OrganizerDashboardHome = () => {
             className="w-48 h-48 object-cover rounded-2xl shadow-sm"
           />
           <div>
-            <h3 className="text-xl font-semibold text-orange-600 mb-2">Meet Prashant</h3>
+            <h3 className="text-xl font-semibold text-blue-600 mb-2">Meet Prashant</h3>
             <p className="text-gray-700 mb-4 leading-relaxed text-sm">
               “As someone who completely relies on people buying tickets to [our] event to get the word out,
               Eventbrite plays a huge part in my business.”
