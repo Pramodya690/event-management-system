@@ -14,6 +14,7 @@ import OrganizerDashboardHome from "../pages/OrganizerDashboard/OrganizerDashboa
 import OrganizerDashboardSidebar from "../pages/OrganizerDashboard/OrganizerDashboardSidebar"
 import OrganizerCreateEventLanding from "../pages/OrganizerDashboard/OrganizerCreateEventLanding"
 import ExhibitionForm from "../pages/OrganizerDashboard/ExhibitionForm"
+import ConferenceForm from "../pages/OrganizerDashboard/ConferenceForm"
 
 
 
@@ -50,6 +51,10 @@ export const routes = [
     {
       path: 'create/exhibition',
       element: <ExhibitionForm />
+    },
+    {
+      path: 'create/conference',
+      element: <ConferenceForm />
     }
   ]
 }

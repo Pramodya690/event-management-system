@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import MapPicker from "../../components/MapPicker";
 
 const steps = ["Build Event Page", "Add Tickets", "Publish"];
+const ticketTabs = ["paid", "free", "donation"];
 
 const ExhibitionForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -18,11 +19,18 @@ const ExhibitionForm = () => {
     tags: [],
     agenda: null,
     faqs: "",
+    tickets: {
+    paid: [],
+    free: [],
+    donation: [],
+  },
   });
+  
 
   const [bannerImagePreview, setBannerImagePreview] = useState(null);
   const [stallMapPreview, setStallMapPreview] = useState(null);
   const [tagInput, setTagInput] = useState("");
+  const [ticketTypeTab, setTicketTypeTab] = useState("paid");
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -368,89 +376,262 @@ const ExhibitionForm = () => {
             )}
 
             {currentStep === 1 && (
-              <motion.div
-                key="step2"
-                variants={variants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                transition={{ duration: 0.3 }}
-                className="space-y-6"
-              >
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">Add Tickets</h2>
+            <motion.div
+              key="step2"
+              variants={variants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.3 }}
+              className="flex flex-col lg:flex-row gap-6"
+            >
+              {/* Left: Ticket Type Selection */}
+              <div className="w-full lg:w-1/2 space-y-4">
+                <h2 className="text-3xl font-bold text-gray-900">Create tickets</h2>
+                <p className="text-gray-600">Choose a ticket type or build a section with multiple ticket types.</p>
 
-                <div className="p-4 border border-blue-300 rounded-lg">
-                  <input
-                    type="number"
-                    name="stalls"
-                    value={form.stalls}
-                    onChange={handleChange}
-                    placeholder="Number of Stalls"
-                    min="1"
-                    className="w-full border rounded px-3 py-2"
-                  />
-                </div>
+                {["paid", "free", "donation"].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setTicketTypeTab(tab)}
+                    className={`w-full flex items-center justify-between p-4 border rounded-lg shadow-sm transition 
+                      ${ticketTypeTab === tab
+                        ? "border-blue-600 bg-blue-50 text-blue-700"
+                        : "border-gray-300 hover:border-blue-400 text-gray-700 hover:text-blue-600"
+                      }`}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="text-xl select-none">
+                        {tab === "paid" ? "💳" : tab === "free" ? "🎟️" : "❤️"}
+                      </div>
+                      <div>
+                        <div className="font-semibold capitalize">{tab}</div>
+                        <div className="text-sm text-gray-500">
+                          {tab === "paid" && "Create a ticket that people have to pay for."}
+                          {tab === "free" && "Create a ticket that no one has to pay for."}
+                          {tab === "donation" && "Let people pay any amount for their ticket."}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-gray-400 text-lg select-none">›</div>
+                  </button>
+                ))}
 
-                <div className="p-4 border border-blue-300 rounded-lg">
-                  <label className="block mb-2">Upload Place Map</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files[0];
-                      if (file) {
-                        setForm((prev) => ({ ...prev, placeMap: file }));
-                        setStallMapPreview(URL.createObjectURL(file));
-                      }
-                    }}
-                  />
-                  {stallMapPreview && (
-                    <img
-                      src={stallMapPreview}
-                      alt="Stall Map Preview"
-                      className="mt-2 max-h-48 rounded border"
-                    />
-                  )}
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => alert("AI would generate stalls based on layout.")}
-                  className="mt-4 bg-green-600 text-white px-4 py-2 rounded"
-                  disabled={!form.stalls || !form.placeMap}
-                >
-                  Generate Stall Allocation with AI
+                <button className="mt-6 text-sm text-blue-600 underline hover:text-blue-800">
+                  Create a section
                 </button>
-              </motion.div>
-            )}
+              </div>
 
-            {currentStep === 2 && (
-              <motion.div
-                key="step3"
-                variants={variants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                transition={{ duration: 0.3 }}
-              >
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">Publish</h2>
+              {/* Right: Ticket Form */}
+              <div className="w-full lg:w-1/2 p-6 border border-blue-300 rounded-lg shadow space-y-6 bg-white">
+                <h3 className="text-xl font-semibold text-blue-800">Add tickets</h3>
 
-                <div className="p-4 border border-blue-300 rounded-lg mb-4">
-                  <label className="inline-flex items-center">
-                    <input
-                      type="checkbox"
-                      name="hasAuthorMeet"
-                      checked={form.hasAuthorMeet}
-                      onChange={handleChange}
-                      className="mr-2"
-                    />
-                    Include Author Meet & Greet
-                  </label>
+                {/* Tabs for context highlight */}
+                <div className="flex space-x-3">
+                  {["paid", "free", "donation"].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setTicketTypeTab(tab)}
+                      className={`px-4 py-1.5 rounded border text-sm font-medium transition
+                        ${
+                          ticketTypeTab === tab
+                            ? "bg-blue-600 text-white border-blue-600"
+                            : "bg-gray-100 text-blue-700 border-blue-300 hover:bg-blue-200"
+                        }`}
+                    >
+                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    </button>
+                  ))}
                 </div>
 
-                <p className="text-gray-600">Click "Create Book Fair" to publish your event.</p>
-              </motion.div>
-            )}
+                {/* Ticket Form Fields */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-blue-800">Name</label>
+                    <input
+                      type="text"
+                      value={form.tickets?.[ticketTypeTab]?.[0]?.name || ""}
+                      onChange={(e) => {
+                        const updated = { ...form.tickets };
+                        updated[ticketTypeTab][0].name = e.target.value;
+                        setForm((prev) => ({ ...prev, tickets: updated }));
+                      }}
+                      placeholder="General Admission"
+                      className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      maxLength={50}
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-blue-800">Available quantity</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={form.tickets?.[ticketTypeTab]?.[0]?.quantity || ""}
+                      onChange={(e) => {
+                        const updated = { ...form.tickets };
+                        updated[ticketTypeTab][0].quantity = e.target.value;
+                        setForm((prev) => ({ ...prev, tickets: updated }));
+                      }}
+                      className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  {ticketTypeTab === "paid" && (
+                    <div>
+                      <label className="block text-sm font-medium text-blue-800">Price ($)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={form.tickets?.[ticketTypeTab]?.[0]?.price || ""}
+                        onChange={(e) => {
+                          const updated = { ...form.tickets };
+                          updated[ticketTypeTab][0].price = e.target.value;
+                          setForm((prev) => ({ ...prev, tickets: updated }));
+                        }}
+                        className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
+                      />
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-blue-800">Sales start</label>
+                      <input
+                        type="date"
+                        className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                      <input
+                        type="time"
+                        className="w-full mt-1 border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-blue-800">Sales end</label>
+                      <input
+                        type="date"
+                        className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                      <input
+                        type="time"
+                        className="w-full mt-1 border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-end space-x-3 pt-4 border-t border-blue-300 mt-6">
+                  <button className="px-4 py-2 rounded border border-blue-400 text-blue-700 hover:bg-blue-50 transition">
+                    Cancel
+                  </button>
+                  <button className="px-6 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {currentStep === 2 && (
+            <motion.div
+              key="step3"
+              variants={variants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.3 }}
+            >
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">Your event is almost ready to publish</h2>
+              <p className="text-gray-600 mb-4">Review your settings and let everyone find your event.</p>
+
+              <div className="flex flex-col md:flex-row gap-6 border border-gray-200 rounded-lg p-6 bg-white shadow">
+                
+                {/* Left Card Preview */}
+                <div className="w-full md:w-1/2 border border-gray-300 rounded-lg p-4 bg-gray-50">
+                  <div className="w-full h-40 bg-gray-200 flex items-center justify-center rounded mb-4">
+                    {bannerImagePreview ? (
+                      <img src={bannerImagePreview} alt="Banner" className="object-contain max-h-40 rounded" />
+                    ) : (
+                      <span className="text-gray-500">No Image</span>
+                    )}
+                  </div>
+
+                  <h3 className="text-lg font-semibold">{form.eventName || "Untitled Event"}</h3>
+                  <p className="text-sm text-gray-600">
+                    {form.date || "Date not set"} · {form.time || "Time not set"} GMT+5:30
+                  </p>
+                  <p className="text-sm text-gray-500 mt-1">{form.location || "To be announced"}</p>
+                  <p className="text-sm text-gray-500 mt-1">{form.mode || "Event mode not selected"}</p>
+                  <a href="#" className="text-sm text-blue-600 mt-2 inline-block">Preview</a>
+                </div>
+
+                {/* Right Metadata Section */}
+                <div className="w-full md:w-1/2 space-y-6">
+
+                  {/* Type & Category */}
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-1">Event type and category</h4>
+                    <p className="text-sm text-gray-500 mb-2">Your type and category help your event appear in more searches.</p>
+                    <div className="flex gap-2">
+                      <span className="px-3 py-2 border rounded bg-gray-100 text-gray-700 w-1/2">{form.type || "Not selected"}</span>
+                      <span className="px-3 py-2 border rounded bg-gray-100 text-gray-700 w-1/2">{form.category || "Not selected"}</span>
+                    </div>
+                  </div>
+
+                  {/* Tags */}
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-1">Tags</h4>
+                    <p className="text-sm text-gray-500 mb-2">Help people discover your event.</p>
+                    <div className="flex flex-wrap gap-2">
+                      {form.tags?.length > 0 ? (
+                        form.tags.map((tag, i) => (
+                          <span key={i} className="inline-block bg-blue-100 text-blue-700 rounded-full px-3 py-1 text-sm">
+                            {tag}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-sm text-gray-400">No tags added</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-1">Event Description</h4>
+                    <p className="text-sm text-gray-600">{form.description || "No description provided."}</p>
+                  </div>
+
+                  {/* Organizer Info */}
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-1">Organizer</h4>
+                    <p className="text-sm text-gray-600">{form.organizerName || "Not provided"}</p>
+                  </div>
+
+                  {/* Contact Info */}
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-1">Contact Information</h4>
+                    <p className="text-sm text-gray-600">{form.contact || "Not provided"}</p>
+                  </div>
+
+                  {/* Registration Limit */}
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-1">Registration Limit</h4>
+                    <p className="text-sm text-gray-600">
+                      {form.registrationLimit ? `${form.registrationLimit} people` : "No limit specified"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+          )}
+
+          
+
+             
           </AnimatePresence>
 
           {/* Navigation */}
@@ -479,7 +660,7 @@ const ExhibitionForm = () => {
                 type="submit"
                 className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
               >
-                Create Book Fair
+                Create Event Page
               </button>
             )}
           </div>
