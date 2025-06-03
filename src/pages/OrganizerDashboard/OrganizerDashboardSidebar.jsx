@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { Home, BarChart, ShoppingCart, Megaphone, Calendar } from 'lucide-react';
+import { MdHome, MdEvent, MdShoppingCart, MdCampaign, MdAnalytics, MdCalendarToday } from 'react-icons/md';
 
 const OrganizerDashboardSidebar = () => {
   const location = useLocation();
@@ -27,52 +27,74 @@ const OrganizerDashboardSidebar = () => {
                }`
             }
           >
-            <Home size={20} />
+            <MdHome size={22} />
             Home
           </NavLink>
 
           {/* Create Event */}
-          <div>
-            <NavLink
-              to="/organizer-dashboard/create"
-              className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium transition 
-                 ${
-                   isCreateEventRoute
-                     ? "bg-blue-100 text-blue-700 shadow-inner font-semibold"
-                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                 }`
-              }
-            >
-              <Calendar size={20} />
-              Create Event
-            </NavLink>
+          <NavLink
+            to="/organizer-dashboard/create"
+            className={({ isActive }) =>
+              `flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium transition 
+               ${
+                 isActive || isCreateEventRoute
+                   ? "bg-blue-100 text-blue-700 shadow-inner font-semibold"
+                   : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+               }`
+            }
+          >
+            <MdCalendarToday size={22} />
+            Create Event
+          </NavLink>
 
-            {/* Submenus for Create Event */}
-            {isCreateEventRoute && (
-              <div className="ml-8 mt-2 flex flex-col gap-2">
-                {[
-                  { to: "/organizer-dashboard/create/conference", label: "Conference" },
-                  { to: "/organizer-dashboard/create/exhibition", label: "Exhibition" },
-                ].map(({ to, label }) => (
-                  <NavLink
-                    key={to}
-                    to={to}
-                    className={({ isActive }) =>
-                      `text-sm rounded px-3 py-1 transition
-                       ${
-                         isActive
-                           ? "bg-blue-200 text-blue-800 font-semibold"
-                           : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
-                       }`
-                    }
-                  >
-                    {label}
-                  </NavLink>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* Submenus for Create Event */}
+          {isCreateEventRoute && (
+            <div className="ml-8 flex flex-col gap-2 mb-4">
+              <NavLink
+                to="/organizer-dashboard/create/conference"
+                className={({ isActive }) =>
+                  `text-sm rounded px-3 py-1 transition
+                   ${
+                     isActive
+                       ? "bg-blue-200 text-blue-800 font-semibold"
+                       : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+                   }`
+                }
+              >
+                Conference
+              </NavLink>
+
+              <NavLink
+                to="/organizer-dashboard/create/exhibition"
+                className={({ isActive }) =>
+                  `text-sm rounded px-3 py-1 transition
+                   ${
+                     isActive
+                       ? "bg-blue-200 text-blue-800 font-semibold"
+                       : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+                   }`
+                }
+              >
+                Exhibition
+              </NavLink>
+            </div>
+          )}
+
+          {/* Event Details */}
+          <NavLink
+            to="/organizer-dashboard/events-summary"
+            className={({ isActive }) =>
+              `flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium transition 
+               ${
+                 isActive
+                   ? "bg-blue-100 text-blue-700 shadow-inner font-semibold"
+                   : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+               }`
+            }
+          >
+            <MdEvent size={22} />
+            Event Details
+          </NavLink>
 
           {/* Orders */}
           <NavLink
@@ -86,7 +108,7 @@ const OrganizerDashboardSidebar = () => {
                }`
             }
           >
-            <ShoppingCart size={20} />
+            <MdShoppingCart size={22} />
             Order Management
           </NavLink>
 
@@ -102,7 +124,7 @@ const OrganizerDashboardSidebar = () => {
                }`
             }
           >
-            <Megaphone size={20} />
+            <MdCampaign size={22} />
             Marketing
           </NavLink>
 
@@ -118,7 +140,7 @@ const OrganizerDashboardSidebar = () => {
                }`
             }
           >
-            <BarChart size={20} />
+            <MdAnalytics size={22} />
             Analytics
           </NavLink>
         </nav>

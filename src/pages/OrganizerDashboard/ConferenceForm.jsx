@@ -141,7 +141,7 @@ const handleGenerateSeatingWithAI = () => {
                 transition={{ duration: 0.3 }}
                 className="space-y-6"
               >
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">Build Event Page</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Build Conference Event Page</h2>
                 {/* Upload Banner Image< */}
                 <div className="p-4 border border-blue-300 rounded-lg">
                   <label className="font-semibold block mb-1">Upload Banner Image</label>

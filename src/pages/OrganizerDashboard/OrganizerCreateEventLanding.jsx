@@ -5,6 +5,7 @@ const OrganizerCreateEventLanding = () => {
   const navigate = useNavigate();
 
   const options = [
+
     {
       title: 'Create Conference',
       description: 'Bring professionals together to share knowledge.',

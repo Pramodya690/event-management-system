@@ -15,6 +15,7 @@ import OrganizerDashboardSidebar from "../pages/OrganizerDashboard/OrganizerDash
 import OrganizerCreateEventLanding from "../pages/OrganizerDashboard/OrganizerCreateEventLanding"
 import ExhibitionForm from "../pages/OrganizerDashboard/ExhibitionForm"
 import ConferenceForm from "../pages/OrganizerDashboard/ConferenceForm"
+import EventsSummary from "../pages/OrganizerDashboard/EventsSummary"
 
 
 
@@ -55,6 +56,10 @@ export const routes = [
     {
       path: 'create/conference',
       element: <ConferenceForm />
+    },
+     {
+      path: 'events-summary',
+      element: <EventsSummary />
     }
   ]
 }
