@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-function RoleSelect() {
+function SignupRoleSelector() {
   const navigate = useNavigate();
 
   const handleRoleSelect = (role) => {
@@ -10,7 +10,7 @@ function RoleSelect() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md text-center">
-        <h2 className="text-2xl font-semibold mb-6">Select Your Role</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-gray-800">Select Your Role</h2>
         <div className="flex flex-col space-y-4">
           <button
             onClick={() => handleRoleSelect('attendee')}
@@ -42,4 +42,4 @@ function RoleSelect() {
   );
 }
 
-export default RoleSelect;
+export default SignupRoleSelector;
