@@ -16,6 +16,7 @@ import ConferenceForm from "../pages/OrganizerDashboard/ConferenceForm"
 import EventsSummary from "../pages/OrganizerDashboard/EventsSummary"
 import SignupRoleSelector from "../pages/Signup/SignupRoleSelector"
 import SignUpOrganizer from "../pages/Signup/SignupOrganizer"
+import OrganizerProfile from "../pages/OrganizerProfile"
 
 
 
@@ -32,7 +33,8 @@ export const routes = [
   { path: '/find-speaker-vendor', element: <EventSpeakersVendors /> },
   { path: '/help-centre', element: <HelpCentre /> },
   { path: '/signup-role-selector', element: <SignupRoleSelector /> },
-   { path: '/signup/organizer', element: <SignUpOrganizer /> },
+  { path: '/signup/organizer', element: <SignUpOrganizer /> },
+  { path: '/organizer-profile', element: <OrganizerProfile /> },
   {
   path: '/organizer-dashboard',
   element: <OrganizerDashboardSidebar />,

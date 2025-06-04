@@ -12,14 +12,10 @@ const SignUpOrganizer = () => {
   const navigate = useNavigate();
 
   const eventTypes = [
-    'Comedy',
-    'Food & Drink',
-    'Music',
-    'Community & Culture',
-    'Hobbies & Special Interest',
-    'Performing & Visual Arts',
-    'Parties',
+    'Comedy', 'Food & Drink', 'Music', 'Community & Culture',
+    'Hobbies & Special Interest', 'Performing & Visual Arts', 'Parties',
   ];
+
 
   const handleSelect = (type) => {
     setSelected((prev) =>
@@ -28,12 +24,10 @@ const SignUpOrganizer = () => {
   };
 
   const handleNext = () => {
-    // Simple validation example: all required fields filled
     if (name && email && selected.length > 0 && numEvents && eventSize && goal) {
-      // Save data or send to API here
-
-      // For now, just navigate
-      navigate('/organizer-welcome');
+      navigate('/organizer-profile', {
+        state: { name, email, selected, numEvents, eventSize, goal }
+      });
     } else {
       alert('Please fill all required fields.');
     }
