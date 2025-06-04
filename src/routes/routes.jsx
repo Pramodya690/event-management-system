@@ -20,16 +20,15 @@ import OrganizerProfile from "../pages/OrganizerProfile"
 import OrganizerDashboardFindVendors from "../pages/OrganizerDashboard/OrganizerDashboardFindVendors"
 import SignupVendor from "../pages/Signup/SignupVendor"
 import VendorProfile from "../pages/VendorProfile"
-
+import SignupAttendee from "../pages/Signup/SignupAttendee"
 
 
 
 export const routes = [
-  {path:'/',element:<HomePage/>},
-  {path:'/find-events',element:<FilterEvents/>},
-  {path:'/events/:id',element:<EventDetail/>},
+  {path:  '/',element:<HomePage/>},
+  {path:  '/find-events',element:<FilterEvents/>},
+  {path:  '/events/:id',element:<EventDetail/>},
   { path: '/login', element: <Login /> },
-  // { path: '/signup/:role', element: <Signup /> }, 
   { path: '/organizer-welcome', element: <OrganizerWelcome /> },
   { path: '/create-event-form', element: <CreateEventForm /> },
   { path: '/events/:id', element: <EventPageCreation /> },
@@ -40,6 +39,7 @@ export const routes = [
   { path: '/organizer-profile', element: <OrganizerProfile /> },
   { path: '/signup/vendor', element: <SignupVendor /> },
   { path: '/vendor-profile', element: <VendorProfile /> },
+  { path: '/signup/attendee', element: <SignupAttendee /> },
   
   {
   path: '/organizer-dashboard',
