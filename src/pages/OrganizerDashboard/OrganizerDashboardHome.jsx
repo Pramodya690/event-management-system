@@ -16,7 +16,7 @@ const OrganizerDashboardHome = () => {
     <div className="space-y-12 max-w-7xl mx-auto px-6 py-10">
       {/* Welcome Section */}
       <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight">
-        Oh hello, <span className="text-blue-600">Dileesha</span>
+        Hello, Let's Create your Event
       </h1>
 
       {/* Action Cards */}

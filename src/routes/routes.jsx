@@ -17,6 +17,9 @@ import EventsSummary from "../pages/OrganizerDashboard/EventsSummary"
 import SignupRoleSelector from "../pages/Signup/SignupRoleSelector"
 import SignUpOrganizer from "../pages/Signup/SignupOrganizer"
 import OrganizerProfile from "../pages/OrganizerProfile"
+import OrganizerDashboardFindVendors from "../pages/OrganizerDashboard/OrganizerDashboardFindVendors"
+import SignupVendor from "../pages/Signup/SignupVendor"
+import VendorProfile from "../pages/VendorProfile"
 
 
 
@@ -35,6 +38,9 @@ export const routes = [
   { path: '/signup-role-selector', element: <SignupRoleSelector /> },
   { path: '/signup/organizer', element: <SignUpOrganizer /> },
   { path: '/organizer-profile', element: <OrganizerProfile /> },
+  { path: '/signup/vendor', element: <SignupVendor /> },
+  { path: '/vendor-profile', element: <VendorProfile /> },
+  
   {
   path: '/organizer-dashboard',
   element: <OrganizerDashboardSidebar />,
@@ -62,6 +68,10 @@ export const routes = [
      {
       path: 'events-summary',
       element: <EventsSummary />
+    },
+    {
+      path: 'find-vendors',
+      element: <OrganizerDashboardFindVendors />
     }
   ]
 }
