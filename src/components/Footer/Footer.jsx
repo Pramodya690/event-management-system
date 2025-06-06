@@ -6,7 +6,7 @@ const Footer = () => {
 
           {/* Left Section */}
           <div className="text-center sm:text-left text-sm">
-            &copy; {new Date().getFullYear()} EventHub. All rights reserved.
+            &copy; {new Date().getFullYear()} EventSphere. All rights reserved.
           </div>
 
           {/* Center Links */}

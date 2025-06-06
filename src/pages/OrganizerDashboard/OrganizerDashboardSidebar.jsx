@@ -342,7 +342,7 @@ const OrganizerDashboardSidebar = () => {
         {/* Sidebar Header */}
         <div className="p-4 border-b border-gray-200 flex items-center justify-between">
           {expanded ? (
-            <h2 className="text-2xl font-bold text-blue-700 tracking-tight">EventPro</h2>
+            <h2 className="text-2xl font-bold text-blue-700 tracking-tight">EventSphere</h2>
           ) : (
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">E</div>
           )}

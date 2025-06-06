@@ -12,7 +12,7 @@ import OrganizerDashboardHome from "../pages/OrganizerDashboard/OrganizerDashboa
 import OrganizerDashboardSidebar from "../pages/OrganizerDashboard/OrganizerDashboardSidebar"
 import OrganizerCreateEventLanding from "../pages/OrganizerDashboard/OrganizerCreateEventLanding"
 import ExhibitionForm from "../pages/OrganizerDashboard/ExhibitionForm"
-import ConferenceForm from "../pages/OrganizerDashboard/ConferenceForm"
+import ConferenceForm from "../pages/OrganizerDashboard/Conference/ConferenceForm"
 import EventsSummary from "../pages/OrganizerDashboard/EventsSummary"
 import SignupRoleSelector from "../pages/Signup/SignupRoleSelector"
 import SignUpOrganizer from "../pages/Signup/SignupOrganizer"
