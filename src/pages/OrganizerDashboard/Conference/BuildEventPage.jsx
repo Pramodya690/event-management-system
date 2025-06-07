@@ -13,7 +13,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
     >
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Build Conference Event Page</h2>
       {/* Upload Banner Image */}
-      <div className="p-4 border border-blue-300 rounded-lg">
+      <div className="p-4 border border-sky-300 rounded-lg">
         <label className="font-semibold block mb-1">Upload Banner Image</label>
         <p className="text-sm text-gray-500 mb-2">
           Upload a high-quality banner that represents your event.
@@ -43,7 +43,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
       </div>
 
       {/* Event Title */}
-      <div className="p-4 border border-blue-300 rounded-lg">
+      <div className="p-4 border border-sky-300 rounded-lg">
         <label className="font-semibold block mb-1">Event Title</label>
         <p className="text-sm text-gray-500 mb-2">
           Be clear and descriptive with a title that tells people what your event is about.
@@ -63,7 +63,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
       </div>
 
       {/* Date & Time Selection */}
-      <div className="p-4 border border-blue-300 rounded-lg">
+      <div className="p-4 border border-sky-300 rounded-lg">
         <label className="font-semibold block mb-1">Date & Time Selection</label>
         <div className="flex gap-2">
           <input
@@ -92,7 +92,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
       </div>
 
       {/* Location */}
-      <div className="p-4 border border-blue-300 rounded-lg">
+      <div className="p-4 border border-sky-300 rounded-lg">
         <label className="font-semibold block mb-1">Location</label>
         <p className="text-sm text-gray-500 mb-2">
           Click on the map to choose the location of your event.
@@ -122,7 +122,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
       </div>
 
       {/* Event Description */}
-      <div className="p-4 border border-blue-300 rounded-lg">
+      <div className="p-4 border border-sky-300 rounded-lg">
         <label className="font-semibold block mb-1">Event Description</label>
         <p className="text-sm text-gray-500 mb-2">
           Add more details about your event and include what people can expect if they attend.
@@ -141,7 +141,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
       </div>
 
       {/* Good to Know (Tags) */}
-      <div className="p-4 border border-blue-300 rounded-lg">
+      <div className="p-4 border border-sky-300 rounded-lg">
         <label className="font-semibold block mb-1">Good to Know (Tags)</label>
         <p className="text-sm text-gray-500 mb-2">
           Use this section to feature specific information about your event. Add highlights and frequently asked questions for attendees.
@@ -170,7 +170,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
           {form.tags.map((tag, index) => (
             <span
               key={index}
-              className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full flex items-center"
+              className="bg-sky-100 text-sky-800 px-2 py-1 rounded-full flex items-center"
             >
               {tag}
               <button
@@ -181,7 +181,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
                     tags: prev.tags.filter((t) => t !== tag),
                   }))
                 }
-                className="ml-2 text-blue-500"
+                className="ml-2 text-sky-500"
               >
                 &times;
               </button>
@@ -191,7 +191,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
       </div>
 
       {/* FAQs */}
-      <div className="p-4 border border-blue-300 rounded-lg">
+      <div className="p-4 border border-sky-300 rounded-lg">
         <label className="font-semibold block mb-1">FAQs</label>
         <p className="text-sm text-gray-500 mb-2">
           Make your event stand out even more. These sections help attendees find information and answer their questions - which means more ticket sales and less time answering messages.
@@ -210,7 +210,7 @@ const BuildEventPage = ({ form, setForm, bannerImagePreview, setBannerImagePrevi
       </div>
 
       {/* Upload Agenda */}
-      <div className="p-4 border border-blue-300 rounded-lg space-y-4">
+      <div className="p-4 border border-sky-300 rounded-lg space-y-4">
         <div>
           <label className="font-semibold block mb-1">Upload Agenda</label>
           <p className="text-sm text-gray-500 mb-2">

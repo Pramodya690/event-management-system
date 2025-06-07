@@ -24,7 +24,7 @@ function OrganizerWelcome() {
           </p>
           <button
             onClick={() => navigate('/create-event-form')}
-            className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
+            className="bg-sky-600 text-white px-6 py-3 rounded hover:bg-sky-700 transition"
           >
             Build event
           </button>
@@ -43,7 +43,7 @@ function OrganizerWelcome() {
           </p>
           <button
             onClick={() => navigate('/')}
-            className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
+            className="bg-sky-600 text-white px-6 py-3 rounded hover:bg-sky-700 transition"
           >
             Explore homepage
           </button>
@@ -62,7 +62,7 @@ function OrganizerWelcome() {
           </p>
           <button
             onClick={() => navigate('/organizer-dashboard')}
-            className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
+            className="bg-sky-600 text-white px-6 py-3 rounded hover:bg-sky-700 transition"
           >
             View dashboard
           </button>

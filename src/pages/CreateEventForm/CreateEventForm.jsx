@@ -51,7 +51,7 @@ function CreateEventForm() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
 
@@ -98,9 +98,9 @@ function CreateEventForm() {
                 onClick={() => setLocationType(option)}
                 className={`px-4 py-2 rounded-full border ${
                   locationType === option
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-sky-600 text-white'
                     : 'bg-white text-gray-700 border-gray-300'
-                } hover:bg-blue-50`}
+                } hover:bg-sky-50`}
               >
                 {option}
               </button>
@@ -176,7 +176,7 @@ function CreateEventForm() {
           </button>
           <button
             type="submit"
-            className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700"
+            className="bg-sky-600 text-white px-5 py-2 rounded hover:bg-sky-700"
           >
             {isPublished ? 'Publish Event' : 'Save Draft'}
           </button>
@@ -185,7 +185,7 @@ function CreateEventForm() {
         <div className="mt-6 text-center">
           <button
             type="button"
-            className="text-blue-600 underline hover:text-blue-800"
+            className="text-sky-600 underline hover:text-sky-800"
             onClick={() => navigate('/find-speaker-vendor')}
           >
             Go to Organizer Dashboard

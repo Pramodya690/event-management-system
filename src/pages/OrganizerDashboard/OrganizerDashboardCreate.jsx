@@ -74,8 +74,8 @@ const OrganizerDashboardCreate = () => {
                     file:mr-4 file:py-2 file:px-4
                     file:rounded file:border-0
                     file:text-sm file:font-semibold
-                    file:bg-blue-50 file:text-blue-700
-                    hover:file:bg-blue-100 mb-4"
+                    file:bg-sky-50 file:text-sky-700
+                    hover:file:bg-sky-100 mb-4"
             />
             <div className="w-full h-[250px] border border-dashed border-gray-400 rounded flex items-center justify-center bg-gray-100">
               {imagePreview ? (
@@ -105,7 +105,7 @@ const OrganizerDashboardCreate = () => {
                 value={form.eventType}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-600"
               >
                 <option value="">-- Choose Event Type --</option>
                 <option value="book-fair">Book Fair</option>
@@ -127,7 +127,7 @@ const OrganizerDashboardCreate = () => {
                 onChange={handleChange}
                 required
                 placeholder="Enter event name"
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-600"
               />
             </div>
 
@@ -143,7 +143,7 @@ const OrganizerDashboardCreate = () => {
                 value={form.date}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-600"
               />
             </div>
 
@@ -160,7 +160,7 @@ const OrganizerDashboardCreate = () => {
                 onChange={handleChange}
                 required
                 placeholder="Enter location"
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-600"
               />
             </div>
 
@@ -177,14 +177,14 @@ const OrganizerDashboardCreate = () => {
                 onChange={handleChange}
                 required
                 placeholder="Write a description for your event"
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-600"
               />
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="bg-blue-600 text-white px-6 py-3 rounded font-semibold hover:bg-blue-700 transition"
+              className="bg-sky-600 text-white px-6 py-3 rounded font-semibold hover:bg-sky-700 transition"
             >
               Continue
             </button>

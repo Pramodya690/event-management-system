@@ -126,7 +126,7 @@
 //           <input
 //             type="text"
 //             placeholder="Search events"
-//             className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+//             className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
 //             value={search}
 //             onChange={(e) => setSearch(e.target.value)}
 //           />
@@ -135,7 +135,7 @@
 //               onClick={() => setView("list")}
 //               className={`px-4 py-2 rounded-md transition ${
 //                 view === "list"
-//                   ? "bg-blue-600 text-white shadow-md"
+//                   ? "bg-sky-600 text-white shadow-md"
 //                   : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
 //               }`}
 //             >
@@ -145,7 +145,7 @@
 //               onClick={() => setView("calendar")}
 //               className={`px-4 py-2 rounded-md transition ${
 //                 view === "calendar"
-//                   ? "bg-blue-600 text-white shadow-md"
+//                   ? "bg-sky-600 text-white shadow-md"
 //                   : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
 //               }`}
 //             >
@@ -209,7 +209,7 @@
 
 //           {/* Footer */}
 //           <div className="p-4 border-t border-gray-200 flex justify-end">
-//             <button className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
+//             <button className="text-sky-600 hover:text-sky-800 text-sm font-medium flex items-center">
 //               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 //                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
 //               </svg>
@@ -270,7 +270,7 @@
 //                           {dayData.events.map((event) => (
 //                             <div
 //                               key={event.id}
-//                               className="text-xs bg-blue-50 text-blue-800 p-1 rounded leading-tight truncate shadow-sm"
+//                               className="text-xs bg-sky-50 text-sky-800 p-1 rounded leading-tight truncate shadow-sm"
 //                               title={`${event.time} - ${event.name}`}
 //                             >
 //                               <div className="font-semibold">{event.time}</div>
@@ -473,7 +473,7 @@ const EventsSummary = () => {
             <input
               type="text"
               placeholder="Search events..."
-              className="pl-10 pr-4 py-2 w-full md:w-64 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+              className="pl-10 pr-4 py-2 w-full md:w-64 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -496,7 +496,7 @@ const EventsSummary = () => {
               onClick={() => setView("list")}
               className={`px-4 py-2 rounded-lg transition-all ${
                 view === "list"
-                  ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
+                  ? "bg-sky-500 text-white shadow-md hover:bg-sky-600"
                   : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 hover:border-gray-400"
               }`}
             >
@@ -506,7 +506,7 @@ const EventsSummary = () => {
               onClick={() => setView("calendar")}
               className={`px-4 py-2 rounded-lg transition-all ${
                 view === "calendar"
-                  ? "bg-blue-600 text-white shadow-md hover:bg-blue-700"
+                  ? "bg-sky-500 text-white shadow-md hover:bg-sky-600"
                   : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 hover:border-gray-400"
               }`}
             >
@@ -514,7 +514,7 @@ const EventsSummary = () => {
             </button>
           </div>
         </div>
-        <button className="bg-blue-700 text-white px-6 py-2 rounded-lg hover:bg-blue-500 transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+        <button className="bg-sky-500 text-white px-6 py-2 rounded-lg hover:bg-sky-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
@@ -568,7 +568,7 @@ const EventsSummary = () => {
             <h2 className="text-lg font-semibold text-gray-800">All Events</h2>
             <div className="flex items-center space-x-4">
               <div className="relative">
-                <select className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-1.5 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <select className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-1.5 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
                   <option>All Status</option>
                   <option>On Sale</option>
                   <option>Draft</option>
@@ -581,7 +581,7 @@ const EventsSummary = () => {
                 </div>
               </div>
               <div className="relative">
-                <select className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-1.5 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <select className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-1.5 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
                   <option>All Types</option>
                   <option>Online</option>
                   <option>In-person</option>
@@ -621,7 +621,7 @@ const EventsSummary = () => {
                       <div className="flex flex-col md:flex-row md:justify-between gap-4">
                         {/* Left: Event Title + Info */}
                         <div className="md:w-2/3">
-                          <h2 className="text-lg font-bold text-gray-800 hover:text-blue-600 transition">{event.name}</h2>
+                          <h2 className="text-lg font-bold text-gray-800 hover:text-sky-600 transition">{event.name}</h2>
                           <p className="text-sm text-gray-500 mt-1">
                             {formatEventDateTime(event)}
                           </p>
@@ -748,13 +748,13 @@ const EventsSummary = () => {
                       key={dayIndex}
                       className={`min-h-[120px] p-2 bg-white ${
                         dayData.day === null ? "bg-gray-50" : "hover:bg-gray-50"
-                      } ${isToday ? "border-2 border-blue-500" : ""}`}
+                      } ${isToday ? "border-2 border-sky-500" : ""}`}
                     >
                       {dayData.day !== null && (
                         <>
                           <div className={`text-sm mb-1 text-right ${
                             isToday 
-                              ? "bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center ml-auto"
+                              ? "bg-sky-500 text-white rounded-full w-6 h-6 flex items-center justify-center ml-auto"
                               : "text-gray-900"
                           }`}>
                             {dayData.day}
@@ -878,7 +878,7 @@ const EventsSummary = () => {
                     </div>
 
                     <div className="mt-6 space-y-3">
-                      <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+                      <button className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition">
                         View Event Page
                       </button>
                       <button className="w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 transition">

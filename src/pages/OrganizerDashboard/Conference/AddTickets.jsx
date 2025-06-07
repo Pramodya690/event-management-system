@@ -21,8 +21,8 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
             onClick={() => setTicketTypeTab(tab)}
             className={`w-full flex items-center justify-between p-4 border rounded-lg shadow-sm transition 
               ${ticketTypeTab === tab
-                ? "border-blue-600 bg-blue-50 text-blue-700"
-                : "border-gray-300 hover:border-blue-400 text-gray-700 hover:text-blue-600"
+                ? "border-sky-600 bg-sky-50 text-sky-700"
+                : "border-gray-300 hover:border-sky-400 text-gray-700 hover:text-sky-600"
               }`}
           >
             <div className="flex items-center space-x-3">
@@ -42,14 +42,14 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
           </button>
         ))}
 
-        <button className="mt-6 text-sm text-blue-600 underline hover:text-blue-800">
+        <button className="mt-6 text-sm text-sky-600 underline hover:text-sky-800">
           Create a section
         </button>
       </div>
 
       {/* Right: Ticket Form */}
-      <div className="w-full lg:w-1/2 p-6 border border-blue-300 rounded-lg shadow space-y-6 bg-white">
-        <h3 className="text-xl font-semibold text-blue-800">Add tickets</h3>
+      <div className="w-full lg:w-1/2 p-6 border border-sky-300 rounded-lg shadow space-y-6 bg-white">
+        <h3 className="text-xl font-semibold text-sky-800">Add tickets</h3>
 
         {/* Tabs for context highlight */}
         <div className="flex space-x-3">
@@ -60,8 +60,8 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
               className={`px-4 py-1.5 rounded border text-sm font-medium transition
                 ${
                   ticketTypeTab === tab
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "bg-gray-100 text-blue-700 border-blue-300 hover:bg-blue-200"
+                    ? "bg-sky-600 text-white border-sky-600"
+                    : "bg-gray-100 text-sky-700 border-sky-300 hover:bg-sky-200"
                 }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -72,7 +72,7 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
         {/* Ticket Form Fields */}
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-blue-800">Name</label>
+            <label className="block text-sm font-medium text-sky-800">Name</label>
             <input
               type="text"
               value={form.tickets?.[ticketTypeTab]?.[0]?.name || ""}
@@ -82,14 +82,14 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
                 setForm((prev) => ({ ...prev, tickets: updated }));
               }}
               placeholder="General Admission"
-              className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
               maxLength={50}
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-blue-800">Available quantity</label>
+            <label className="block text-sm font-medium text-sky-800">Available quantity</label>
             <input
               type="number"
               min="1"
@@ -99,14 +99,14 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
                 updated[ticketTypeTab][0].quantity = e.target.value;
                 setForm((prev) => ({ ...prev, tickets: updated }));
               }}
-              className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
               required
             />
           </div>
 
           {ticketTypeTab === "paid" && (
             <div>
-              <label className="block text-sm font-medium text-blue-800">Price ($)</label>
+              <label className="block text-sm font-medium text-sky-800">Price ($)</label>
               <input
                 type="number"
                 min="0"
@@ -116,7 +116,7 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
                   updated[ticketTypeTab][0].price = e.target.value;
                   setForm((prev) => ({ ...prev, tickets: updated }));
                 }}
-                className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                 required
               />
             </div>
@@ -124,35 +124,35 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-blue-800">Sales start</label>
+              <label className="block text-sm font-medium text-sky-800">Sales start</label>
               <input
                 type="date"
-                className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
               <input
                 type="time"
-                className="w-full mt-1 border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mt-1 border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-blue-800">Sales end</label>
+              <label className="block text-sm font-medium text-sky-800">Sales end</label>
               <input
                 type="date"
-                className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
               <input
                 type="time"
-                className="w-full mt-1 border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mt-1 border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
           </div>
         </div>
 
-        <div className="flex justify-end space-x-3 pt-4 border-t border-blue-300 mt-6">
-          <button className="px-4 py-2 rounded border border-blue-400 text-blue-700 hover:bg-blue-50 transition">
+        <div className="flex justify-end space-x-3 pt-4 border-t border-sky-300 mt-6">
+          <button className="px-4 py-2 rounded border border-sky-400 text-sky-700 hover:bg-sky-50 transition">
             Cancel
           </button>
-          <button className="px-6 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition">
+          <button className="px-6 py-2 rounded bg-sky-600 text-white hover:bg-sky-700 transition">
             Save
           </button>
         </div>

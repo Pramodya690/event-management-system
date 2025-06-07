@@ -69,12 +69,12 @@ const ExhibitionForm = () => {
             <li
               key={index}
               className={`flex items-center space-x-2 ${
-                index === currentStep ? "font-bold text-blue-600" : "text-gray-500"
+                index === currentStep ? "font-bold text-sky-600" : "text-gray-500"
               }`}
             >
               <div
                 className={`w-6 h-6 flex items-center justify-center rounded-full border ${
-                  index === currentStep ? "bg-blue-600 text-white" : "border-gray-300"
+                  index === currentStep ? "bg-sky-600 text-white" : "border-gray-300"
                 }`}
               >
                 {index + 1}
@@ -104,7 +104,7 @@ const ExhibitionForm = () => {
               >
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">Build Exhibition Event Page</h2>
                 {/* Upload Banner Image< */}
-                <div className="p-4 border border-blue-300 rounded-lg">
+                <div className="p-4 border border-sky-300 rounded-lg">
                   <label className="font-semibold block mb-1">Upload Banner Image</label>
                   <p className="text-sm text-gray-500 mb-2">
                     Upload a high-quality banner that represents your event.
@@ -134,7 +134,7 @@ const ExhibitionForm = () => {
                 </div>
 
                 {/* Event Title< */}
-                <div className="p-4 border border-blue-300 rounded-lg">
+                <div className="p-4 border border-sky-300 rounded-lg">
                   <label className="font-semibold block mb-1">Event Title</label>
                   <p className="text-sm text-gray-500 mb-2">
                     Be clear and descriptive with a title that tells people what your event is about.
@@ -151,7 +151,7 @@ const ExhibitionForm = () => {
                 </div>
 
                 {/* Date & Time Selection< */}
-                <div className="p-4 border border-blue-300 rounded-lg">
+                <div className="p-4 border border-sky-300 rounded-lg">
                   <label className="font-semibold block mb-1">Date & Time Selection</label>
                   <div className="flex gap-2">
                     <input
@@ -174,7 +174,7 @@ const ExhibitionForm = () => {
                 </div>
 
                 {/* Location */}
-                <div className="p-4 border border-blue-300 rounded-lg">
+                <div className="p-4 border border-sky-300 rounded-lg">
                   <label className="font-semibold block mb-1">Location</label>
                   <p className="text-sm text-gray-500 mb-2">
                     Click on the map to choose the location of your event.
@@ -201,7 +201,7 @@ const ExhibitionForm = () => {
                 </div>
 
                 {/* Event Description< */}
-                <div className="p-4 border border-blue-300 rounded-lg">
+                <div className="p-4 border border-sky-300 rounded-lg">
                   <label className="font-semibold block mb-1">Event Description</label>
                   <p className="text-sm text-gray-500 mb-2">
                     Add more details about your event and include what people can expect if they attend.
@@ -216,7 +216,7 @@ const ExhibitionForm = () => {
                   />
                 </div>
                 {/* Good to Know (Tags)< */}
-                <div className="p-4 border border-blue-300 rounded-lg">
+                <div className="p-4 border border-sky-300 rounded-lg">
                   <label className="font-semibold block mb-1">Good to Know (Tags)</label>
                   <p className="text-sm text-gray-500 mb-2">
                     Use this section to feature specific information about your event. Add highlights and frequently asked questions for attendees.
@@ -245,7 +245,7 @@ const ExhibitionForm = () => {
                     {form.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full flex items-center"
+                        className="bg-sky-100 text-sky-800 px-2 py-1 rounded-full flex items-center"
                       >
                         {tag}
                         <button
@@ -256,7 +256,7 @@ const ExhibitionForm = () => {
                               tags: prev.tags.filter((t) => t !== tag),
                             }))
                           }
-                          className="ml-2 text-blue-500"
+                          className="ml-2 text-sky-500"
                         >
                           &times;
                         </button>
@@ -266,7 +266,7 @@ const ExhibitionForm = () => {
                 </div>
 
                 {/* FAQs< */}
-                <div className="p-4 border border-blue-300 rounded-lg">
+                <div className="p-4 border border-sky-300 rounded-lg">
                   <label className="font-semibold block mb-1">FAQs</label>
                   <p className="text-sm text-gray-500 mb-2">
                     Make your event stand out even more. These sections help attendees find information and answer their questions - which means more ticket sales and less time answering messages.
@@ -282,7 +282,7 @@ const ExhibitionForm = () => {
                 </div>
 
                 {/* Upload Agenda<
-                <div className="p-4 border border-blue-300 rounded-lg">
+                <div className="p-4 border border-sky-300 rounded-lg">
                   <label className="font-semibold block mb-1">Upload Agenda</label>
                   <p className="text-sm text-gray-500 mb-2">
                   Upload a detailed agenda or schedule so attendees know what sessions, activities, or timings to expect during the event.
@@ -305,7 +305,7 @@ const ExhibitionForm = () => {
                 </div> */}
 
                 {/* Stall Allocation Section */} 
-                  <div className="p-4 border border-blue-300 rounded-lg">
+                  <div className="p-4 border border-sky-300 rounded-lg">
                     <label className="font-semibold block mb-2">Stall Allocation</label>
                     <p className="text-sm text-gray-500 mb-3">
                       Visualize and auto-generate stall positions using your uploaded layout.
@@ -396,8 +396,8 @@ const ExhibitionForm = () => {
                     onClick={() => setTicketTypeTab(tab)}
                     className={`w-full flex items-center justify-between p-4 border rounded-lg shadow-sm transition 
                       ${ticketTypeTab === tab
-                        ? "border-blue-600 bg-blue-50 text-blue-700"
-                        : "border-gray-300 hover:border-blue-400 text-gray-700 hover:text-blue-600"
+                        ? "border-sky-600 bg-sky-50 text-sky-700"
+                        : "border-gray-300 hover:border-sky-400 text-gray-700 hover:text-sky-600"
                       }`}
                   >
                     <div className="flex items-center space-x-3">
@@ -417,14 +417,14 @@ const ExhibitionForm = () => {
                   </button>
                 ))}
 
-                <button className="mt-6 text-sm text-blue-600 underline hover:text-blue-800">
+                <button className="mt-6 text-sm text-sky-600 underline hover:text-sky-800">
                   Create a section
                 </button>
               </div>
 
               {/* Right: Ticket Form */}
-              <div className="w-full lg:w-1/2 p-6 border border-blue-300 rounded-lg shadow space-y-6 bg-white">
-                <h3 className="text-xl font-semibold text-blue-800">Add tickets</h3>
+              <div className="w-full lg:w-1/2 p-6 border border-sky-300 rounded-lg shadow space-y-6 bg-white">
+                <h3 className="text-xl font-semibold text-sky-800">Add tickets</h3>
 
                 {/* Tabs for context highlight */}
                 <div className="flex space-x-3">
@@ -435,8 +435,8 @@ const ExhibitionForm = () => {
                       className={`px-4 py-1.5 rounded border text-sm font-medium transition
                         ${
                           ticketTypeTab === tab
-                            ? "bg-blue-600 text-white border-blue-600"
-                            : "bg-gray-100 text-blue-700 border-blue-300 hover:bg-blue-200"
+                            ? "bg-sky-600 text-white border-sky-600"
+                            : "bg-gray-100 text-sky-700 border-sky-300 hover:bg-sky-200"
                         }`}
                     >
                       {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -447,7 +447,7 @@ const ExhibitionForm = () => {
                 {/* Ticket Form Fields */}
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-blue-800">Name</label>
+                    <label className="block text-sm font-medium text-sky-800">Name</label>
                     <input
                       type="text"
                       value={form.tickets?.[ticketTypeTab]?.[0]?.name || ""}
@@ -457,14 +457,14 @@ const ExhibitionForm = () => {
                         setForm((prev) => ({ ...prev, tickets: updated }));
                       }}
                       placeholder="General Admission"
-                      className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       maxLength={50}
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-blue-800">Available quantity</label>
+                    <label className="block text-sm font-medium text-sky-800">Available quantity</label>
                     <input
                       type="number"
                       min="1"
@@ -474,14 +474,14 @@ const ExhibitionForm = () => {
                         updated[ticketTypeTab][0].quantity = e.target.value;
                         setForm((prev) => ({ ...prev, tickets: updated }));
                       }}
-                      className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       required
                     />
                   </div>
 
                   {ticketTypeTab === "paid" && (
                     <div>
-                      <label className="block text-sm font-medium text-blue-800">Price ($)</label>
+                      <label className="block text-sm font-medium text-sky-800">Price ($)</label>
                       <input
                         type="number"
                         min="0"
@@ -491,7 +491,7 @@ const ExhibitionForm = () => {
                           updated[ticketTypeTab][0].price = e.target.value;
                           setForm((prev) => ({ ...prev, tickets: updated }));
                         }}
-                        className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                         required
                       />
                     </div>
@@ -499,35 +499,35 @@ const ExhibitionForm = () => {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-blue-800">Sales start</label>
+                      <label className="block text-sm font-medium text-sky-800">Sales start</label>
                       <input
                         type="date"
-                        className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       />
                       <input
                         type="time"
-                        className="w-full mt-1 border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full mt-1 border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-blue-800">Sales end</label>
+                      <label className="block text-sm font-medium text-sky-800">Sales end</label>
                       <input
                         type="date"
-                        className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       />
                       <input
                         type="time"
-                        className="w-full mt-1 border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full mt-1 border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex justify-end space-x-3 pt-4 border-t border-blue-300 mt-6">
-                  <button className="px-4 py-2 rounded border border-blue-400 text-blue-700 hover:bg-blue-50 transition">
+                <div className="flex justify-end space-x-3 pt-4 border-t border-sky-300 mt-6">
+                  <button className="px-4 py-2 rounded border border-sky-400 text-sky-700 hover:bg-sky-50 transition">
                     Cancel
                   </button>
-                  <button className="px-6 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition">
+                  <button className="px-6 py-2 rounded bg-sky-600 text-white hover:bg-sky-700 transition">
                     Save
                   </button>
                 </div>
@@ -565,7 +565,7 @@ const ExhibitionForm = () => {
                   </p>
                   <p className="text-sm text-gray-500 mt-1">{form.location || "To be announced"}</p>
                   <p className="text-sm text-gray-500 mt-1">{form.mode || "Event mode not selected"}</p>
-                  <a href="#" className="text-sm text-blue-600 mt-2 inline-block">Preview</a>
+                  <a href="#" className="text-sm text-sky-600 mt-2 inline-block">Preview</a>
                 </div>
 
                 {/* Right Metadata Section */}
@@ -588,7 +588,7 @@ const ExhibitionForm = () => {
                     <div className="flex flex-wrap gap-2">
                       {form.tags?.length > 0 ? (
                         form.tags.map((tag, i) => (
-                          <span key={i} className="inline-block bg-blue-100 text-blue-700 rounded-full px-3 py-1 text-sm">
+                          <span key={i} className="inline-block bg-sky-100 text-sky-700 rounded-full px-3 py-1 text-sm">
                             {tag}
                           </span>
                         ))
@@ -651,14 +651,14 @@ const ExhibitionForm = () => {
               <button
                 type="button"
                 onClick={handleNext}
-                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+                className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
               >
                 Save & Continue →
               </button>
             ) : (
               <button
                 type="submit"
-                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+                className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
               >
                 Create Event Page
               </button>

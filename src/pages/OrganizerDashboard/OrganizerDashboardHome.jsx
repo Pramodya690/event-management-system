@@ -23,8 +23,8 @@
 //       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 //         <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-8 flex flex-col justify-between">
 //           <div>
-//             <div className="bg-blue-50 w-12 h-12 flex items-center justify-center rounded-full mb-6">
-//               <span className="text-blue-600 text-3xl">✏️</span>
+//             <div className="bg-sky-50 w-12 h-12 flex items-center justify-center rounded-full mb-6">
+//               <span className="text-sky-600 text-3xl">✏️</span>
 //             </div>
 //             <h2 className="text-2xl font-semibold mb-3 text-gray-900">Start from scratch</h2>
 //             <p className="text-gray-600 leading-relaxed">
@@ -33,7 +33,7 @@
 //           </div>
 //           <button
 //             onClick={handleCreateEventClick}
-//             className="mt-6 self-start bg-blue-600 text-white font-semibold rounded-lg px-6 py-3 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition"
+//             className="mt-6 self-start bg-sky-600 text-white font-semibold rounded-lg px-6 py-3 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-1 transition"
 //           >
 //             Create event
 //           </button>
@@ -41,8 +41,8 @@
 
 //         <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-8 flex flex-col justify-between">
 //           <div>
-//             <div className="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-full mb-6">
-//               <span className="text-blue-700 text-3xl">✨</span>
+//             <div className="bg-sky-100 w-12 h-12 flex items-center justify-center rounded-full mb-6">
+//               <span className="text-sky-700 text-3xl">✨</span>
 //             </div>
 //             <h2 className="text-2xl font-semibold mb-3 text-gray-900">Create my event faster with AI</h2>
 //             <p className="text-gray-600 leading-relaxed">
@@ -51,7 +51,7 @@
 //           </div>
 //           <button
 //             onClick={handleCreateWithAI}
-//             className="mt-6 self-start bg-blue-700 text-white font-semibold rounded-lg px-6 py-3 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-1 transition"
+//             className="mt-6 self-start bg-sky-700 text-white font-semibold rounded-lg px-6 py-3 hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-1 transition"
 //           >
 //             Create with AI
 //           </button>
@@ -64,7 +64,7 @@
 //           </p>
 //           <a
 //             href="#"
-//             className="inline-block text-blue-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+//             className="inline-block text-sky-600 font-medium hover:underline focus:outline-none focus:ring-2 focus:ring-sky-500 rounded"
 //           >
 //             Set up your profile &rarr;
 //           </a>
@@ -82,7 +82,7 @@
 //             className="w-48 h-48 object-cover rounded-2xl shadow-sm"
 //           />
 //           <div>
-//             <h3 className="text-xl font-semibold text-blue-600 mb-2">Meet Prashant</h3>
+//             <h3 className="text-xl font-semibold text-sky-600 mb-2">Meet Prashant</h3>
 //             <p className="text-gray-700 mb-4 leading-relaxed text-sm">
 //               “As someone who completely relies on people buying tickets to [our] event to get the word out,
 //               Eventbrite plays a huge part in my business.”
@@ -114,9 +114,9 @@ const OrganizerDashboardHome = () => {
   };
 
   const stats = [
-    { value: "12,450", label: "Total attendees", icon: <FiUser className="text-blue-600" /> },
-    { value: "24", label: "Upcoming events", icon: <FiCalendar className="text-blue-600" /> },
-    { value: "89%", label: "Satisfaction rate", icon: <FiBarChart2 className="text-blue-600" /> },
+    { value: "12,450", label: "Total attendees", icon: <FiUser className="text-sky-600" /> },
+    { value: "24", label: "Upcoming events", icon: <FiCalendar className="text-sky-600" /> },
+    { value: "89%", label: "Satisfaction rate", icon: <FiBarChart2 className="text-sky-600" /> },
   ];
 
   const quickLinks = [
@@ -141,7 +141,7 @@ const OrganizerDashboardHome = () => {
         <div className="mt-4 md:mt-0">
           <button
             onClick={handleCreateEventClick}
-            className="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-6 py-3 transition-colors duration-200"
+            className="flex items-center bg-sky-500 hover:bg-sky-600 text-white font-medium rounded-lg px-6 py-3 transition-colors duration-200"
           >
             <FiPlus className="mr-2" />
             Create New Event
@@ -153,7 +153,7 @@ const OrganizerDashboardHome = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {stats.map((stat, index) => (
           <div key={index} className="bg-white rounded-xl shadow-sm p-6 flex items-center">
-            <div className="p-3 bg-blue-50 rounded-lg mr-4">
+            <div className="p-3 bg-sky-50 rounded-lg mr-4">
               {stat.icon}
             </div>
             <div>
@@ -167,9 +167,9 @@ const OrganizerDashboardHome = () => {
       {/* Main Action Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
         {/* Create Event Card */}
-        <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-8 flex flex-col">
-          <div className="p-3 bg-blue-50 rounded-lg w-12 h-12 flex items-center justify-center mb-6">
-            <FiPlus className="text-blue-600 text-xl" />
+        <div className="bg-gradient-to-br from-gray-50 to-sky-100 rounded-xl shadow-md p-8 flex flex-col border border-sky-200">
+          <div className="p-3 bg-sky-50 rounded-lg w-12 h-12 flex items-center justify-center mb-6">
+            <FiPlus className="text-sky-600 text-xl" />
           </div>
           <h2 className="text-xl font-semibold mb-3 text-gray-900">Create Event Manually</h2>
           <p className="text-gray-600 mb-6 flex-grow">
@@ -177,7 +177,7 @@ const OrganizerDashboardHome = () => {
           </p>
           <button
             onClick={handleCreateEventClick}
-            className="self-start bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-5 py-2.5 transition-colors duration-200 flex items-center"
+            className="self-start bg-sky-500 hover:bg-sky-600 text-white font-medium rounded-lg px-5 py-2.5 transition-colors duration-200 flex items-center"
           >
             Get Started
             <FiArrowRight className="ml-2" />
@@ -185,9 +185,9 @@ const OrganizerDashboardHome = () => {
         </div>
 
         {/* AI Assistant Card */}
-        <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 p-8 flex flex-col">
-          <div className="p-3 bg-purple-50 rounded-lg w-12 h-12 flex items-center justify-center mb-6">
-            <FiZap className="text-purple-600 text-xl" />
+        <div className="bg-gradient-to-br from-gray-50 to-sky-100 rounded-xl shadow-md p-8 flex flex-col border border-sky-200">
+          <div className="p-3 bg-sky-50 rounded-lg w-12 h-12 flex items-center justify-center mb-6">
+            <FiZap className="text-sky-500 text-xl" />
           </div>
           <h2 className="text-xl font-semibold mb-3 text-gray-900">AI Event Assistant</h2>
           <p className="text-gray-600 mb-6 flex-grow">
@@ -195,7 +195,7 @@ const OrganizerDashboardHome = () => {
           </p>
           <button
             onClick={handleCreateWithAI}
-            className="self-start bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg px-5 py-2.5 transition-colors duration-200 flex items-center"
+            className="self-start bg-sky-500 hover:bg-sky-600 text-white font-medium rounded-lg px-5 py-2.5 transition-colors duration-200 flex items-center"
           >
             Try AI Assistant
             <FiArrowRight className="ml-2" />
@@ -203,17 +203,17 @@ const OrganizerDashboardHome = () => {
         </div>
 
         {/* Profile Completion Card */}
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-md p-8 flex flex-col border border-blue-200">
+        <div className="bg-gradient-to-br from-gray-50 to-sky-100 rounded-xl shadow-md p-8 flex flex-col border border-sky-200">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Complete Your Profile</h3>
           <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-            <div className="bg-blue-600 h-2 rounded-full" style={{ width: '65%' }}></div>
+            <div className="bg-sky-600 h-2 rounded-full" style={{ width: '65%' }}></div>
           </div>
           <p className="text-gray-700 text-sm mb-6">
             A complete profile increases event discoverability by 40% and builds attendee trust.
           </p>
           <a
             href="/organizer-profile"
-            className="inline-flex items-center text-blue-600 font-medium hover:text-blue-800 transition-colors duration-200"
+            className="inline-flex items-center text-sky-600 font-medium hover:text-sky-800 transition-colors duration-200"
           >
             Complete Profile
             <FiArrowRight className="ml-2" />
@@ -227,13 +227,13 @@ const OrganizerDashboardHome = () => {
         <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Recent Events</h2>
-            <a href="/events" className="text-sm text-blue-600 hover:underline">View All</a>
+            <a href="/events" className="text-sm text-sky-600 hover:underline">View All</a>
           </div>
           <div className="space-y-4">
             {[1, 2, 3].map((item) => (
               <div key={item} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-lg transition-colors duration-150">
                 <div className="flex items-center">
-                  <div className="bg-blue-100 text-blue-800 p-2 rounded-lg mr-4">
+                  <div className="bg-sky-100 text-sky-800 p-2 rounded-lg mr-4">
                     <FiCalendar />
                   </div>
                   <div>
@@ -241,7 +241,7 @@ const OrganizerDashboardHome = () => {
                     <p className="text-sm text-gray-500">October 15, 2023 • 450 attendees</p>
                   </div>
                 </div>
-                <button className="text-blue-600 hover:text-blue-800 p-2">
+                <button className="text-sky-600 hover:text-sky-800 p-2">
                   <FiArrowRight />
                 </button>
               </div>
@@ -281,19 +281,11 @@ const OrganizerDashboardHome = () => {
             />
           </div>
           <div className="p-8 md:w-2/3">
-            <div className="uppercase tracking-wide text-sm text-blue-600 font-semibold mb-1">Featured Organizer</div>
+            <div className="uppercase tracking-wide text-sm text-sky-600 font-semibold mb-1">Featured Organizer</div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Meet Prashant from TechSummit</h2>
-            <blockquote className="text-gray-700 mb-6 border-l-4 border-blue-200 pl-4 py-1">
+            <blockquote className="text-gray-700 mb-6 border-l-4 border-sky-200 pl-4 py-1">
               "Using this platform transformed how we manage our annual conference. We saw a 40% increase in attendance and saved dozens of hours in administrative work."
             </blockquote>
-            <div className="flex flex-wrap gap-3">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition-colors duration-200">
-                Read Case Study
-              </button>
-              <button className="border border-gray-300 hover:bg-gray-50 text-gray-700 px-5 py-2 rounded-lg font-medium transition-colors duration-200">
-                Watch Interview
-              </button>
-            </div>
           </div>
         </div>
       </div>

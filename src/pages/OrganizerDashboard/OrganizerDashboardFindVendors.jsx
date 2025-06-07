@@ -100,7 +100,7 @@
 
 //       <button
 //         onClick={handleSearch}
-//         className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+//         className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700 transition"
 //         disabled={loading}
 //       >
 //         {loading ? 'Searching...' : 'Search Vendors'}
@@ -222,7 +222,7 @@ const OrganizerDashboardFindVendors = () => {
                 name="location"
                 value={filters.location}
                 onChange={handleChange}
-                className="pl-10 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="pl-10 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
                 placeholder="Location or vendor name"
               />
             </div>
@@ -234,7 +234,7 @@ const OrganizerDashboardFindVendors = () => {
               name="category"
               value={filters.category}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
             >
               <option value="">All Categories</option>
               <option value="Catering">Catering</option>
@@ -255,7 +255,7 @@ const OrganizerDashboardFindVendors = () => {
                 name="minBudget"
                 value={filters.minBudget}
                 onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
                 placeholder="Min"
               />
               <input
@@ -263,7 +263,7 @@ const OrganizerDashboardFindVendors = () => {
                 name="maxBudget"
                 value={filters.maxBudget}
                 onChange={handleChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
                 placeholder="Max"
               />
             </div>
@@ -278,7 +278,7 @@ const OrganizerDashboardFindVendors = () => {
               name="capacity"
               value={filters.capacity}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
               placeholder="Number of people"
             />
           </div>
@@ -286,7 +286,7 @@ const OrganizerDashboardFindVendors = () => {
           <div className="flex items-end gap-3">
             <button
               onClick={handleSearch}
-              className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2"
+              className="flex-1 bg-sky-600 text-white px-6 py-3 rounded-lg hover:bg-sky-700 transition flex items-center justify-center gap-2"
               disabled={loading}
             >
               <FiSearch />
@@ -310,7 +310,7 @@ const OrganizerDashboardFindVendors = () => {
           </h2>
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">Sort by:</span>
-            <select className="border border-gray-300 rounded-lg px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500">
+            <select className="border border-gray-300 rounded-lg px-3 py-1 text-sm focus:ring-2 focus:ring-sky-500">
               <option>Recommended</option>
               <option>Price: Low to High</option>
               <option>Price: High to Low</option>
@@ -328,7 +328,7 @@ const OrganizerDashboardFindVendors = () => {
             <p className="text-gray-600 mb-4">Try adjusting your search filters</p>
             <button
               onClick={resetFilters}
-              className="text-blue-600 hover:text-blue-800 font-medium"
+              className="text-sky-600 hover:text-sky-800 font-medium"
             >
               Reset all filters
             </button>
@@ -364,7 +364,7 @@ const OrganizerDashboardFindVendors = () => {
                     <FiDollarSign className="inline mr-1" />
                     <span>₹{vendor.budgetRange.min.toLocaleString()} - ₹{vendor.budgetRange.max.toLocaleString()}</span>
                   </div>
-                  <button className="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                  <button className="text-sky-600 hover:text-sky-800 font-medium text-sm">
                     View Details
                   </button>
                 </div>
@@ -380,7 +380,7 @@ const OrganizerDashboardFindVendors = () => {
           <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
             Previous
           </button>
-          <button className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+          <button className="px-3 py-1 bg-sky-600 text-white rounded hover:bg-sky-700">
             1
           </button>
           <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-50">

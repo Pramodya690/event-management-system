@@ -30,7 +30,7 @@ const PublishEvent = ({ form, bannerImagePreview }) => {
           </p>
           <p className="text-sm text-gray-500 mt-1">{form.location || "To be announced"}</p>
           <p className="text-sm text-gray-500 mt-1">{form.mode || "Event mode not selected"}</p>
-          <a href="#" className="text-sm text-blue-600 mt-2 inline-block">Preview</a>
+          <a href="#" className="text-sm text-sky-600 mt-2 inline-block">Preview</a>
         </div>
 
         {/* Right Metadata Section */}
@@ -53,7 +53,7 @@ const PublishEvent = ({ form, bannerImagePreview }) => {
             <div className="flex flex-wrap gap-2">
               {form.tags?.length > 0 ? (
                 form.tags.map((tag, i) => (
-                  <span key={i} className="inline-block bg-blue-100 text-blue-700 rounded-full px-3 py-1 text-sm">
+                  <span key={i} className="inline-block bg-sky-100 text-sky-700 rounded-full px-3 py-1 text-sm">
                     {tag}
                   </span>
                 ))

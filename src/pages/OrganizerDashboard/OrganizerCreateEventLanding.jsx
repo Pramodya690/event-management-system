@@ -41,7 +41,7 @@
 //             <p className="text-gray-600 mb-6">{description}</p>
 //             <button
 //               onClick={() => navigate(route)}
-//               className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+//               className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700 transition"
 //             >
 //               Start Building
 //             </button>
@@ -66,21 +66,21 @@ const OrganizerCreateEventLanding = () => {
       description: 'Bring professionals together to share knowledge and network.',
       image: '/conference.png',
       route: '/organizer-dashboard/create/conference',
-      icon: <FiUsers className="text-blue-600 text-2xl mb-2" />
+      icon: <FiUsers className="text-sky-600 text-2xl mb-2" />
     },
     {
       title: 'Create Exhibition',
       description: 'Showcase art, science, technology, and more to your audience.',
       image: '/exhibition.png',
       route: '/organizer-dashboard/create/exhibition',
-      icon: <FiCalendar className="text-blue-600 text-2xl mb-2" />
+      icon: <FiCalendar className="text-sky-600 text-2xl mb-2" />
     },
     {
       title: 'Create Using AI',
       description: 'Leverage AI to design effectively and efficiently.',
       image: '/ai.png',
       route: '/organizer-dashboard/create/workshop',
-      icon: <FiSettings className="text-blue-600 text-2xl mb-2" />
+      icon: <FiSettings className="text-sky-600 text-2xl mb-2" />
     },
   ];
 
@@ -88,22 +88,22 @@ const OrganizerCreateEventLanding = () => {
     {
       title: "Easy Setup",
       description: "Get your event page ready in minutes with our intuitive builder",
-      icon: <FiSettings className="text-blue-600 text-xl" />
+      icon: <FiSettings className="text-sky-600 text-xl" />
     },
     {
       title: "Marketing Tools",
       description: "Promote your event with built-in email and social tools",
-      icon: <FiUsers className="text-blue-600 text-xl" />
+      icon: <FiUsers className="text-sky-600 text-xl" />
     },
     {
       title: "Ticketing",
       description: "Sell tickets and manage registrations seamlessly",
-      icon: <FiCalendar className="text-blue-600 text-xl" />
+      icon: <FiCalendar className="text-sky-600 text-xl" />
     },
     {
       title: "Analytics",
       description: "Track attendance and engagement with real-time data",
-      icon: <FiInfo className="text-blue-600 text-xl" />
+      icon: <FiInfo className="text-sky-600 text-xl" />
     }
   ];
 
@@ -134,7 +134,7 @@ const OrganizerCreateEventLanding = () => {
                   alt={title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-sky/60 to-transparent"></div>
               </div>
               <div className="p-6 text-center">
                 <div className="flex justify-center">
@@ -144,7 +144,7 @@ const OrganizerCreateEventLanding = () => {
                 <p className="text-gray-600 mb-6">{description}</p>
                 <button
                   onClick={() => navigate(route)}
-                  className="flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg w-full transition-colors duration-300"
+                  className="flex items-center justify-center space-x-2 bg-sky-500 hover:bg-sky-600 text-white px-6 py-3 rounded-lg w-full transition-colors duration-300"
                 >
                   <span>Start Building</span>
                   <FiArrowRight className="text-lg" />
@@ -171,7 +171,7 @@ const OrganizerCreateEventLanding = () => {
           {features.map((feature, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition">
               <div className="flex items-center mb-4">
-                <div className="p-2 rounded-full bg-blue-50 mr-4">
+                <div className="p-2 rounded-full bg-sky-50 mr-4">
                   {feature.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900">{feature.title}</h3>
@@ -182,17 +182,17 @@ const OrganizerCreateEventLanding = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="bg-gradient-to-r from-blue-400 to-blue-800 rounded-xl p-8 md:p-12 text-center">
+        <div className="bg-gradient-to-r from-sky-400 to-sky-800 rounded-xl p-8 md:p-12 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
             Need help deciding?
           </h2>
-          <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+          <p className="text-sky-100 mb-6 max-w-2xl mx-auto">
             Our event specialists can help you choose the right format and guide you through 
             the setup process to ensure your event is a success.
           </p>
           <button
             onClick={() => navigate('/contact-support')}
-            className="bg-white text-blue-700 hover:bg-blue-50 px-6 py-3 rounded-lg font-medium transition-colors duration-300 inline-flex items-center"
+            className="bg-white text-sky-700 hover:bg-sky-50 px-6 py-3 rounded-lg font-medium transition-colors duration-300 inline-flex items-center"
           >
             <span>Contact Our Team</span>
             <FiArrowRight className="ml-2" />

@@ -108,12 +108,12 @@
 //             <li
 //               key={index}
 //               className={`flex items-center space-x-2 ${
-//                 index === currentStep ? "font-bold text-blue-600" : "text-gray-500"
+//                 index === currentStep ? "font-bold text-sky-600" : "text-gray-500"
 //               }`}
 //             >
 //               <div
 //                 className={`w-6 h-6 flex items-center justify-center rounded-full border ${
-//                   index === currentStep ? "bg-blue-600 text-white" : "border-gray-300"
+//                   index === currentStep ? "bg-sky-600 text-white" : "border-gray-300"
 //                 }`}
 //               >
 //                 {index + 1}
@@ -143,7 +143,7 @@
 //               >
 //                 <h2 className="text-2xl font-bold text-gray-800 mb-6">Build Conference Event Page</h2>
 //                 {/* Upload Banner Image< */}
-//                 <div className="p-4 border border-blue-300 rounded-lg">
+//                 <div className="p-4 border border-sky-300 rounded-lg">
 //                   <label className="font-semibold block mb-1">Upload Banner Image</label>
 //                   <p className="text-sm text-gray-500 mb-2">
 //                     Upload a high-quality banner that represents your event.
@@ -173,7 +173,7 @@
 //                 </div>
 
 //                 {/* Event Title< */}
-//                 <div className="p-4 border border-blue-300 rounded-lg">
+//                 <div className="p-4 border border-sky-300 rounded-lg">
 //                   <label className="font-semibold block mb-1">Event Title</label>
 //                   <p className="text-sm text-gray-500 mb-2">
 //                     Be clear and descriptive with a title that tells people what your event is about.
@@ -190,7 +190,7 @@
 //                 </div>
 
 //                 {/* Date & Time Selection< */}
-//                 <div className="p-4 border border-blue-300 rounded-lg">
+//                 <div className="p-4 border border-sky-300 rounded-lg">
 //                   <label className="font-semibold block mb-1">Date & Time Selection</label>
 //                   <div className="flex gap-2">
 //                     <input
@@ -213,7 +213,7 @@
 //                 </div>
 
 //                 {/* Location */}
-//                 <div className="p-4 border border-blue-300 rounded-lg">
+//                 <div className="p-4 border border-sky-300 rounded-lg">
 //                   <label className="font-semibold block mb-1">Location</label>
 //                   <p className="text-sm text-gray-500 mb-2">
 //                     Click on the map to choose the location of your event.
@@ -240,7 +240,7 @@
 //                 </div>
 
 //                 {/* Event Description< */}
-//                 <div className="p-4 border border-blue-300 rounded-lg">
+//                 <div className="p-4 border border-sky-300 rounded-lg">
 //                   <label className="font-semibold block mb-1">Event Description</label>
 //                   <p className="text-sm text-gray-500 mb-2">
 //                     Add more details about your event and include what people can expect if they attend.
@@ -255,7 +255,7 @@
 //                   />
 //                 </div>
 //                 {/* Good to Know (Tags)< */}
-//                 <div className="p-4 border border-blue-300 rounded-lg">
+//                 <div className="p-4 border border-sky-300 rounded-lg">
 //                   <label className="font-semibold block mb-1">Good to Know (Tags)</label>
 //                   <p className="text-sm text-gray-500 mb-2">
 //                     Use this section to feature specific information about your event. Add highlights and frequently asked questions for attendees.
@@ -284,7 +284,7 @@
 //                     {form.tags.map((tag, index) => (
 //                       <span
 //                         key={index}
-//                         className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full flex items-center"
+//                         className="bg-sky-100 text-sky-800 px-2 py-1 rounded-full flex items-center"
 //                       >
 //                         {tag}
 //                         <button
@@ -295,7 +295,7 @@
 //                               tags: prev.tags.filter((t) => t !== tag),
 //                             }))
 //                           }
-//                           className="ml-2 text-blue-500"
+//                           className="ml-2 text-sky-500"
 //                         >
 //                           &times;
 //                         </button>
@@ -305,7 +305,7 @@
 //                 </div>
 
 //                 {/* FAQs< */}
-//                 <div className="p-4 border border-blue-300 rounded-lg">
+//                 <div className="p-4 border border-sky-300 rounded-lg">
 //                   <label className="font-semibold block mb-1">FAQs</label>
 //                   <p className="text-sm text-gray-500 mb-2">
 //                     Make your event stand out even more. These sections help attendees find information and answer their questions - which means more ticket sales and less time answering messages.
@@ -321,7 +321,7 @@
 //                 </div>
 
 //                 {/* Upload Agenda */}
-//                 <div className="p-4 border border-blue-300 rounded-lg space-y-4">
+//                 <div className="p-4 border border-sky-300 rounded-lg space-y-4">
 //                   <div>
 //                     <label className="font-semibold block mb-1">Upload Agenda</label>
 //                     <p className="text-sm text-gray-500 mb-2">
@@ -350,10 +350,10 @@
 //                     </p>
 //                     <button
 //                       type="button"
-//                       className="px-4 py-2 text-blue-900 rounded transition
-//                                 border border-blue-800
-//                                 bg-blue-100/30 backdrop-blur-sm
-//                                 hover:bg-blue-600 hover:text-white"
+//                       className="px-4 py-2 text-sky-900 rounded transition
+//                                 border border-sky-800
+//                                 bg-sky-100/30 backdrop-blur-sm
+//                                 hover:bg-sky-600 hover:text-white"
 //                       onClick={handleGenerateAgendaWithAI}
 //                     >
 //                       Generate with AI
@@ -368,7 +368,7 @@
 //                   </div>
 //                 </div>
 //                 {/* Seat Allocation Section */}
-//                 <div className="p-4 border border-blue-300 rounded-lg space-y-4">
+//                 <div className="p-4 border border-sky-300 rounded-lg space-y-4">
 //                   <label className="font-semibold block mb-1">Seat Allocation</label>
 //                   <p className="text-sm text-gray-500 mb-2">
 //                     Specify seating layout for your event or let AI generate a seating chart for you.
@@ -382,10 +382,10 @@
 //                     </p>
 //                     <button
 //                       type="button"
-//                       className="px-4 py-2 text-blue-900 rounded transition
-//                                 border border-blue-800
-//                                 bg-blue-100/30 backdrop-blur-sm
-//                                 hover:bg-blue-600 hover:text-white"
+//                       className="px-4 py-2 text-sky-900 rounded transition
+//                                 border border-sky-800
+//                                 bg-sky-100/30 backdrop-blur-sm
+//                                 hover:bg-sky-600 hover:text-white"
 //                       onClick={handleGenerateSeatingWithAI}
 //                     >
 //                       Generate with AI
@@ -424,8 +424,8 @@
 //                     onClick={() => setTicketTypeTab(tab)}
 //                     className={`w-full flex items-center justify-between p-4 border rounded-lg shadow-sm transition 
 //                       ${ticketTypeTab === tab
-//                         ? "border-blue-600 bg-blue-50 text-blue-700"
-//                         : "border-gray-300 hover:border-blue-400 text-gray-700 hover:text-blue-600"
+//                         ? "border-sky-600 bg-sky-50 text-sky-700"
+//                         : "border-gray-300 hover:border-sky-400 text-gray-700 hover:text-sky-600"
 //                       }`}
 //                   >
 //                     <div className="flex items-center space-x-3">
@@ -445,14 +445,14 @@
 //                   </button>
 //                 ))}
 
-//                 <button className="mt-6 text-sm text-blue-600 underline hover:text-blue-800">
+//                 <button className="mt-6 text-sm text-sky-600 underline hover:text-sky-800">
 //                   Create a section
 //                 </button>
 //               </div>
 
 //               {/* Right: Ticket Form */}
-//               <div className="w-full lg:w-1/2 p-6 border border-blue-300 rounded-lg shadow space-y-6 bg-white">
-//                 <h3 className="text-xl font-semibold text-blue-800">Add tickets</h3>
+//               <div className="w-full lg:w-1/2 p-6 border border-sky-300 rounded-lg shadow space-y-6 bg-white">
+//                 <h3 className="text-xl font-semibold text-sky-800">Add tickets</h3>
 
 //                 {/* Tabs for context highlight */}
 //                 <div className="flex space-x-3">
@@ -463,8 +463,8 @@
 //                       className={`px-4 py-1.5 rounded border text-sm font-medium transition
 //                         ${
 //                           ticketTypeTab === tab
-//                             ? "bg-blue-600 text-white border-blue-600"
-//                             : "bg-gray-100 text-blue-700 border-blue-300 hover:bg-blue-200"
+//                             ? "bg-sky-600 text-white border-sky-600"
+//                             : "bg-gray-100 text-sky-700 border-sky-300 hover:bg-sky-200"
 //                         }`}
 //                     >
 //                       {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -475,7 +475,7 @@
 //                 {/* Ticket Form Fields */}
 //                 <div className="space-y-4">
 //                   <div>
-//                     <label className="block text-sm font-medium text-blue-800">Name</label>
+//                     <label className="block text-sm font-medium text-sky-800">Name</label>
 //                     <input
 //                       type="text"
 //                       value={form.tickets?.[ticketTypeTab]?.[0]?.name || ""}
@@ -485,14 +485,14 @@
 //                         setForm((prev) => ({ ...prev, tickets: updated }));
 //                       }}
 //                       placeholder="General Admission"
-//                       className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//                       className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
 //                       maxLength={50}
 //                       required
 //                     />
 //                   </div>
 
 //                   <div>
-//                     <label className="block text-sm font-medium text-blue-800">Available quantity</label>
+//                     <label className="block text-sm font-medium text-sky-800">Available quantity</label>
 //                     <input
 //                       type="number"
 //                       min="1"
@@ -502,14 +502,14 @@
 //                         updated[ticketTypeTab][0].quantity = e.target.value;
 //                         setForm((prev) => ({ ...prev, tickets: updated }));
 //                       }}
-//                       className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//                       className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
 //                       required
 //                     />
 //                   </div>
 
 //                   {ticketTypeTab === "paid" && (
 //                     <div>
-//                       <label className="block text-sm font-medium text-blue-800">Price ($)</label>
+//                       <label className="block text-sm font-medium text-sky-800">Price ($)</label>
 //                       <input
 //                         type="number"
 //                         min="0"
@@ -519,7 +519,7 @@
 //                           updated[ticketTypeTab][0].price = e.target.value;
 //                           setForm((prev) => ({ ...prev, tickets: updated }));
 //                         }}
-//                         className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//                         className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
 //                         required
 //                       />
 //                     </div>
@@ -527,35 +527,35 @@
 
 //                   <div className="grid grid-cols-2 gap-4">
 //                     <div>
-//                       <label className="block text-sm font-medium text-blue-800">Sales start</label>
+//                       <label className="block text-sm font-medium text-sky-800">Sales start</label>
 //                       <input
 //                         type="date"
-//                         className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//                         className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
 //                       />
 //                       <input
 //                         type="time"
-//                         className="w-full mt-1 border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//                         className="w-full mt-1 border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
 //                       />
 //                     </div>
 //                     <div>
-//                       <label className="block text-sm font-medium text-blue-800">Sales end</label>
+//                       <label className="block text-sm font-medium text-sky-800">Sales end</label>
 //                       <input
 //                         type="date"
-//                         className="w-full border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//                         className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
 //                       />
 //                       <input
 //                         type="time"
-//                         className="w-full mt-1 border border-blue-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+//                         className="w-full mt-1 border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
 //                       />
 //                     </div>
 //                   </div>
 //                 </div>
 
-//                 <div className="flex justify-end space-x-3 pt-4 border-t border-blue-300 mt-6">
-//                   <button className="px-4 py-2 rounded border border-blue-400 text-blue-700 hover:bg-blue-50 transition">
+//                 <div className="flex justify-end space-x-3 pt-4 border-t border-sky-300 mt-6">
+//                   <button className="px-4 py-2 rounded border border-sky-400 text-sky-700 hover:bg-sky-50 transition">
 //                     Cancel
 //                   </button>
-//                   <button className="px-6 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition">
+//                   <button className="px-6 py-2 rounded bg-sky-600 text-white hover:bg-sky-700 transition">
 //                     Save
 //                   </button>
 //                 </div>
@@ -593,7 +593,7 @@
 //                   </p>
 //                   <p className="text-sm text-gray-500 mt-1">{form.location || "To be announced"}</p>
 //                   <p className="text-sm text-gray-500 mt-1">{form.mode || "Event mode not selected"}</p>
-//                   <a href="#" className="text-sm text-blue-600 mt-2 inline-block">Preview</a>
+//                   <a href="#" className="text-sm text-sky-600 mt-2 inline-block">Preview</a>
 //                 </div>
 
 //                 {/* Right Metadata Section */}
@@ -616,7 +616,7 @@
 //                     <div className="flex flex-wrap gap-2">
 //                       {form.tags?.length > 0 ? (
 //                         form.tags.map((tag, i) => (
-//                           <span key={i} className="inline-block bg-blue-100 text-blue-700 rounded-full px-3 py-1 text-sm">
+//                           <span key={i} className="inline-block bg-sky-100 text-sky-700 rounded-full px-3 py-1 text-sm">
 //                             {tag}
 //                           </span>
 //                         ))
@@ -679,14 +679,14 @@
 //               <button
 //                 type="button"
 //                 onClick={handleNext}
-//                 className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+//                 className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
 //               >
 //                 Save & Continue →
 //               </button>
 //             ) : (
 //               <button
 //                 type="submit"
-//                 className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+//                 className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
 //               >
 //                 Create Event Page
 //               </button>
@@ -760,12 +760,12 @@ const ConferenceForm = () => {
             <li
               key={index}
               className={`flex items-center space-x-2 ${
-                index === currentStep ? "font-bold text-blue-600" : "text-gray-500"
+                index === currentStep ? "font-bold text-sky-600" : "text-gray-500"
               }`}
             >
               <div
                 className={`w-6 h-6 flex items-center justify-center rounded-full border ${
-                  index === currentStep ? "bg-blue-600 text-white" : "border-gray-300"
+                  index === currentStep ? "bg-sky-600 text-white" : "border-gray-300"
                 }`}
               >
                 {index + 1}
@@ -828,14 +828,14 @@ const ConferenceForm = () => {
               <button
                 type="button"
                 onClick={handleNext}
-                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+                className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
               >
                 Save & Continue →
               </button>
             ) : (
               <button
                 type="submit"
-                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+                className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
               >
                 Create Event Page
               </button>

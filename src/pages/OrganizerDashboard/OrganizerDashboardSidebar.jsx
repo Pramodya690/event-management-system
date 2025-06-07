@@ -322,7 +322,6 @@ import {
   MdCampaign, 
   MdAnalytics, 
   MdCalendarToday,
-  MdNotifications,
   MdHelpOutline,
   MdSettings,
   MdExpandMore,
@@ -336,13 +335,16 @@ const OrganizerDashboardSidebar = () => {
   const [expanded, setExpanded] = React.useState(true);
 
   return (
-    <div className="flex bg-gray-50 text-gray-800">
+    <div className="flex bg-sky-100 text-gray-800">
       {/* Fixed Sidebar */}
       <aside className={`fixed top-0 left-0 h-screen bg-white shadow-lg transition-all duration-300 z-30 ${expanded ? 'w-64' : 'w-20'}`}>
         {/* Sidebar Header */}
         <div className="p-4 border-b border-gray-200 flex items-center justify-between">
           {expanded ? (
-            <h2 className="text-2xl font-bold text-blue-700 tracking-tight">EventSphere</h2>
+            <NavLink to="/" className="text-2xl font-bold text-sky-600 tracking-tight hover:underline">
+              EventSphere
+            </NavLink>
+
           ) : (
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">E</div>
           )}
@@ -438,7 +440,7 @@ const OrganizerDashboardSidebar = () => {
           </NavItem>
 
           <NavItem 
-            to="/organizer-dashboard/analytics" 
+            to="/organizer-dashboard/event-analytics" 
             icon={<MdAnalytics size={20} />}
             expanded={expanded}
             active={location.pathname === '/organizer-dashboard/analytics'}
@@ -449,14 +451,7 @@ const OrganizerDashboardSidebar = () => {
 
         {/* Bottom Navigation */}
         <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 p-2 bg-white">
-          <NavItem 
-            to="/notifications" 
-            icon={<MdNotifications size={20} />}
-            expanded={expanded}
-            badge={3}
-          >
-            Notifications
-          </NavItem>
+          
           <NavItem 
             to="/settings" 
             icon={<MdSettings size={20} />}
@@ -487,10 +482,6 @@ const OrganizerDashboardSidebar = () => {
           </h1>
           
           <div className="flex items-center gap-4">
-            <button className="relative p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100">
-              <MdNotifications size={22} />
-              <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
-            </button>
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
                 <MdPerson size={18} />
