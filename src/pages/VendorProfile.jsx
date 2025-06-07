@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FiStar, FiMapPin, FiUsers, FiDollarSign, FiEdit } from 'react-icons/fi';
-import Footer from '../components/Footer/Footer';
-import Navigation from "../components/Navigation/Navigation.jsx";
+import Footer from '../components/Footer.jsx';
+import Navigation from "../components/Navigation.jsx";
 
 const VendorProfile = () => {
   const { state } = useLocation();

@@ -190,7 +190,7 @@
 // export default Navigation;
 
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { useState, useRef, useEffect } from "react";
 
 const Navigation = () => {
@@ -328,7 +328,7 @@ const Navigation = () => {
 
                       {user?.role === "organizer" && (
                         <Link
-                          to="/organizer-profile"
+                          to="/organizer-dashboard"
                           className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 border-b border-gray-200"
                           onClick={() => setShowDropdown(false)}
                         >

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navigation from "../../components/Navigation/Navigation.jsx";
+import Navigation from "../../components/Navigation.jsx";
 
 const SignupAttendee = () => {
   const navigate = useNavigate();

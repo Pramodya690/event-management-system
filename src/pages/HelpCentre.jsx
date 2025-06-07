@@ -80,10 +80,10 @@
 
 // export default HelpCentre;
 import React from 'react';
-import Navigation from "../components/Navigation/Navigation.jsx";
+import Navigation from "../components/Navigation.jsx";
 import helpBanner from '../assets/helpBanner.jpg';
 import { FiSearch, FiMail, FiPhone, FiMessageSquare, FiClock, FiChevronDown } from 'react-icons/fi';
-import Footer from '../components/Footer/Footer.jsx';
+import Footer from '../components/Footer.jsx';
 
 const HelpCentre = () => {
   return (

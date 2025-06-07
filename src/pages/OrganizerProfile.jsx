@@ -50,8 +50,8 @@
 // export default OrganizerProfile;
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import Navigation from '../components/Navigation/Navigation';
-import Footer from '../components/Footer/Footer';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 const OrganizerProfile = () => {
   const location = useLocation();

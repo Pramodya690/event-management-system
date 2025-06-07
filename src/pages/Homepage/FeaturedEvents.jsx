@@ -1,4 +1,4 @@
-import EventCard from "../../components/EventCard/EventCard";
+import EventCard from "../../components/FilterEvents/EventCard";
 
 const FeaturedEvents = ({ events }) => {
   if (events.length === 0) return null;

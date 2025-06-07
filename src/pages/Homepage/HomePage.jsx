@@ -160,11 +160,11 @@
 // export default HomePage;
 
 import { useState } from "react";
-import EventCard from "../../components/EventCard/EventCard.jsx";
+import EventCard from "../../components/FilterEvents/EventCard.jsx";
 import { eventList } from "../../utils/EventDatabase.jsx";
-import Navigation from "../../components/Navigation/Navigation.jsx";
+import Navigation from "../../components/Navigation.jsx";
 import ImageSlideshow from "../../components/ImageSlideshow.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
+import Footer from "../../components/Footer.jsx";
 import CategoryFilter from "./CategoryFilter.jsx";
 import LocationFilter from "./LocationFilter.jsx";
 import FeaturedEvents from "./FeaturedEvents.jsx";

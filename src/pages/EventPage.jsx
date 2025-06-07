@@ -56,8 +56,9 @@ import "leaflet/dist/leaflet.css";
 import { MdCalendarMonth, MdShare, MdBookmarkBorder } from "react-icons/md";
 import { IoLocationSharp, IoTimeOutline } from "react-icons/io5";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
-import Navigation from "../components/Navigation/Navigation";
-import Footer from "../components/Footer/Footer";
+import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
+
 
 
 

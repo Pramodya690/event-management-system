@@ -80,7 +80,7 @@ const Footer = () => {
             <h3 className="text-white text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li><a href="/about" className="text-gray-300 hover:text-white transition text-sm">About Us</a></li>
-              <li><a href="/events" className="text-gray-300 hover:text-white transition text-sm">Browse Events</a></li>
+              <li><a href="/find-events" className="text-gray-300 hover:text-white transition text-sm">Browse Events</a></li>
               <li><a href="/create-event" className="text-gray-300 hover:text-white transition text-sm">Create Event</a></li>
               <li><a href="/pricing" className="text-gray-300 hover:text-white transition text-sm">Pricing</a></li>
               <li><a href="/blog" className="text-gray-300 hover:text-white transition text-sm">Blog</a></li>

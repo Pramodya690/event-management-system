@@ -129,8 +129,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Navigation from '../components/Navigation/Navigation';
-import Footer from "../components/Footer/Footer";
+import Navigation from '../components/Navigation';
+import Footer from "../components/Footer";
 
 function Login() {
   const [email, setEmail] = useState('');

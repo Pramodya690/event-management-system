@@ -45,8 +45,8 @@
 // export default SignupRoleSelector;
 
 import { useNavigate } from 'react-router-dom';
-import Navigation from '../../components/Navigation/Navigation';
-import Footer from '../../components/Footer/Footer';
+import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
 
 function SignupRoleSelector() {
   const navigate = useNavigate();

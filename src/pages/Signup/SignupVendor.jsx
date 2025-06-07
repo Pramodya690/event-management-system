@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
-import Navigation from "../../components/Navigation/Navigation.jsx";
+import Footer from '../../components/Footer.jsx';
+import Navigation from "../../components/Navigation.jsx";
 import {
   FiUser, FiMapPin, FiUsers, FiDollarSign,
   FiUpload, FiBriefcase, FiInfo
