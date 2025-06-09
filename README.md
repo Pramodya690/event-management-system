@@ -8,51 +8,60 @@ This project consists of a backend API and a frontend React application for mana
 
 ### 1. Change to backend directory:
 
-bash
+```bash
 cd stall-allocation
+```
 
 ### 2. Create Virtual Environment
+
 ```bash
 python -m venv venv
+```
 
-**### 3. Activate Virtual Environment**
+### 3. Activate Virtual Environment
 
 On Windows:
 
-bash
+```bash
 .\venv\Scripts\activate
+```
 
 On macOS/Linux:
 
 bash
 source venv/bin/activate
 
-**### 4. Install Dependencies**
+### 4. Install Dependencies
 
-bash
+```bash
 pip install -r requirements.txt
+```
 
-**### 5. Run the backend server with Uvicorn:**
+### 5. Run the backend server with Uvicorn:
 
-bash
+```bash
 uvicorn api:app --reload
+```
 The backend should now be running at http://localhost:8000.
 
-**## Running the Frontend**
+## Running the Frontend
 
-**### 1. Change to frontend directory:**
+### 1. Change to frontend directory:
 
-bash
+```bash
 cd event-management-system-frontend
+```
 
-** ### 2. Install Node.js dependencies:**
+### 2. Install Node.js dependencies:
 
-bash
+```bash
 npm install
+```
 
-**### 3. Start the development server:**
+### 3. Start the development server:
 
-bash
+```bash
 npm run dev
+```
 The frontend should now be running 
 
