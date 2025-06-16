@@ -28,7 +28,7 @@ const SignupAttendee = () => {
 
     try {
       // Replace with your actual signup API route
-      const response = await axios.post('/api/auth/attendee/signup', {
+      const response = await axios.post('http://localhost:5000/api/auth/attendee/signup', {
         name: form.name,
         email: form.email,
         password: form.password

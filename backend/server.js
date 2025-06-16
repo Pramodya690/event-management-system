@@ -27,6 +27,31 @@ app.post('/api/organizers', async (req, res) => {
   }
 });
 
+
+// Endpoint to register attendee
+app.post('/api/auth/attendee/signup', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    // OPTIONAL: Check if email already exists
+    const existingUser = await pool.query('SELECT * FROM attendee WHERE email = $1', [email]);
+    if (existingUser.rows.length > 0) {
+      return res.status(400).json({ message: 'Email already exists' });
+    }
+
+    const result = await pool.query(
+      'INSERT INTO attendee (name, email, password) VALUES ($1, $2, $3) RETURNING *',
+      [name, email, password] // 👈 You can hash password later
+    );
+
+    res.status(201).json({ message: 'Attendee registered successfully', attendee: result.rows[0] });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: 'Database error' });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
