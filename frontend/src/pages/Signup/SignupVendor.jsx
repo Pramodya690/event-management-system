@@ -39,31 +39,41 @@ const SignupVendor = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitting(true);
+  e.preventDefault();
+  setSubmitting(true);
 
-    try {
-      // In a real app, you would make an API call here
-      const newVendorId = 'mock-vendor-id-123';
-      
-      navigate(`/vendor-profile/${newVendorId}`, { 
-        state: { 
-          vendor: {
-            ...vendorData,
-            id: newVendorId,
-            rating: 0,
-            reviews: []
-          } 
-        } 
-      });
+  try {
+    const response = await fetch('http://localhost:5000/api/vendors', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(vendorData)
+    });
 
-    } catch (error) {
-      console.error('Error submitting vendor data:', error);
-      alert('Error submitting form. Please try again.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.message || 'Failed to register vendor');
+
+    // Redirect with returned vendor info
+    navigate(`/vendor-profile/${data.vendor.id}`, {
+      state: {
+        vendor: {
+          ...data.vendor,
+          rating: 0,
+          reviews: []
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error('Error submitting vendor data:', error.message);
+    alert(error.message || 'Error submitting form. Please try again.');
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen flex flex-col">

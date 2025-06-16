@@ -51,6 +51,31 @@ app.post('/api/auth/attendee/signup', async (req, res) => {
   }
 });
 
+// vendor  
+app.post('/api/vendors', async (req, res) => {
+  try {
+    const { name, category, email, phone, address, cities } = req.body;
+
+    // Optional: check if vendor already exists
+    const existingVendor = await pool.query('SELECT * FROM vendor WHERE email = $1', [email]);
+    if (existingVendor.rows.length > 0) {
+      return res.status(400).json({ message: 'Vendor with this email already exists.' });
+    }
+
+    const result = await pool.query(
+      'INSERT INTO vendor (name, category, email, phone, address, cities) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [name, category, email, phone, address, cities]
+    );
+
+    res.status(201).json({ message: 'Vendor registered successfully', vendor: result.rows[0] });
+
+  } catch (err) {
+    console.error('Vendor Registration Error:', err.message);
+    res.status(500).json({ message: 'Server error during vendor registration' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
