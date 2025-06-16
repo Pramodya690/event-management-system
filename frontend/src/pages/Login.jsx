@@ -13,41 +13,88 @@ function Login() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //   setError('');
 
-    // Simulate API call
-    setTimeout(() => {
-      let mockUser;
+  //   // Simulate API call
+  //   setTimeout(() => {
+  //     let mockUser;
 
-      if (email === 'admin@example.com') {
-        mockUser = { name: 'Admin', email, role: 'admin' };
-      } else if (email === 'organizer@example.com') {
-        mockUser = { name: 'Event Organizer', email, role: 'organizer' };
-      } else if (email === 'attendee@example.com') {
-        mockUser = { name: 'Event Attendee', email, role: 'attendee' };
-      } else if (email === 'vendor@example.com') {
-        mockUser = { name: 'Event Vendor', email, role: 'vendor' };
-      } else {
-        setError('Invalid email or password');
-        setIsLoading(false);
-        return;
-      }
+  //     if (email === 'admin@example.com') {
+  //       mockUser = { name: 'Admin', email, role: 'admin' };
+  //     } else if (email === 'organizer@example.com') {
+  //       mockUser = { name: 'Event Organizer', email, role: 'organizer' };
+  //     } else if (email === 'attendee@example.com') {
+  //       mockUser = { name: 'Event Attendee', email, role: 'attendee' };
+  //     } else if (email === 'vendor@example.com') {
+  //       mockUser = { name: 'Event Vendor', email, role: 'vendor' };
+  //     } else {
+  //       setError('Invalid email or password');
+  //       setIsLoading(false);
+  //       return;
+  //     }
 
-      setUser(mockUser);
-      setIsLoading(false);
+  //     setUser(mockUser);
+  //     setIsLoading(false);
       
-      if (mockUser.role === 'admin') {
-        navigate('/admin/dashboard');
-      } else if (mockUser.role === 'organizer') {
-        navigate('/organizer-dashboard');
-      } else {
-        navigate('/');
-      }
-    }, 1000);
-  };
+  //     if (mockUser.role === 'admin') {
+  //       navigate('/admin/dashboard');
+  //     } else if (mockUser.role === 'organizer') {
+  //       navigate('/organizer-dashboard');
+  //     } else {
+  //       navigate('/');
+  //     }
+  //   }, 1000);
+  // };
+
+
+  const handleLogin = async (e) => {
+  e.preventDefault();
+  setIsLoading(true);
+  setError('');
+
+  try {
+    const response = await fetch('http://localhost:5000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setError(data.message || 'Login failed');
+      setIsLoading(false);
+      return;
+    }
+
+    const user = data.user;
+    setUser(user); // context
+
+    // Redirect by role
+    // if (user.role === 'admin') {
+    //   navigate('/admin/dashboard');
+    // } else 
+    if (user.role === 'organizer') {
+      navigate('/organizer-dashboard');
+    // } else if (user.role === 'vendor') {
+    //   navigate('/vendor-dashboard');
+    } else {
+      navigate('/attendee-dashboard'); // or home
+    }
+
+  } catch (err) {
+    console.error('Login failed:', err);
+    setError('An unexpected error occurred');
+  }
+
+  setIsLoading(false);
+};
+
 
   return (
     <div className="min-h-screen flex flex-col bg-sky-50">

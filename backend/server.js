@@ -77,6 +77,55 @@ app.post('/api/vendors', async (req, res) => {
 
 
 
+//login
+// POST /api/login
+app.post('/api/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const checkUserInTable = async (tableName, roleField) => {
+      // Validate table name
+      const allowedTables = ['organizer', 'vendor', 'attendee'];
+      if (!allowedTables.includes(tableName)) throw new Error('Invalid table');
+
+      const query = `SELECT * FROM ${tableName} WHERE email = $1 AND password = $2`;
+      const result = await pool.query(query, [email, password]);
+      
+      if (result.rows.length > 0) {
+        const user = result.rows[0];
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name || user.username,
+          role: roleField
+        };
+      }
+      return null;
+    };
+
+    const userChecks = [
+      checkUserInTable('organizer', 'organizer'),
+      checkUserInTable('attendee', 'attendee'),
+      // checkUserInTable('vendor', 'vendor')
+    ];
+
+    const users = await Promise.all(userChecks);
+    const validUser = users.find(user => user !== null);
+
+    if (validUser) {
+      return res.status(200).json({ user: validUser });
+    } else {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+  } catch (err) {
+    console.error('Login Error:', err.message);
+    res.status(500).json({ message: 'Server error during login' });
+  }
+});
+
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
