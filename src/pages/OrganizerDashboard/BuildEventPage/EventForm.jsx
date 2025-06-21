@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import BuildEventPage from "../BuildEventPage/BuildEventPage";
-import AddTickets from "../BuildEventPage/AddTickets";
-import PublishEvent from "../BuildEventPage/PublishEvent";
+import BuildEventPage from "./BuildEventPage";
+import AddTickets from "./AddTickets";
+import PublishEvent from "./PublishEvent";
 
 const steps = ["Build Event Page", "Add Tickets", "Publish"];
 
