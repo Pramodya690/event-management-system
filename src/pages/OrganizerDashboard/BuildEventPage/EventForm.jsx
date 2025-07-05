@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import BuildEventPage from "./BuildEventPage";
@@ -54,18 +52,24 @@ const ConferenceForm = () => {
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
       <aside className="w-64 bg-white shadow-lg p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-6">Event Setup</h2>
+        <h2 className="text-xl font-semibold text-gray-700 mb-6">
+          Event Setup
+        </h2>
         <ol className="space-y-4">
           {steps.map((step, index) => (
             <li
               key={index}
               className={`flex items-center space-x-2 ${
-                index === currentStep ? "font-bold text-sky-600" : "text-gray-500"
+                index === currentStep
+                  ? "font-bold text-sky-600"
+                  : "text-gray-500"
               }`}
             >
               <div
                 className={`w-6 h-6 flex items-center justify-center rounded-full border ${
-                  index === currentStep ? "bg-sky-600 text-white" : "border-gray-300"
+                  index === currentStep
+                    ? "bg-sky-600 text-white"
+                    : "border-gray-300"
                 }`}
               >
                 {index + 1}
@@ -104,9 +108,9 @@ const ConferenceForm = () => {
             )}
 
             {currentStep === 2 && (
-              <PublishEvent 
-                form={form} 
-                bannerImagePreview={bannerImagePreview} 
+              <PublishEvent
+                form={form}
+                bannerImagePreview={bannerImagePreview}
               />
             )}
           </AnimatePresence>
