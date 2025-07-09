@@ -2,7 +2,7 @@
 🛠️ Setup Instructions
 
 1. Clone the repository
-```bash
+```
 Copy code
 git clone https://github.com/Pramodya690/event-management-system.git
 cd event-management-system```
