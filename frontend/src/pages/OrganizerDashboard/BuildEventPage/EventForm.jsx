@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+
 import BuildEventPage from "./BuildEventPage";
 import AddTickets from "./AddTickets";
 import PublishEvent from "./PublishEvent";
@@ -31,7 +32,7 @@ const ConferenceForm = () => {
   });
 
   const [bannerImagePreview, setBannerImagePreview] = useState(null);
-  const [stallMapPreview, setStallMapPreview] = useState(null);
+  // const [stallMapPreview, setStallMapPreview] = useState(null);
   const [tagInput, setTagInput] = useState("");
   const [ticketTypeTab, setTicketTypeTab] = useState("paid");
 
@@ -43,10 +44,53 @@ const ConferenceForm = () => {
     if (currentStep > 0) setCurrentStep((prev) => prev - 1);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Final Submission:", form);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Final Submission:", form);
+  // };
+
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // const organizerId = localStorage.getItem("organizerId");
+  // if (!organizerId) {
+  //   alert("Organizer not logged in.");
+  //   return;
+  // }
+
+  const data = {
+    // organizer_id: organizerId,
+    event_title: form.eventName,
+    date: form.date,
+    time: form.time,
+    location: form.location,
+    description: form.description,
+    tags: form.tags,
+    faqs: form.faqs,
+    tickets: form.tickets,
   };
+
+  try {
+    const response = await fetch("http://localhost:5000/api/createEvent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      alert("Event created!");
+      // optionally redirect or clear form
+    } else {
+      alert("Event creation failed.");
+    }
+  } catch (err) {
+    console.error("Error during event creation:", err);
+    alert("Something went wrong.");
+  }
+};
+
+  
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -134,7 +178,8 @@ const ConferenceForm = () => {
                 onClick={handleNext}
                 className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
               >
-                Save & Continue →
+                save eventtttt
+                {/* Save & Continue → */}
               </button>
             ) : (
               <button

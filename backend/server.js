@@ -1,12 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import pool from './db.js';
-
-dotenv.config();
 
 const port = 5000;
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
@@ -26,7 +24,6 @@ app.post('/api/organizers', async (req, res) => {
     res.status(500).json({ error: 'Database error' });
   }
 });
-
 
 // Endpoint to register attendee
 app.post('/api/auth/attendee/signup', async (req, res) => {
@@ -51,7 +48,7 @@ app.post('/api/auth/attendee/signup', async (req, res) => {
   }
 });
 
-// vendor  
+// vendor
 app.post('/api/vendors', async (req, res) => {
   try {
     const { name, category, email, phone, address, cities } = req.body;
@@ -75,10 +72,7 @@ app.post('/api/vendors', async (req, res) => {
   }
 });
 
-
-
 //login
-// POST /api/login
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -124,6 +118,23 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+
+// to save the events
+app.post('/api/createEvent', async (req, res) => {
+  try {
+    const { event_title, date, time, location, description, tags, faqs } = req.body;
+
+    const result = await pool.query(
+      'INSERT INTO event (event_title, date, time, location, description, tags, faqs) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [event_title,  date, time, location, description, tags, faqs]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Database error' });
+  }
+});
 
 
 app.listen(port, () => {

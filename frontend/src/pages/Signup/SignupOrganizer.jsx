@@ -62,8 +62,6 @@ const SignUpOrganizer = () => {
     console.error('Error during registration:', err);
     alert('Something went wrong.');
   }
-
-  
 };
 
 
