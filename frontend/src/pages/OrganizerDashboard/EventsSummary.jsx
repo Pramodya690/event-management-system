@@ -121,6 +121,7 @@ const statusStyles = {
 };
 
 const EventsSummary = () => {
+  const [events, setEvents] = useState([]);
   const [view, setView] = useState("list");
   const [search, setSearch] = useState("");
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -128,9 +129,74 @@ const EventsSummary = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showEventModal, setShowEventModal] = useState(false);
 
+  // useEffect(() => {
+  //   const fetchEvents = async () => {
+  //     try {
+  //       const res = await fetch("http://localhost:5000/api/events");
+  //       const data = await res.json();
+  //       const transformed = data.map((e) => ({
+  //         id: e._id,
+  //         name: e.event_title,
+  //         date: e.date,
+  //         startTime: e.time,
+  //         endTime: e.time,
+  //         timezone: "PDT",
+  //         ticketsSold: e.ticketsSold || 0,
+  //         capacity: e.capacity || 100,
+  //         gross: e.gross || "$0.00",
+  //         status: `On Sale`,
+  //         type: e.location?.toLowerCase().includes("online")
+  //           ? "Online event"
+  //           : "In-person event",
+  //         image: e.image || "https://source.unsplash.com/random/500x300",
+  //       }));
+  //       setEvents(transformed);
+  //     } catch (err) {
+  //       console.error("Error fetching events:", err);
+  //     }
+  //   };
+  //   fetchEvents();
+  // }, []);
+
+  useEffect(() => {
+  const fetchEvents = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/events");
+      const data = await res.json();
+
+      const transformed = data.map((e) => ({
+        id: e.id, // or e.event_id, if that's your column
+        name: e.event_title,
+        date: e.date,
+        startTime: e.time,
+        endTime: e.time,
+        timezone: "PDT",
+        ticketsSold: 0,
+        capacity: 100,
+        gross: "$0.00",
+        status: "On Sale",
+        type: e.location.toLowerCase().includes("online")
+          ? "Online event"
+          : "In-person event",
+        image: "https://source.unsplash.com/random/500x300",
+      }));
+
+      setEvents(transformed);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  fetchEvents();
+}, []);
+
+
+
+
+
   useEffect(() => {
     setCalendarWeeks(buildCalendarWeeks(currentMonth, events));
-  }, [currentMonth]);
+  }, [currentMonth, events]);
 
   const filteredEvents = events.filter((event) =>
     event.name.toLowerCase().includes(search.toLowerCase())
