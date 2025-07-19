@@ -13,43 +13,6 @@ function Login() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
-  //   setError('');
-
-  //   // Simulate API call
-  //   setTimeout(() => {
-  //     let mockUser;
-
-  //     if (email === 'admin@example.com') {
-  //       mockUser = { name: 'Admin', email, role: 'admin' };
-  //     } else if (email === 'organizer@example.com') {
-  //       mockUser = { name: 'Event Organizer', email, role: 'organizer' };
-  //     } else if (email === 'attendee@example.com') {
-  //       mockUser = { name: 'Event Attendee', email, role: 'attendee' };
-  //     } else if (email === 'vendor@example.com') {
-  //       mockUser = { name: 'Event Vendor', email, role: 'vendor' };
-  //     } else {
-  //       setError('Invalid email or password');
-  //       setIsLoading(false);
-  //       return;
-  //     }
-
-  //     setUser(mockUser);
-  //     setIsLoading(false);
-      
-  //     if (mockUser.role === 'admin') {
-  //       navigate('/admin/dashboard');
-  //     } else if (mockUser.role === 'organizer') {
-  //       navigate('/organizer-dashboard');
-  //     } else {
-  //       navigate('/');
-  //     }
-  //   }, 1000);
-  // };
-
-
   const handleLogin = async (e) => {
   e.preventDefault();
   setIsLoading(true);
@@ -74,11 +37,10 @@ function Login() {
 
     const user = data.user;
     setUser(user); // context
+    // to make user info global after the user logs into the system
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", data.token);
 
-    // Redirect by role
-    // if (user.role === 'admin') {
-    //   navigate('/admin/dashboard');
-    // } else 
     if (user.role === 'organizer') {
       navigate('/organizer-dashboard');
     // } else if (user.role === 'vendor') {

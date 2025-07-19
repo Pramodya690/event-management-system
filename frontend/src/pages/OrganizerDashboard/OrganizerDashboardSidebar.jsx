@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   MdHome,
   MdEvent,
@@ -20,6 +21,20 @@ const OrganizerDashboardSidebar = () => {
     "/organizer-dashboard/create"
   );
   const [expanded, setExpanded] = React.useState(true);
+
+  // logout function
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate("/login"); // Redirect to login page
+  };
+
+  // to display user name & details
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+
+
 
   return (
     <div className="flex bg-sky-100 text-gray-800">
@@ -66,12 +81,15 @@ const OrganizerDashboardSidebar = () => {
             </div>
             <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
           </div>
-          {expanded && (
+          {/* {expanded && (
             <div className="flex-1 min-w-0">
               <p className="font-medium truncate">John Doe</p>
               <p className="text-xs text-gray-500 truncate">Organizer</p>
             </div>
-          )}
+          )} */}
+          <span className="hidden md:inline font-medium">
+          {user?.name || "Unknown User"}
+        </span>
         </div>
 
         {/* Main Navigation */}
@@ -167,7 +185,9 @@ const OrganizerDashboardSidebar = () => {
           >
             Help Center
           </NavItem>
-          <button className="w-full flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 rounded-lg px-4 py-3 text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
             <FiLogOut size={20} />
             {expanded && <span>Logout</span>}
           </button>
