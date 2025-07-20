@@ -46,7 +46,7 @@ function Login() {
     // } else if (user.role === 'vendor') {
     //   navigate('/vendor-dashboard');
     } else {
-      navigate('/attendee-dashboard'); // or home
+      navigate('/'); // or home
     }
 
   } catch (err) {

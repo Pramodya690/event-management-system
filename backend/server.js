@@ -136,7 +136,7 @@ app.post('/api/createEvent', async (req, res) => {
   }
 });
 
-// // Fetch all created events
+// Fetch all created events
 app.get('/api/events', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM event ORDER BY date ASC');
@@ -146,7 +146,6 @@ app.get('/api/events', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch events' });
   }
 });
-
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
