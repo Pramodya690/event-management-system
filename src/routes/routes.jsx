@@ -21,6 +21,7 @@ import EventAnalytics from "../pages/OrganizerDashboard/EventAnalytics";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 import StallAllocationPage from "../pages/OrganizerDashboard/BuildEventPage/StallAllocationPage";
 import SeatAllocationPage from "../pages/OrganizerDashboard/BuildEventPage/SeatAllocationPage";
+import Marketing from "../pages/OrganizerDashboard/Marketing";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
@@ -73,6 +74,10 @@ export const routes = [
       {
         path: "event-analytics",
         element: <EventAnalytics />,
+      },
+      {
+        path: "marketing",
+        element: <Marketing />,
       },
     ],
   },
