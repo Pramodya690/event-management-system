@@ -337,17 +337,6 @@ const StallAllocationPage = ({ form, setForm }) => {
               </button>
             </div>
           </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-            <h3 className="text-lg font-medium text-blue-800 mb-2">
-              AI Allocation Features
-            </h3>
-            <ul className="space-y-2 text-sm text-blue-700">
-              <li>✔ Optimizes stall placement for maximum visibility</li>
-              <li>✔ Ensures proper traffic flow between stalls</li>
-              <li>✔ Accounts for entry/exit points and facilities</li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
