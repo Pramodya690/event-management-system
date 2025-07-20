@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import MapPicker from "../../CreateEventForm/MapPicker";
+import { useNavigate } from "react-router-dom";
 
 const BuildEventPage = ({
   form,
@@ -10,9 +11,41 @@ const BuildEventPage = ({
   tagInput,
   setTagInput,
 }) => {
+  const navigate = useNavigate();
   const [enableAgenda, setEnableAgenda] = useState(false);
   const [enableStallAllocation, setEnableStallAllocation] = useState(false);
   const [stallMapPreview, setStallMapPreview] = useState(null);
+
+  const handleSave = async () => {
+    const eventData = { ...form };
+    const formData = new FormData();
+
+    for (const key in eventData) {
+      if (key === "agenda" || key === "placeMap") {
+        if (eventData[key]) formData.append(key, eventData[key]);
+      } else if (typeof eventData[key] === "object") {
+        formData.append(key, JSON.stringify(eventData[key]));
+      } else {
+        formData.append(key, eventData[key]);
+      }
+    }
+
+    try {
+      const response = await fetch("http://localhost:8000/api/events", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert("✅ Event saved: " + result.id);
+      } else {
+        alert("❌ Error: " + result.detail);
+      }
+    } catch (err) {
+      alert("❌ Network Error: " + err.message);
+    }
+  };
 
   return (
     <motion.div
@@ -319,131 +352,37 @@ const BuildEventPage = ({
         />
       </div>
 
-      {/* Feature Toggles */}
+      {/* Optional Features Navigation */}
       <div className="p-4 border border-sky-300 rounded-lg">
         <label className="font-semibold block mb-2">Optional Features</label>
-        <div className="space-y-2">
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={enableAgenda}
-              onChange={() => setEnableAgenda(!enableAgenda)}
-            />
-            Enable Agenda Upload
-          </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={enableStallAllocation}
-              onChange={() => setEnableStallAllocation(!enableStallAllocation)}
-            />
-            Enable Stall Allocation
-          </label>
-        </div>
+
+        {/* Navigate to Seat Allocation Page */}
+        <button
+          type="button"
+          onClick={() => navigate("/seat-allocation")}
+          className="block mb-2 w-full bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+        >
+          Go to Seat Allocation
+        </button>
+
+        {/* Navigate to Stall Allocation Page */}
+        <button
+          type="button"
+          onClick={() => navigate("/stall-allocation")}
+          className="block w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          Go to Stall Allocation
+        </button>
       </div>
 
-      {/* Upload Agenda */}
-      {enableAgenda && (
-        <div className="p-4 border border-sky-300 rounded-lg space-y-4">
-          <label className="font-semibold block mb-1">Upload Agenda</label>
-          <p className="text-sm text-gray-500 mb-2">
-            Upload a detailed agenda so attendees know what sessions to expect.
-          </p>
-          <input
-            type="file"
-            accept=".pdf,image/*"
-            onChange={(e) => {
-              const file = e.target.files[0];
-              if (file) {
-                setForm((prev) => ({ ...prev, agenda: file }));
-              }
-            }}
-          />
-          {form.agenda && (
-            <p className="mt-2 text-sm text-green-600">
-              {form.agenda.name} selected
-            </p>
-          )}
-        </div>
-      )}
-
-      {/* Stall Allocation */}
-      {enableStallAllocation && (
-        <div className="p-4 border border-sky-300 rounded-lg">
-          <label className="font-semibold block mb-2">Stall Allocation</label>
-          <p className="text-sm text-gray-500 mb-3">
-            Visualize and auto-generate stall positions using your uploaded
-            layout.
-          </p>
-
-          {/* Upload Place Map */}
-          <div className="mb-4">
-            <label className="block mb-2">Upload Place Map</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files[0];
-                if (file) {
-                  setForm((prev) => ({ ...prev, placeMap: file }));
-                  setStallMapPreview(URL.createObjectURL(file));
-                }
-              }}
-            />
-            {stallMapPreview && (
-              <img
-                src={stallMapPreview}
-                alt="Stall Map Preview"
-                className="mt-2 max-h-48 rounded border"
-              />
-            )}
-          </div>
-
-          {/* Stall Count */}
-          <div className="mb-4">
-            <input
-              type="number"
-              name="stalls"
-              value={form.stalls}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  [e.target.name]: e.target.value,
-                }))
-              }
-              placeholder="Number of Stalls"
-              min="1"
-              className="w-full border rounded px-3 py-2"
-            />
-          </div>
-
-          {/* Stall Allocation Visual Placeholder */}
-          <div className="bg-gray-100 border border-dashed border-gray-400 h-64 rounded flex items-center justify-center text-gray-500 mb-4">
-            {form.placeMap ? (
-              <img
-                src={stallMapPreview}
-                alt="Stall Allocation Preview"
-                className="max-h-full object-contain"
-              />
-            ) : (
-              <span>Upload a map to see stall allocation here.</span>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={() =>
-              alert(
-                "In the future, this button will use AI to auto-allocate stalls."
-              )
-            }
-            className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 disabled:opacity-50"
-            disabled={!form.stalls || !form.placeMap}
-          >
-            Generate Stall Allocation with AI
-          </button>
-        </div>
-      )}
+      {/* ✅ Save Event Button - should be placed at the very end */}
+      <button
+        type="button"
+        onClick={handleSave}
+        className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
+      >
+        Save Event
+      </button>
     </motion.div>
   );
 };

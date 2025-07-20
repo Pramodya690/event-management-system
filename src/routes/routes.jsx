@@ -8,7 +8,7 @@ import HelpCentre from "../pages/HelpCentre";
 import OrganizerDashboardHome from "../pages/OrganizerDashboard/OrganizerDashboardHome";
 import OrganizerDashboardSidebar from "../pages/OrganizerDashboard/OrganizerDashboardSidebar";
 import OrganizerCreateEventLanding from "../pages/OrganizerDashboard/OrganizerCreateEventLanding";
-import ConferenceForm from "../pages/OrganizerDashboard/BuildEventPage/EventForm";
+import ConferenceForm from "../pages/OrganizerDashboard/BuildEventPage/CombinedEventForm";
 import EventsSummary from "../pages/OrganizerDashboard/EventsSummary";
 import SignupRoleSelector from "../pages/Signup/SignupRoleSelector";
 import SignUpOrganizer from "../pages/Signup/SignupOrganizer";
@@ -19,6 +19,8 @@ import VendorProfile from "../pages/VendorProfile";
 import SignupAttendee from "../pages/Signup/SignupAttendee";
 import EventAnalytics from "../pages/OrganizerDashboard/EventAnalytics";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
+import StallAllocationPage from "../pages/OrganizerDashboard/BuildEventPage/StallAllocationPage";
+import SeatAllocationPage from "../pages/OrganizerDashboard/BuildEventPage/SeatAllocationPage";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
@@ -55,6 +57,10 @@ export const routes = [
       {
         path: "create/conference",
         element: <ConferenceForm />,
+      },
+      {
+        path: "edit/:eventId",
+        element: <ConferenceForm mode="edit" />,
       },
       {
         path: "events-summary",

@@ -1,299 +1,5 @@
-// import React, { useState, useEffect } from "react";
-
-// // Sample Events Data
-// const events = [
-//   {
-//     id: 1,
-//     name: "Book Club Gathering",
-//     date: "2025-07-03",
-//     startTime: "10:00 AM",
-//     endTime: "11:30 AM",
-//     timezone: "PDT",
-//     ticketsSold: 3,
-//     capacity: 100,
-//     gross: "$0.00",
-//     status: "On Sale",
-//     type: "Online event"
-//   },
-//   {
-//     id: 2,
-//     name: "Tech Conference",
-//     date: "2025-07-14",
-//     startTime: "10:00 AM",
-//     endTime: "05:30 PM",
-//     timezone: "PDT",
-//     ticketsSold: 14,
-//     capacity: 0,
-//     gross: "$0.00",
-//     status: "Draft",
-//     type: "Online event"
-//   },
-//   {
-//     id: 3,
-//     name: "Art Exhibition",
-//     date: "2025-07-14",
-//     startTime: "10:00 AM",
-//     endTime: "05:30 PM",
-//     timezone: "PDT",
-//     ticketsSold: 14,
-//     capacity: 0,
-//     gross: "$0.00",
-//     status: "Draft",
-//     type: "In-person event"
-//   }
-// ];
-
-// // Utility to build calendar grid
-// const buildCalendarWeeks = (monthDate, eventList) => {
-//   const start = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
-//   const end = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0);
-
-//   const startDay = start.getDay(); // 0-6
-//   const totalDays = end.getDate();
-
-//   const days = [];
-//   let currentDay = 1;
-
-//   // Build 6 weeks (42 days) for the calendar grid
-//   for (let i = 0; i < 6; i++) {
-//     const week = [];
-//     for (let j = 0; j < 7; j++) {
-//       if (i === 0 && j < startDay) {
-//         week.push({ day: null, events: [] });
-//       } else if (currentDay > totalDays) {
-//         week.push({ day: null, events: [] });
-//       } else {
-//         const dayString = new Date(monthDate.getFullYear(), monthDate.getMonth(), currentDay).toISOString().split("T")[0];
-//         const eventsForDay = eventList
-//           .filter((e) => e.date === dayString)
-//           .map((e) => ({
-//             id: e.id,
-//             name: e.name,
-//             time: e.startTime,
-//           }));
-//         week.push({ day: currentDay, events: eventsForDay });
-//         currentDay++;
-//       }
-//     }
-//     days.push(week);
-//   }
-
-//   return days;
-// };
-
-// const EventsSummary = () => {
-//   const [view, setView] = useState("list");
-//   const [search, setSearch] = useState("");
-//   const [currentMonth, setCurrentMonth] = useState(new Date());
-//   const [calendarWeeks, setCalendarWeeks] = useState([]);
-
-//   useEffect(() => {
-//     setCalendarWeeks(buildCalendarWeeks(currentMonth, events));
-//   }, [currentMonth]);
-
-//   const filteredEvents = events.filter((event) =>
-//     event.name.toLowerCase().includes(search.toLowerCase())
-//   );
-
-//   const formatEventDateTime = (event) => {
-//     const date = new Date(event.date);
-//     const dateString = date.toLocaleDateString("en-US", {
-//       weekday: "long",
-//       year: "numeric",
-//       month: "long",
-//       day: "numeric",
-//     });
-//     return `${dateString} at ${event.startTime} - ${event.endTime} ${event.timezone}`;
-//   };
-
-//   const prevMonth = () => {
-//     const prev = new Date(currentMonth);
-//     prev.setMonth(prev.getMonth() - 1);
-//     setCurrentMonth(prev);
-//   };
-
-//   const nextMonth = () => {
-//     const next = new Date(currentMonth);
-//     next.setMonth(next.getMonth() + 1);
-//     setCurrentMonth(next);
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 p-6 font-sans">
-//       {/* Top Bar */}
-//       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
-//         <div className="flex items-center gap-3">
-//           <input
-//             type="text"
-//             placeholder="Search events"
-//             className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
-//             value={search}
-//             onChange={(e) => setSearch(e.target.value)}
-//           />
-//           <div className="flex gap-2">
-//             <button
-//               onClick={() => setView("list")}
-//               className={`px-4 py-2 rounded-md transition ${
-//                 view === "list"
-//                   ? "bg-sky-600 text-white shadow-md"
-//                   : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
-//               }`}
-//             >
-//               List
-//             </button>
-//             <button
-//               onClick={() => setView("calendar")}
-//               className={`px-4 py-2 rounded-md transition ${
-//                 view === "calendar"
-//                   ? "bg-sky-600 text-white shadow-md"
-//                   : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
-//               }`}
-//             >
-//               Calendar
-//             </button>
-//           </div>
-//         </div>
-//         <button className="bg-orange-600 text-white px-6 py-2 rounded-md hover:bg-orange-700 transition shadow-md">
-//           Create Event
-//         </button>
-//       </div>
-
-//       {view === "list" ? (
-//         <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-//           {/* Events List */}
-//           <div className="divide-y divide-gray-200">
-//             {filteredEvents.map((event) => (
-//               <div key={event.id} className="p-6">
-//                 <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-//                   {/* Left: Event Title + Info */}
-//                   <div className="md:w-1/2">
-//                     <h2 className="text-lg font-bold text-gray-800">{event.name}</h2>
-//                     <p className="text-sm text-gray-500 mt-1">
-//                       {formatEventDateTime(event)}
-//                     </p>
-//                     <p className="text-sm text-gray-500">{event.type}</p>
-//                   </div>
-
-//                   {/* Right: Event Stats */}
-//                   <div className="md:w-1/2 ml-auto overflow-x-auto">
-//                     <table className="w-full">
-//                       <thead>
-//                         <tr className="text-right text-gray-500 text-sm border-b border-gray-200">
-//                           <th className="pb-3 font-medium">Sold</th>
-//                           <th className="pb-3 font-medium">Capacity</th>
-//                           <th className="pb-3 font-medium">Gross</th>
-//                           <th className="pb-3 font-medium text-left">Status</th>
-//                         </tr>
-//                       </thead>
-//                       <tbody>
-//                         <tr className="border-b border-gray-100 text-right">
-//                           <td className="py-4 font-medium">{event.ticketsSold}</td>
-//                           <td className="py-4">{event.capacity || '∞'}</td>
-//                           <td className="py-4 font-medium">{event.gross}</td>
-//                           <td className="py-4 text-left">
-//                             <div className="flex items-center">
-//                               <span className={`inline-block w-2 h-2 rounded-full mr-2 ${
-//                                 event.status === "On Sale" ? "bg-green-500" : "bg-gray-400"
-//                               }`}></span>
-//                               <span className="font-medium">{event.status}</span>
-//                             </div>
-//                           </td>
-//                         </tr>
-//                       </tbody>
-//                     </table>
-//                   </div>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-
-//           {/* Footer */}
-//           <div className="p-4 border-t border-gray-200 flex justify-end">
-//             <button className="text-sky-600 hover:text-sky-800 text-sm font-medium flex items-center">
-//               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-//               </svg>
-//               CSV Export
-//             </button>
-//           </div>
-//         </div>
-//       ) : (
-//         // Calendar View
-//         <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
-//           <div className="flex justify-between items-center mb-4">
-//             <button
-//               onClick={prevMonth}
-//               className="px-3 py-1 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
-//             >
-//               &lt;
-//             </button>
-//             <h2 className="text-lg font-semibold text-gray-800">
-//               {currentMonth.toLocaleString("default", {
-//                 month: "long",
-//                 year: "numeric",
-//               })}
-//             </h2>
-//             <button
-//               onClick={nextMonth}
-//               className="px-3 py-1 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
-//             >
-//               &gt;
-//             </button>
-//           </div>
-
-//           {/* Weekday Headers */}
-//           <div className="grid grid-cols-7 text-sm font-medium text-gray-700 border-b border-gray-200 pb-2 mb-2">
-//             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-//               <div key={day} className="text-center">
-//                 {day}
-//               </div>
-//             ))}
-//           </div>
-
-//           {/* Calendar Grid */}
-//           <div className="grid grid-cols-7 gap-px bg-gray-100 rounded overflow-hidden">
-//             {calendarWeeks.map((week, weekIndex) => (
-//               <React.Fragment key={weekIndex}>
-//                 {week.map((dayData, dayIndex) => (
-//                   <div
-//                     key={dayIndex}
-//                     className={`min-h-[100px] p-2 bg-white ${
-//                       dayData.day === null ? "bg-gray-50" : "hover:bg-gray-50"
-//                     }`}
-//                   >
-//                     {dayData.day !== null && (
-//                       <>
-//                         <div className="text-xs text-gray-900 font-semibold text-right mb-1">
-//                           {dayData.day}
-//                         </div>
-//                         <div className="space-y-1">
-//                           {dayData.events.map((event) => (
-//                             <div
-//                               key={event.id}
-//                               className="text-xs bg-sky-50 text-sky-800 p-1 rounded leading-tight truncate shadow-sm"
-//                               title={`${event.time} - ${event.name}`}
-//                             >
-//                               <div className="font-semibold">{event.time}</div>
-//                               <div>{event.name}</div>
-//                             </div>
-//                           ))}
-//                         </div>
-//                       </>
-//                     )}
-//                   </div>
-//                 ))}
-//               </React.Fragment>
-//             ))}
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default EventsSummary;
-
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Sample Events Data
 const events = [
@@ -309,7 +15,8 @@ const events = [
     gross: "$0.00",
     status: "On Sale",
     type: "Online event",
-    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    image:
+      "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 2,
@@ -323,7 +30,8 @@ const events = [
     gross: "$1,400.00",
     status: "Draft",
     type: "Online event",
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    image:
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 3,
@@ -337,7 +45,8 @@ const events = [
     gross: "$2,800.00",
     status: "On Sale",
     type: "In-person event",
-    image: "https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    image:
+      "https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 4,
@@ -351,7 +60,8 @@ const events = [
     gross: "$12,250.00",
     status: "On Sale",
     type: "In-person event",
-    image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+    image:
+      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 5,
@@ -365,8 +75,9 @@ const events = [
     gross: "$900.00",
     status: "On Sale",
     type: "Online event",
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-  }
+    image:
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+  },
 ];
 
 // Utility to build calendar grid
@@ -389,7 +100,13 @@ const buildCalendarWeeks = (monthDate, eventList) => {
       } else if (currentDay > totalDays) {
         week.push({ day: null, events: [] });
       } else {
-        const dayString = new Date(monthDate.getFullYear(), monthDate.getMonth(), currentDay).toISOString().split("T")[0];
+        const dayString = new Date(
+          monthDate.getFullYear(),
+          monthDate.getMonth(),
+          currentDay
+        )
+          .toISOString()
+          .split("T")[0];
         const eventsForDay = eventList
           .filter((e) => e.date === dayString)
           .map((e) => ({
@@ -410,9 +127,9 @@ const buildCalendarWeeks = (monthDate, eventList) => {
 
 const statusStyles = {
   "On Sale": "bg-green-100 text-green-800",
-  "Draft": "bg-gray-100 text-gray-800",
-  "Cancelled": "bg-red-100 text-red-800",
-  "Sold Out": "bg-yellow-100 text-yellow-800"
+  Draft: "bg-gray-100 text-gray-800",
+  Cancelled: "bg-red-100 text-red-800",
+  "Sold Out": "bg-yellow-100 text-yellow-800",
 };
 
 const EventsSummary = () => {
@@ -468,7 +185,9 @@ const EventsSummary = () => {
       {/* Top Bar */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
         <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-bold text-gray-800 hidden md:block">Event Dashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-800 hidden md:block">
+            Event Dashboard
+          </h1>
           <div className="relative">
             <input
               type="text"
@@ -515,8 +234,18 @@ const EventsSummary = () => {
           </div>
         </div>
         <button className="bg-sky-500 text-white px-6 py-2 rounded-lg hover:bg-sky-600 transition-all shadow-md hover:shadow-lg flex items-center gap-2">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
           </svg>
           Create Event
         </button>
@@ -526,37 +255,84 @@ const EventsSummary = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <div className="text-gray-500 text-sm font-medium">Total Events</div>
-          <div className="text-2xl font-bold text-gray-800 mt-1">{events.length}</div>
+          <div className="text-2xl font-bold text-gray-800 mt-1">
+            {events.length}
+          </div>
           <div className="text-xs text-green-600 mt-1 flex items-center">
-            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+            <svg
+              className="w-3 h-3 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 15l7-7 7 7"
+              />
             </svg>
             12% from last month
           </div>
         </div>
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <div className="text-gray-500 text-sm font-medium">Tickets Sold</div>
-          <div className="text-2xl font-bold text-gray-800 mt-1">{events.reduce((sum, event) => sum + event.ticketsSold, 0)}</div>
+          <div className="text-2xl font-bold text-gray-800 mt-1">
+            {events.reduce((sum, event) => sum + event.ticketsSold, 0)}
+          </div>
           <div className="text-xs text-green-600 mt-1 flex items-center">
-            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+            <svg
+              className="w-3 h-3 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 15l7-7 7 7"
+              />
             </svg>
             24% from last month
           </div>
         </div>
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <div className="text-gray-500 text-sm font-medium">Total Revenue</div>
-          <div className="text-2xl font-bold text-gray-800 mt-1">${events.reduce((sum, event) => sum + parseFloat(event.gross.replace(/[^0-9.]/g, '')), 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+          <div className="text-2xl font-bold text-gray-800 mt-1">
+            $
+            {events
+              .reduce(
+                (sum, event) =>
+                  sum + parseFloat(event.gross.replace(/[^0-9.]/g, "")),
+                0
+              )
+              .toLocaleString("en-US", { minimumFractionDigits: 2 })}
+          </div>
           <div className="text-xs text-green-600 mt-1 flex items-center">
-            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+            <svg
+              className="w-3 h-3 mr-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 15l7-7 7 7"
+              />
             </svg>
             8% from last month
           </div>
         </div>
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-          <div className="text-gray-500 text-sm font-medium">Upcoming Events</div>
-          <div className="text-2xl font-bold text-gray-800 mt-1">{events.filter(e => new Date(e.date) >= new Date()).length}</div>
+          <div className="text-gray-500 text-sm font-medium">
+            Upcoming Events
+          </div>
+          <div className="text-2xl font-bold text-gray-800 mt-1">
+            {events.filter((e) => new Date(e.date) >= new Date()).length}
+          </div>
           <div className="text-xs text-gray-500 mt-1">Next 30 days</div>
         </div>
       </div>
@@ -575,7 +351,11 @@ const EventsSummary = () => {
                   <option>Sold Out</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                   </svg>
                 </div>
@@ -587,7 +367,11 @@ const EventsSummary = () => {
                   <option>In-person</option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <svg
+                    className="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                  >
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                   </svg>
                 </div>
@@ -599,8 +383,8 @@ const EventsSummary = () => {
           <div className="divide-y divide-gray-200">
             {filteredEvents.length > 0 ? (
               filteredEvents.map((event) => (
-                <div 
-                  key={event.id} 
+                <div
+                  key={event.id}
                   className="p-6 hover:bg-gray-50 transition cursor-pointer"
                   onClick={() => openEventDetails(event)}
                 >
@@ -608,25 +392,31 @@ const EventsSummary = () => {
                     {/* Event Image */}
                     <div className="w-full md:w-48 flex-shrink-0">
                       <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
-                        <img 
-                          src={event.image} 
+                        <img
+                          src={event.image}
                           alt={event.name}
                           className="w-full h-full object-cover"
                         />
                       </div>
                     </div>
-                    
+
                     {/* Event Details */}
                     <div className="flex-1">
                       <div className="flex flex-col md:flex-row md:justify-between gap-4">
                         {/* Left: Event Title + Info */}
                         <div className="md:w-2/3">
-                          <h2 className="text-lg font-bold text-gray-800 hover:text-sky-600 transition">{event.name}</h2>
+                          <h2 className="text-lg font-bold text-gray-800 hover:text-sky-600 transition">
+                            {event.name}
+                          </h2>
                           <p className="text-sm text-gray-500 mt-1">
                             {formatEventDateTime(event)}
                           </p>
                           <div className="mt-2 flex items-center gap-2">
-                            <span className={`px-2 py-1 text-xs rounded-full ${statusStyles[event.status]}`}>
+                            <span
+                              className={`px-2 py-1 text-xs rounded-full ${
+                                statusStyles[event.status]
+                              }`}
+                            >
                               {event.status}
                             </span>
                             <span className="text-xs px-2 py-1 bg-gray-100 text-gray-800 rounded-full">
@@ -640,15 +430,25 @@ const EventsSummary = () => {
                           <div className="grid grid-cols-3 gap-2 text-center">
                             <div>
                               <div className="text-sm text-gray-500">Sold</div>
-                              <div className="font-bold text-gray-800">{event.ticketsSold}</div>
+                              <div className="font-bold text-gray-800">
+                                {event.ticketsSold}
+                              </div>
                             </div>
                             <div>
-                              <div className="text-sm text-gray-500">Capacity</div>
-                              <div className="font-bold text-gray-800">{event.capacity || '∞'}</div>
+                              <div className="text-sm text-gray-500">
+                                Capacity
+                              </div>
+                              <div className="font-bold text-gray-800">
+                                {event.capacity || "∞"}
+                              </div>
                             </div>
                             <div>
-                              <div className="text-sm text-gray-500">Revenue</div>
-                              <div className="font-bold text-gray-800">{event.gross}</div>
+                              <div className="text-sm text-gray-500">
+                                Revenue
+                              </div>
+                              <div className="font-bold text-gray-800">
+                                {event.gross}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -672,9 +472,12 @@ const EventsSummary = () => {
                     d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <h3 className="mt-2 text-sm font-medium text-gray-900">No events found</h3>
+                <h3 className="mt-2 text-sm font-medium text-gray-900">
+                  No events found
+                </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  Try adjusting your search or filter to find what you're looking for.
+                  Try adjusting your search or filter to find what you're
+                  looking for.
                 </p>
               </div>
             )}
@@ -683,7 +486,8 @@ const EventsSummary = () => {
           {/* Footer */}
           <div className="p-4 border-t border-gray-200 flex justify-between items-center bg-gray-50">
             <div className="text-sm text-gray-500">
-              Showing <span className="font-medium">1</span> to <span className="font-medium">{filteredEvents.length}</span> of{' '}
+              Showing <span className="font-medium">1</span> to{" "}
+              <span className="font-medium">{filteredEvents.length}</span> of{" "}
               <span className="font-medium">{events.length}</span> events
             </div>
             <div className="flex space-x-2">
@@ -704,8 +508,18 @@ const EventsSummary = () => {
               onClick={prevMonth}
               className="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition flex items-center gap-2"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
               Previous
             </button>
@@ -720,15 +534,33 @@ const EventsSummary = () => {
               className="px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition flex items-center gap-2"
             >
               Next
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </button>
           </div>
 
           {/* Weekday Headers */}
           <div className="grid grid-cols-7 text-sm font-medium text-gray-500 mb-2">
-            {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map((day) => (
+            {[
+              "Sunday",
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+            ].map((day) => (
               <div key={day} className="text-center p-2">
                 {day.substring(0, 3)}
               </div>
@@ -740,9 +572,10 @@ const EventsSummary = () => {
             {calendarWeeks.map((week, weekIndex) => (
               <React.Fragment key={weekIndex}>
                 {week.map((dayData, dayIndex) => {
-                  const isToday = dayData.day === new Date().getDate() && 
-                                currentMonth.getMonth() === new Date().getMonth() && 
-                                currentMonth.getFullYear() === new Date().getFullYear();
+                  const isToday =
+                    dayData.day === new Date().getDate() &&
+                    currentMonth.getMonth() === new Date().getMonth() &&
+                    currentMonth.getFullYear() === new Date().getFullYear();
                   return (
                     <div
                       key={dayIndex}
@@ -752,11 +585,13 @@ const EventsSummary = () => {
                     >
                       {dayData.day !== null && (
                         <>
-                          <div className={`text-sm mb-1 text-right ${
-                            isToday 
-                              ? "bg-sky-500 text-white rounded-full w-6 h-6 flex items-center justify-center ml-auto"
-                              : "text-gray-900"
-                          }`}>
+                          <div
+                            className={`text-sm mb-1 text-right ${
+                              isToday
+                                ? "bg-sky-500 text-white rounded-full w-6 h-6 flex items-center justify-center ml-auto"
+                                : "text-gray-900"
+                            }`}
+                          >
                             {dayData.day}
                           </div>
                           <div className="space-y-1 overflow-y-auto max-h-[90px]">
@@ -764,18 +599,22 @@ const EventsSummary = () => {
                               <div
                                 key={event.id}
                                 className={`text-xs p-1 rounded leading-tight truncate shadow-sm cursor-pointer ${
-                                  event.type === "Online event" 
-                                    ? "bg-purple-50 text-purple-800 hover:bg-purple-100" 
+                                  event.type === "Online event"
+                                    ? "bg-purple-50 text-purple-800 hover:bg-purple-100"
                                     : "bg-green-50 text-green-800 hover:bg-green-100"
                                 }`}
                                 title={`${event.time} - ${event.name}`}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  const evt = events.find(e => e.id === event.id);
+                                  const evt = events.find(
+                                    (e) => e.id === event.id
+                                  );
                                   if (evt) openEventDetails(evt);
                                 }}
                               >
-                                <div className="font-semibold">{event.time}</div>
+                                <div className="font-semibold">
+                                  {event.time}
+                                </div>
                                 <div className="truncate">{event.name}</div>
                               </div>
                             ))}
@@ -798,15 +637,29 @@ const EventsSummary = () => {
             <div className="p-6">
               <div className="flex justify-between items-start">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-800">{selectedEvent.name}</h2>
-                  <p className="text-gray-600 mt-1">{formatEventDateTime(selectedEvent)}</p>
+                  <h2 className="text-2xl font-bold text-gray-800">
+                    {selectedEvent.name}
+                  </h2>
+                  <p className="text-gray-600 mt-1">
+                    {formatEventDateTime(selectedEvent)}
+                  </p>
                 </div>
-                <button 
+                <button
                   onClick={closeEventModal}
                   className="text-gray-400 hover:text-gray-500"
                 >
-                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
@@ -814,65 +667,101 @@ const EventsSummary = () => {
               <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="md:col-span-2">
                   <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden bg-gray-100">
-                    <img 
-                      src={selectedEvent.image} 
+                    <img
+                      src={selectedEvent.image}
                       alt={selectedEvent.name}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="mt-4">
-                    <h3 className="text-lg font-semibold text-gray-800">Event Description</h3>
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      Event Description
+                    </h3>
                     <p className="text-gray-600 mt-2">
-                      This is a detailed description of the event. It should provide all the necessary information 
-                      attendees might need, including what to expect, any special guests or features, and what they 
-                      should bring or prepare for the event.
+                      This is a detailed description of the event. It should
+                      provide all the necessary information attendees might
+                      need, including what to expect, any special guests or
+                      features, and what they should bring or prepare for the
+                      event.
                     </p>
                   </div>
                 </div>
 
                 <div>
                   <div className="bg-gray-50 p-4 rounded-xl">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Event Details</h3>
-                    
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                      Event Details
+                    </h3>
+
                     <div className="space-y-4">
                       <div>
-                        <h4 className="text-sm font-medium text-gray-500">Status</h4>
+                        <h4 className="text-sm font-medium text-gray-500">
+                          Status
+                        </h4>
                         <div className="mt-1 flex items-center">
-                          <span className={`inline-block w-2 h-2 rounded-full mr-2 ${
-                            selectedEvent.status === "On Sale" ? "bg-green-500" : "bg-gray-400"
-                          }`}></span>
-                          <span className="font-medium">{selectedEvent.status}</span>
+                          <span
+                            className={`inline-block w-2 h-2 rounded-full mr-2 ${
+                              selectedEvent.status === "On Sale"
+                                ? "bg-green-500"
+                                : "bg-gray-400"
+                            }`}
+                          ></span>
+                          <span className="font-medium">
+                            {selectedEvent.status}
+                          </span>
                         </div>
                       </div>
 
                       <div>
-                        <h4 className="text-sm font-medium text-gray-500">Event Type</h4>
+                        <h4 className="text-sm font-medium text-gray-500">
+                          Event Type
+                        </h4>
                         <p className="mt-1 font-medium">{selectedEvent.type}</p>
                       </div>
 
                       <div>
-                        <h4 className="text-sm font-medium text-gray-500">Location</h4>
+                        <h4 className="text-sm font-medium text-gray-500">
+                          Location
+                        </h4>
                         <p className="mt-1 font-medium">
-                          {selectedEvent.type === "Online event" ? "Virtual Event" : "Venue Name, City, State"}
+                          {selectedEvent.type === "Online event"
+                            ? "Virtual Event"
+                            : "Venue Name, City, State"}
                         </p>
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <h4 className="text-sm font-medium text-gray-500">Tickets Sold</h4>
-                          <p className="mt-1 font-medium">{selectedEvent.ticketsSold}</p>
+                          <h4 className="text-sm font-medium text-gray-500">
+                            Tickets Sold
+                          </h4>
+                          <p className="mt-1 font-medium">
+                            {selectedEvent.ticketsSold}
+                          </p>
                         </div>
                         <div>
-                          <h4 className="text-sm font-medium text-gray-500">Capacity</h4>
-                          <p className="mt-1 font-medium">{selectedEvent.capacity || 'Unlimited'}</p>
+                          <h4 className="text-sm font-medium text-gray-500">
+                            Capacity
+                          </h4>
+                          <p className="mt-1 font-medium">
+                            {selectedEvent.capacity || "Unlimited"}
+                          </p>
                         </div>
                         <div>
-                          <h4 className="text-sm font-medium text-gray-500">Revenue</h4>
-                          <p className="mt-1 font-medium">{selectedEvent.gross}</p>
+                          <h4 className="text-sm font-medium text-gray-500">
+                            Revenue
+                          </h4>
+                          <p className="mt-1 font-medium">
+                            {selectedEvent.gross}
+                          </p>
                         </div>
                         <div>
-                          <h4 className="text-sm font-medium text-gray-500">Timezone</h4>
-                          <p className="mt-1 font-medium">{selectedEvent.timezone}</p>
+                          <h4 className="text-sm font-medium text-gray-500">
+                            Timezone
+                          </h4>
+                          <p className="mt-1 font-medium">
+                            {selectedEvent.timezone}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -888,6 +777,142 @@ const EventsSummary = () => {
                         Cancel Event
                       </button>
                     </div>
+                    {/* Feature Toggles */}
+                    <div className="p-4 border border-sky-300 rounded-lg">
+                      <label className="font-semibold block mb-2">
+                        Optional Features
+                      </label>
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={enableAgenda}
+                            onChange={() => setEnableAgenda(!enableAgenda)}
+                          />
+                          Enable Agenda Upload
+                        </label>
+                        <label className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={enableStallAllocation}
+                            onChange={() =>
+                              setEnableStallAllocation(!enableStallAllocation)
+                            }
+                          />
+                          Enable Stall Allocation
+                        </label>
+                      </div>
+                    </div>
+
+                    {/* Upload Agenda */}
+                    {enableAgenda && (
+                      <div className="p-4 border border-sky-300 rounded-lg space-y-4">
+                        <label className="font-semibold block mb-1">
+                          Upload Agenda
+                        </label>
+                        <p className="text-sm text-gray-500 mb-2">
+                          Upload a detailed agenda so attendees know what
+                          sessions to expect.
+                        </p>
+                        <input
+                          type="file"
+                          accept=".pdf,image/*"
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              setForm((prev) => ({ ...prev, agenda: file }));
+                            }
+                          }}
+                        />
+                        {form.agenda && (
+                          <p className="mt-2 text-sm text-green-600">
+                            {form.agenda.name} selected
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Stall Allocation */}
+                    {enableStallAllocation && (
+                      <div className="p-4 border border-sky-300 rounded-lg">
+                        <label className="font-semibold block mb-2">
+                          Stall Allocation
+                        </label>
+                        <p className="text-sm text-gray-500 mb-3">
+                          Visualize and auto-generate stall positions using your
+                          uploaded layout.
+                        </p>
+
+                        <div className="mb-4">
+                          <label className="block mb-2">Upload Place Map</label>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                              const file = e.target.files[0];
+                              if (file) {
+                                setForm((prev) => ({
+                                  ...prev,
+                                  placeMap: file,
+                                }));
+                                setStallMapPreview(URL.createObjectURL(file));
+                              }
+                            }}
+                          />
+                          {stallMapPreview && (
+                            <img
+                              src={stallMapPreview}
+                              alt="Stall Map Preview"
+                              className="mt-2 max-h-48 rounded border"
+                            />
+                          )}
+                        </div>
+
+                        <div className="mb-4">
+                          <input
+                            type="number"
+                            name="stalls"
+                            value={form.stalls}
+                            onChange={(e) =>
+                              setForm((prev) => ({
+                                ...prev,
+                                [e.target.name]: e.target.value,
+                              }))
+                            }
+                            placeholder="Number of Stalls"
+                            min="1"
+                            className="w-full border rounded px-3 py-2"
+                          />
+                        </div>
+
+                        <div className="bg-gray-100 border border-dashed border-gray-400 h-64 rounded flex items-center justify-center text-gray-500 mb-4">
+                          {form.placeMap ? (
+                            <img
+                              src={stallMapPreview}
+                              alt="Stall Allocation Preview"
+                              className="max-h-full object-contain"
+                            />
+                          ) : (
+                            <span>
+                              Upload a map to see stall allocation here.
+                            </span>
+                          )}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            alert(
+                              "In the future, this button will use AI to auto-allocate stalls."
+                            )
+                          }
+                          className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 disabled:opacity-50"
+                          disabled={!form.stalls || !form.placeMap}
+                        >
+                          Generate Stall Allocation with AI
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
