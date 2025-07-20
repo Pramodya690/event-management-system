@@ -56,7 +56,7 @@ app.post('/api/auth/attendee/signup', async (req, res) => {
   }
 });
 
-// vendor
+// Endpoint to register vendor
 app.post('/api/vendors', async (req, res) => {
   try {
     const { name, category, email, phone, address, cities } = req.body;
@@ -83,6 +83,7 @@ app.post('/api/vendors', async (req, res) => {
   }
 });
 
+//login
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
   
@@ -135,36 +136,83 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+//save event data to db, with images
 const upload = multer({ storage: multer.memoryStorage() });
-
 app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
   try {
     console.log('req.file:', req.file); // ✅ See if file is received
+    console.log("BODY:", req.body);           // Text fields
+    console.log("FILE:", req.file);           // Uploaded file
+    console.log("VENUE ID:", req.body.venue_id);
 
     const {
       event_title,
       date,
       time,
       location,
+      venue_id,
       description,
       tags,
-      faqs
+      faqs,
+      city,
+      headcount,
+      coordinates
     } = req.body;
 
     const bannerImage = req.file ? req.file.buffer : null;
 
     const result = await pool.query(
       `INSERT INTO event 
-      (event_title, date, time, location, description, tags, faqs, banner_image)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      (event_title, date, time, location, venue_id, description, tags, faqs, banner_image, city, headcount, coordinates)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
       RETURNING *`,
-      [event_title, date, time, location, description, tags, faqs, bannerImage]
+      [
+        event_title,
+        date,
+        time,
+        location,
+        description,
+        tags,
+        faqs,
+        bannerImage,
+        city || null,
+        headcount || null,
+        venue_id,
+        coordinates ? `(${coordinates[0]},${coordinates[1]})` : null
+      ]
+      // [event_title, date, time, location, description, tags, faqs, bannerImage]
     ); 
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error('Error saving event:', err.message);
     res.status(500).json({ error: 'Database error' });
+  }
+});
+
+//suggestion venues to the event creation
+app.get('/api/venues', async (req, res) => {
+  const { city, headcount } = req.query;
+
+  if (!city || !headcount) {
+    return res.status(400).json({ error: 'City and headcount are required' });
+  }
+
+  try {
+    // Query venues in city with capacity >= headcount, sorted by capacity ascending
+    const result = await pool.query(
+      `SELECT * FROM venues
+       WHERE LOWER(city) = LOWER($1)
+       AND capacity >= $2
+       ORDER BY capacity ASC
+       LIMIT 10`, // Return top 5 matches
+      [city, headcount]
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching venues:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
