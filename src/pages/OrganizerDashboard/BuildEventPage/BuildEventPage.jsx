@@ -352,29 +352,6 @@ const BuildEventPage = ({
         />
       </div>
 
-      {/* Optional Features Navigation */}
-      <div className="p-4 border border-sky-300 rounded-lg">
-        <label className="font-semibold block mb-2">Optional Features</label>
-
-        {/* Navigate to Seat Allocation Page */}
-        <button
-          type="button"
-          onClick={() => navigate("/seat-allocation")}
-          className="block mb-2 w-full bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-        >
-          Go to Seat Allocation
-        </button>
-
-        {/* Navigate to Stall Allocation Page */}
-        <button
-          type="button"
-          onClick={() => navigate("/stall-allocation")}
-          className="block w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          Go to Stall Allocation
-        </button>
-      </div>
-
       {/* ✅ Save Event Button - should be placed at the very end */}
       <button
         type="button"
