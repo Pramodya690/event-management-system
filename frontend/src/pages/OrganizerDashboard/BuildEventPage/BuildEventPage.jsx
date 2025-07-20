@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import axios from 'axios';
 
 const BuildEventPage = ({
   form,
@@ -8,38 +9,132 @@ const BuildEventPage = ({
   setTagInput,
 }) => {
 
+  const [bannerImage, setBannerImage] = useState(null);
+  const [bannerImagePreview, setBannerImagePreview] = useState(null);
 
-  const handleSave = async (e) => {
+//   const handleSave = async (e) => {
+//   e.preventDefault();
+
+//   // connected to event
+//   const payload = {
+//         event_title: form.eventName,
+//         date: form.date,
+//         time: form.time,
+//         location: form.location,
+//         description: form.description,
+//         tags: form.tags,
+//         faqs: form.faqs,
+//   };
+
+//   try {
+//     const response = await fetch('http://localhost:5000/api/createEvent', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify(payload),
+//     });
+
+//     if (response.ok) {
+//       alert('Event created!');
+//     } else {
+//       alert('Event creation failed.');
+//     }
+//   } catch (err) {
+//     console.error('Error during event creation:', err);
+//     alert('Something went wrong.');
+//   }
+// };
+
+// const handleSave = async (e) => {
+//   e.preventDefault();
+
+//   const formData = new FormData();
+//   formData.append('event_title', form.eventName);
+//   formData.append('date', form.date);
+//   formData.append('time', form.time);
+//   formData.append('location', form.location);
+//   formData.append('description', form.description);
+//   formData.append('tags', form.tags);
+//   formData.append('faqs', form.faqs);
+//   if (bannerImage) {
+//     formData.append('bannerImage', bannerImage);
+//   }
+//   // formData.append("bannerImage", bannerImage); // 👈 file object
+
+//   // try {
+//   //   const response = await fetch('http://localhost:5000/api/createEvent', {
+//   //     method: 'POST',
+//   //     body: formData, // No Content-Type here; fetch sets it automatically for FormData
+//   //   });
+
+//   //   if (response.ok) {
+//   //     alert('Event created!');
+//   //   } else {
+//   //     alert('Event creation failed.');
+//   //   }
+//   // } catch (err) {
+//   //   console.error('Error during event creation:', err);
+//   //   alert('Something went wrong.');
+//   // }
+
+//   // await axios.post("http://localhost:5000/api/createEvent", formData, {
+//   // headers: {
+//   //   "Content-Type": "multipart/form-data",
+//   // },
+// });
+// };
+
+const handleSave = async (e) => {
   e.preventDefault();
 
-  // connected to event
-  const payload = {
-        event_title: form.eventName,
-        date: form.date,
-        time: form.time,
-        location: form.location,
-        description: form.description,
-        tags: form.tags,
-        faqs: form.faqs,
-  };
+  const formData = new FormData();
+  formData.append('event_title', form.eventName);
+  formData.append('date', form.date);
+  formData.append('time', form.time);
+  formData.append('location', form.location);
+  formData.append('description', form.description);
+  formData.append('tags', JSON.stringify(form.tags)); // Convert array to JSON string
+  formData.append('faqs', form.faqs);
+  if (bannerImage) {
+    formData.append('bannerImage', bannerImage); // ✅ This was missing
+  }
+
+  // try {
+  //   // const response = await axios.post('http://localhost:5000/api/createEvent', formData, {
+  //   //   headers: {
+  //   //     'Content-Type': 'multipart/form-data',
+  //   //   },
+  //   // });
+
+  //   const response = await axios.post('http://localhost:5000/api/createEvent', formData);
+
+
+  //   if (response.status === 201) {
+  //     alert('Event created successfully!');
+  //   } else {
+  //     alert('Failed to create event.');
+  //   }
+  // } catch (err) {
+  //   console.error('Error creating event:', err);
+  //   alert('Something went wrong!');
+  // }
 
   try {
-    const response = await fetch('http://localhost:5000/api/createEvent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
+    // ✅ DO NOT manually set 'Content-Type'
+    const response = await axios.post('http://localhost:5000/api/createEvent', formData);
 
-    if (response.ok) {
-      alert('Event created!');
+    if (response.status === 201) {
+      alert('Event created successfully!');
     } else {
-      alert('Event creation failed.');
+      alert('Failed to create event.');
     }
   } catch (err) {
-    console.error('Error during event creation:', err);
-    alert('Something went wrong.');
+    console.error('Error creating event:', err);
+    alert('Something went wrong!');
   }
+
 };
+
+
 
   return (
     <motion.div
@@ -53,6 +148,29 @@ const BuildEventPage = ({
       <h2 className="text-2xl font-bold text-gray-800 mb-6">
         Build Conference Event Page
       </h2>
+
+      {/* Upload Banner Image */}
+<div className="p-4 border border-sky-300 rounded-lg">
+  <label className="font-semibold block mb-1">Upload Banner Image</label>
+  <p className="text-sm text-gray-500 mb-2">
+    Upload a high-quality banner that represents your event.
+  </p>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) => {
+      const file = e.target.files[0];
+      if (file) {
+        setBannerImage(file);
+        setBannerImagePreview(URL.createObjectURL(file));
+      }
+    }}
+  />
+  {bannerImagePreview && (
+    <img src={bannerImagePreview} alt="Preview" className="mt-4 max-h-48 rounded shadow" />
+  )}
+</div>
+
 
       {/* Event Title */}
       <div className="p-4 border border-sky-300 rounded-lg">
@@ -190,13 +308,13 @@ const BuildEventPage = ({
         />
       </div>
 
-      {/* <button
+      <button
         type="button"
         onClick={handleSave}
         className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
       >
         Save Event
-      </button> */}
+      </button>
     </motion.div>
   );
 };

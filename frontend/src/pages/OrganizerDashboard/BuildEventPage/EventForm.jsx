@@ -31,6 +31,8 @@ const ConferenceForm = () => {
     },
   });
 
+  // In ConferenceForm.jsx
+  // const [bannerImage, setBannerImage] = useState(null);
   const [bannerImagePreview, setBannerImagePreview] = useState(null);
   // const [stallMapPreview, setStallMapPreview] = useState(null);
   const [tagInput, setTagInput] = useState("");
@@ -178,7 +180,7 @@ const ConferenceForm = () => {
                 onClick={handleNext}
                 className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
               >
-                save eventtttt
+                save eventtt
                 {/* Save & Continue → */}
               </button>
             ) : (

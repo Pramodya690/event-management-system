@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pool from './db.js';
+import multer from 'multer';
 
 const port = 5000;
 const app = express();
@@ -119,22 +120,97 @@ app.post('/api/login', async (req, res) => {
 });
 
 
-// to save the events
-app.post('/api/createEvent', async (req, res) => {
+// // to save the events
+// app.post('/api/createEvent', async (req, res) => {
+//   try {
+//     const { event_title, date, time, location, description, tags, faqs } = req.body;
+
+//     const result = await pool.query(
+//       'INSERT INTO event (event_title, date, time, location, description, tags, faqs) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+//       [event_title,  date, time, location, description, tags, faqs]
+//     );
+
+//     res.status(201).json(result.rows[0]);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).json({ error: 'Database error' });
+//   }
+// });
+
+
+
+// to save event data to db with the image
+// const multer = require('multer');
+
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
   try {
-    const { event_title, date, time, location, description, tags, faqs } = req.body;
+    console.log('req.file:', req.file); // ✅ See if file is received
+
+    const {
+      event_title,
+      date,
+      time,
+      location,
+      description,
+      tags,
+      faqs
+    } = req.body;
+
+    const bannerImage = req.file ? req.file.buffer : null;
 
     const result = await pool.query(
-      'INSERT INTO event (event_title, date, time, location, description, tags, faqs) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-      [event_title,  date, time, location, description, tags, faqs]
+      `INSERT INTO event 
+      (event_title, date, time, location, description, tags, faqs, banner_image)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *`,
+      [event_title, date, time, location, description, tags, faqs, bannerImage]
     );
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    console.error(err.message);
+    console.error('Error saving event:', err.message);
     res.status(500).json({ error: 'Database error' });
   }
 });
+
+
+// const upload = multer({ storage: multer.memoryStorage() }); // store image in RAM
+
+// app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
+//   try {
+//     console.log('req.file:', req.file); // check if the file exists
+//     const {
+//       event_title,
+//       date,
+//       time,
+//       location,
+//       description,
+//       tags,
+//       faqs
+//     } = req.body;
+
+//     const bannerImage = req.file ? req.file.buffer : null;
+
+//     const result = await pool.query(
+//       `INSERT INTO event 
+//       (event_title, date, time, location, description, tags, faqs, banner_image)
+//       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+//       RETURNING *`,
+//       [event_title, date, time, location, description, tags, faqs, bannerImage]
+//     );
+
+//     res.status(201).json(result.rows[0]);
+    
+
+//   } catch (err) {
+//     console.error('Error saving event:', err.message);
+//     res.status(500).json({ error: 'Database error' });
+//   }
+// });
+
 
 // Fetch all created events
 app.get('/api/events', async (req, res) => {
