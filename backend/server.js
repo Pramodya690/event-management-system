@@ -256,6 +256,27 @@ app.get('/api/events/:eventId', async (req, res) => {
   }
 });
 
+//saving tickets to db
+app.post("/api/tickets", async (req, res) => {
+  const { eventId, type, name, quantity, price, sales_start, sales_end } = req.body;
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO tickets 
+       (event_id, type, name, quantity, price, sales_start, sales_end)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING *`,
+      [eventId, type, name, quantity, price || 0, sales_start, sales_end]
+    );
+
+    res.status(201).json({ ticket: result.rows[0] });
+  } catch (err) {
+    console.error("Error inserting ticket:", err);
+    res.status(500).json({ error: "Failed to create ticket" });
+  }
+});
+
+
 
 // Fetch all created events
 app.get('/api/events', async (req, res) => {
