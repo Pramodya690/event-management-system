@@ -39,7 +39,7 @@ function Login() {
       setIsLoading(false);
 
       if (mockUser.role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("/admin-dashboard");
       } else if (mockUser.role === "organizer") {
         navigate("/");
       } else {

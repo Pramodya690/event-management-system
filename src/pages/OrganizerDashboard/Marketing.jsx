@@ -975,7 +975,7 @@ const Marketing = () => {
           </div>
         )}
 
-        {activeTab === "tasks" && (
+        {/* {activeTab === "tasks" && (
           <div className="p-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold text-gray-800">
@@ -1020,7 +1020,7 @@ const Marketing = () => {
               </div>
             )}
           </div>
-        )}
+        )} */}
 
         {activeTab === "social" && (
           <div className="p-6">
