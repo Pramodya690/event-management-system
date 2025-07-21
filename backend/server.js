@@ -161,28 +161,6 @@ app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
 
     const bannerImage = req.file ? req.file.buffer : null;
 
-    // const result = await pool.query(
-    //   `INSERT INTO event 
-    //   (event_title, date, time, location, venue_id, description, tags, faqs, banner_image, city, headcount, coordinates)
-    //   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-    //   RETURNING *`,
-    //   [
-    //     event_title,
-    //     date,
-    //     time,
-    //     location,
-    //     description,
-    //     tags,
-    //     faqs,
-    //     bannerImage,
-    //     city || null,
-    //     headcount || null,
-    //     venue_id,
-    //     coordinates ? `(${coordinates[0]},${coordinates[1]})` : null
-    //   ]
-    //   // [event_title, date, time, location, description, tags, faqs, bannerImage]
-    // ); 
-
     const result = await pool.query(
   `INSERT INTO event 
   (event_title, date, time, location, venue_id, description, tags, faqs, banner_image, city, headcount, coordinates)
@@ -235,6 +213,46 @@ app.get('/api/venues', async (req, res) => {
   } catch (error) {
     console.error('Error fetching venues:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// to serve the binary image saved in the db as a real image to be fetched onto the publish event page of the eventform
+app.get('/api/eventBanner/:eventId', async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const result = await pool.query(
+      `SELECT banner_image FROM event WHERE id = $1`,
+      [eventId]
+    );
+
+    if (result.rows.length === 0 || !result.rows[0].banner_image) {
+      return res.status(404).send('Image not found');
+    }
+
+    const imageBuffer = result.rows[0].banner_image;
+
+    res.set('Content-Type', 'image/jpeg'); // or 'image/png' based on your input
+    res.send(imageBuffer);
+  } catch (err) {
+    console.error("Failed to load banner image:", err);
+    res.status(500).send("Server error");
+  }
+});
+
+// Example with Express and PostgreSQL
+app.get('/api/events/:eventId', async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const eventResult = await pool.query('SELECT * FROM event WHERE id = $1', [eventId]);
+    if (eventResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    const event = eventResult.rows[0];
+    res.json(event);
+  } catch (err) {
+    console.error('Failed to fetch event:', err);
+    res.status(500).json({ error: 'Server error' });
   }
 });
 
