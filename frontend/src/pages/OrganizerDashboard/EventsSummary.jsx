@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 // Utility to build calendar grid
-const buildCalendarWeeks = (monthDate, eventList) => {
+const buildCalendarWeeks = (monthDate, eventListNew) => {
   const start = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
   const end = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0);
 
@@ -21,7 +21,7 @@ const buildCalendarWeeks = (monthDate, eventList) => {
         week.push({ day: null, events: [] });
       } else {
         const dayString = new Date(monthDate.getFullYear(), monthDate.getMonth(), currentDay).toISOString().split("T")[0];
-        const eventsForDay = eventList
+        const eventsForDay = eventListNew
           .filter((e) => e.date === dayString)
           .map((e) => ({
             id: e.id,
