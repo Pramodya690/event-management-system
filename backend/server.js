@@ -59,7 +59,7 @@ app.post('/api/auth/attendee/signup', async (req, res) => {
 // Endpoint to register vendor
 app.post('/api/vendors', async (req, res) => {
   try {
-    const { name, category, email, phone, address, cities, password } = req.body;
+    const { name, category, email, phone, address, cities, password, capacity, budget } = req.body;
 
     //Validate password presence
     if (!password) {
@@ -76,8 +76,8 @@ app.post('/api/vendors', async (req, res) => {
     }
 
     const result = await pool.query(
-      'INSERT INTO vendor (name, category, email, phone, address, cities, password) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-      [name, category, email, phone, address, cities, hashedPassword]
+      'INSERT INTO vendor (name, category, email, phone, address, cities, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
+      [name, category, email, phone, address, cities, hashedPassword, capacity, budget]
     );
 
     res.status(201).json({ message: 'Vendor registered successfully', vendor: result.rows[0] });

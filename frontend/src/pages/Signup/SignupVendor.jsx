@@ -12,7 +12,9 @@ const SignupVendor = () => {
     phone: '',
     address: '',
     cities: [],
-    password: ''
+    password: '',
+    capacity:'',
+    budget:''
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -74,7 +76,6 @@ const SignupVendor = () => {
     setSubmitting(false);
   }
 };
-
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -148,6 +149,57 @@ const SignupVendor = () => {
             </section>
 
             <hr className="border-t border-gray-200" />
+
+            <section>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">Additional Info</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block font-medium mb-1">
+                    Max Budget (in your currency)
+                  </label>
+                  <input
+                    type="number"
+                    name="budget"
+                    value={vendorData.budget}
+                    onChange={handleChange}
+                    min="0"
+                    step="any"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                    placeholder="e.g., 50000"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium mb-1">
+                    Min Budget (in your currency)
+                  </label>
+                  <input
+                    type="number"
+                    name="budget"
+                    value={vendorData.budget}
+                    onChange={handleChange}
+                    min="0"
+                    step="any"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                    placeholder="e.g., 50000"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium mb-1">
+                    Capacity (number of people)
+                  </label>
+                  <input
+                    type="number"
+                    name="capacity"
+                    value={vendorData.capacity}
+                    onChange={handleChange}
+                    min="1"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                    placeholder="e.g., 200"
+                  />
+                </div>
+              </div>
+            </section>
+
 
             {/* Contact Info */}
             <section>
