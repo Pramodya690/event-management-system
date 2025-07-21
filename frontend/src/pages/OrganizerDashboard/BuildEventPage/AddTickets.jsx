@@ -15,6 +15,52 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
       return updated;
     });
   }, [ticketTypeTab]);
+  
+  //to connect to the tickets db
+//   const handleSave = async () => {
+//   const ticket = form.tickets?.[ticketTypeTab]?.[0];
+
+//   if (!ticket?.name || !ticket?.quantity || (ticketTypeTab === "paid" && !ticket?.price)) {
+//     alert("Please fill in all required fields.");
+//     return;
+//   }
+
+//   const salesStartDate = document.querySelector("input[type='date']").value;
+//   const salesStartTime = document.querySelector("input[type='time']").value;
+//   const salesEndDate = document.querySelectorAll("input[type='date']")[1].value;
+//   const salesEndTime = document.querySelectorAll("input[type='time']")[1].value;
+
+//   const sales_start = `${salesStartDate}T${salesStartTime}:00`;
+//   const sales_end = `${salesEndDate}T${salesEndTime}:00`;
+
+//   try {
+//     const res = await fetch("/api/tickets", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         eventId: form.eventId, // Make sure `eventId` exists in form state
+//         type: ticketTypeTab,
+//         name: ticket.name,
+//         quantity: ticket.quantity,
+//         price: ticketTypeTab === "paid" ? ticket.price : 0,
+//         sales_start,
+//         sales_end,
+//       }),
+//     });
+
+//     if (!res.ok) throw new Error("Failed to save ticket.");
+
+//     const data = await res.json();
+//     alert("Ticket saved successfully!");
+//     console.log("Saved ticket:", data.ticket);
+//   } catch (error) {
+//     console.error("Error saving ticket:", error);
+//     alert("An error occurred while saving the ticket.");
+//   }
+// };
+
 
   return (
     <motion.div
@@ -191,14 +237,16 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
           </div>
         </div>
 
-        <div className="flex justify-end space-x-3 pt-4 border-t border-sky-300 mt-6">
+        {/* <div className="flex justify-end space-x-3 pt-4 border-t border-sky-300 mt-6">
           <button className="px-4 py-2 rounded border border-sky-400 text-sky-700 hover:bg-sky-50 transition">
             Cancel
           </button>
-          <button className="px-6 py-2 rounded bg-sky-600 text-white hover:bg-sky-700 transition">
+          <button 
+            
+            className="px-6 py-2 rounded bg-sky-600 text-white hover:bg-sky-700 transition">
             Save
           </button>
-        </div>
+        </div> */}
       </div>
     </motion.div>
   );

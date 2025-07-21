@@ -59,20 +59,25 @@ app.post('/api/auth/attendee/signup', async (req, res) => {
 // Endpoint to register vendor
 app.post('/api/vendors', async (req, res) => {
   try {
-    const { name, category, email, phone, address, cities } = req.body;
+    const { name, category, email, phone, address, cities, password } = req.body;
 
-    // ✅ Hash the password before storing it
+    //Validate password presence
+    if (!password) {
+      return res.status(400).json({ message: 'Password is required.' });
+    }
+
+    //Hash the password before storing it
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Optional: check if vendor already exists
+    //check if vendor already exists
     const existingVendor = await pool.query('SELECT * FROM vendor WHERE email = $1', [email]);
     if (existingVendor.rows.length > 0) {
       return res.status(400).json({ message: 'Vendor with this email already exists.' });
     }
 
     const result = await pool.query(
-      'INSERT INTO vendor (name, category, email, phone, address, cities) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [name, category, email, phone, address, cities]
+      'INSERT INTO vendor (name, category, email, phone, address, cities, password) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [name, category, email, phone, address, cities, hashedPassword]
     );
 
     res.status(201).json({ message: 'Vendor registered successfully', vendor: result.rows[0] });
@@ -167,18 +172,18 @@ app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
   RETURNING *`,
   [
-    event_title,                           // $1
-    date,                                  // $2
-    time,                                  // $3
-    location,                              // $4
-    venue_id || null,                      // $5 ✅ FIXED
-    description,                           // $6 ✅ FIXED
-    tags,                                  // $7
-    faqs,                                  // $8
-    bannerImage,                           // $9
-    city || null,                          // $10
-    headcount || null,                     // $11
-    coordinates ? `(${coordinates[0]},${coordinates[1]})` : null // $12
+    event_title,                           
+    date,                                  
+    time,                                  
+    location,                             
+    venue_id || null,                      
+    description,                           
+    tags,                                  
+    faqs,                                  
+    bannerImage,                           
+    city || null,                          
+    headcount || null,                     
+    coordinates ? `(${coordinates[0]},${coordinates[1]})` : null 
   ]
 );
 

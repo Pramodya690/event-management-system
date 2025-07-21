@@ -65,6 +65,8 @@ const ConferenceForm = () => {
 
         const data = await response.json();
         console.log("Event saved and returned:", data);
+        console.log("Submitting tickets with event ID:", form.eventId);
+
 
         setForm((prev) => ({
           ...prev,
@@ -93,6 +95,47 @@ const ConferenceForm = () => {
         return;
       }
     }
+
+    // to add the tickets
+    if (currentStep === 1) {
+    const tickets = form.tickets || {};
+
+    try {
+      for (const type of Object.keys(tickets)) {
+        if (!["paid", "free", "donation"].includes(type)) continue;
+
+        for (const ticket of tickets[type]) {
+          const payload = {
+            eventId: form.eventId,
+            type,
+            name: ticket.name,
+            quantity: ticket.quantity,
+            price: type === "paid" ? ticket.price : 0,
+            sales_start: ticket.sales_start,
+            sales_end: ticket.sales_end,
+          };
+
+          const res = await fetch("http://localhost:5000/api/tickets", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok) throw new Error("Failed to save ticket");
+
+          const data = await res.json();
+          console.log("Ticket saved:", data.ticket);
+        }
+      }
+
+      alert("All tickets saved successfully!");
+    } catch (error) {
+      console.error("Ticket save failed:", error);
+      alert("Failed to save one or more tickets.");
+      return;
+    }
+  }
+
 
     if (currentStep < steps.length - 1) setCurrentStep((prev) => prev + 1);
   };

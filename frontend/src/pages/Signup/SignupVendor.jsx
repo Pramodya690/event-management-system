@@ -11,7 +11,8 @@ const SignupVendor = () => {
     email: '',
     phone: '',
     address: '',
-    cities: []
+    cities: [],
+    password: ''
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -129,6 +130,20 @@ const SignupVendor = () => {
                     <option value="Audio-Visual">Audio-Visual</option>
                   </select>
                 </div>
+                <div>
+                  <label className="block font-medium mb-1 flex items-center gap-2">
+                    🔒 Password
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    value={vendorData.password}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-3 border border-gray-300 rounded-lg"
+                  />
+                </div>
+
               </div>
             </section>
 
@@ -217,6 +232,7 @@ const SignupVendor = () => {
               className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-medium hover:bg-blue-700 transition mt-6"
             >
               {submitting ? 'Submitting...' : 'Register as Vendor'}
+              Register as a vendor
             </button>
           </form>
         </div>
