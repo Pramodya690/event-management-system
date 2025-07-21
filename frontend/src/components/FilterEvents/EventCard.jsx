@@ -1,37 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const dummyEvent = {
-  id: 1,
-  image: "/event.jpeg",
-  eventName: "Tech & Innovation Fair 2025",
-  date: "June 15, 2025",
-  time: "10:00 AM",
-  location: "Expo Center, New York",
-  category: "Misic",
-};
-
-const EventCard = () => {
-  const event = dummyEvent;
-
+const EventCard = ({ id, event_title, date, location, image}) => {
   return (
     <Link
-      to={`/events/${event.id}`}
+      to={`/events/${id}`}
       className="bg-white rounded-lg shadow hover:shadow-md transition p-4"
     >
       <img
-        src={event.image}
-        alt={event.eventName}
+        src={image || "https://via.placeholder.com/400x200?text=No+Image"}
+        alt={event_title}
         className="w-full h-40 object-cover rounded"
       />
-      <h3 className="mt-3 font-bold text-lg">{event.eventName}</h3>
+      <h3 className="mt-3 font-bold text-lg">{event_title}</h3>
       <p className="text-sm text-gray-500">
-        {event.date} • {event.time}
+        {date.day} {date.month} {date.year}
       </p>
-      <p className="text-sm text-gray-600">{event.location}</p>
-      <span className="inline-block mt-2 text-xs bg-sky-100 text-sky-800 px-2 py-1 rounded">
-        {event.category}
-      </span>
+      <p className="text-sm text-gray-500">
+  {new Date(date).toLocaleString("default", { month: "short", year: "numeric" })}
+</p>
+
+      <p className="text-sm text-gray-600">{location}</p>
     </Link>
   );
 };

@@ -1,8 +1,8 @@
 const popularLocations = [
   { name: "All", image: "/Images/all.jpg" },
   { name: "Colombo", image: "/Images/colombo.jpg" },
-  { name: "Cinnamon Gardens", image: "/Images/cinnamon-garden.jpeg" },
-  { name: "Colombo Fort", image: "/Images/colombo-fort.jpeg" },
+  // { name: "Cinnamon Gardens", image: "/Images/cinnamon-garden.jpeg" },
+  // { name: "Colombo Fort", image: "/Images/colombo-fort.jpeg" },
   { name: "Kandy", image: "/Images/kandy.jpg" },
   { name: "Galle", image: "/Images/galle.jpeg" },
 ];
