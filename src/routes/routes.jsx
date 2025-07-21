@@ -1,5 +1,5 @@
 import HomePage from "../pages/Homepage/HomePage";
-import FilterEvents from "../pages/FilterEvents";
+import AllEvents from "../pages/AllEvents";
 import EventPage from "../pages/EventPage";
 import Login from "../pages/Login";
 import OrganizerWelcome from "../pages/OrganizerWelcome";
@@ -20,10 +20,11 @@ import SignupAttendee from "../pages/Signup/SignupAttendee";
 import EventAnalytics from "../pages/OrganizerDashboard/EventAnalytics";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 import Marketing from "../pages/OrganizerDashboard/Marketing";
+import AboutUs from "../pages/AboutUs";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
-  { path: "/find-events", element: <FilterEvents /> },
+  { path: "/find-events", element: <AllEvents /> },
   { path: "/events/:id", element: <EventPage /> },
   { path: "/login", element: <Login /> },
   { path: "/organizer-welcome", element: <OrganizerWelcome /> },
@@ -36,6 +37,7 @@ export const routes = [
   { path: "/vendor-profile", element: <VendorProfile /> },
   { path: "/signup/attendee", element: <SignupAttendee /> },
   { path: "/admin-dashboard", element: <AdminDashboard /> },
+  { path: "/about-us", element: <AboutUs /> },
 
   {
     path: "/organizer-dashboard",

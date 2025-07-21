@@ -160,12 +160,14 @@ import AddTickets from "./AddTickets";
 import PublishEvent from "./PublishEvent";
 import SeatAllocationPage from "./SeatAllocationPage";
 import StallAllocationPage from "./StallAllocationPage";
+import AgendaGenerator from "./AgendaGenerator";
 
 const steps = [
   "Build Event Page",
   "Add Tickets",
   "Seat Allocation",
   "Stall Allocation",
+  "Agenda Creation",
   "Publish",
 ];
 
@@ -184,7 +186,7 @@ const CombinedEventForm = () => {
     hasAuthorMeet: false,
     placeMap: null,
     tags: [],
-    agenda: null,
+    agenda: "",
     faqs: "",
     tickets: {
       paid: [],
@@ -292,6 +294,10 @@ const CombinedEventForm = () => {
             )}
 
             {currentStep === 4 && (
+              <AgendaGenerator form={form} setForm={setForm} />
+            )}
+
+            {currentStep === 5 && (
               <PublishEvent
                 form={form}
                 bannerImagePreview={bannerImagePreview}
