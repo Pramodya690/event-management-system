@@ -14,7 +14,8 @@ const SignupVendor = () => {
     cities: [],
     password: '',
     capacity:'',
-    budget:''
+    min_budget:'',
+    max_budget:'',
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -58,16 +59,8 @@ const SignupVendor = () => {
 
     if (!response.ok) throw new Error(data.message || 'Failed to register vendor');
 
-    // Redirect with returned vendor info
-    navigate(`/vendor-profile/${data.vendor.id}`, {
-      state: {
-        vendor: {
-          ...data.vendor,
-          rating: 0,
-          reviews: []
-        }
-      }
-    });
+    //vendor is directed to the home page after he registers himself
+    navigate('/');
 
   } catch (error) {
     console.error('Error submitting vendor data:', error.message);
@@ -159,8 +152,8 @@ const SignupVendor = () => {
                   </label>
                   <input
                     type="number"
-                    name="budget"
-                    value={vendorData.budget}
+                    name="max_budget"
+                    value={vendorData.max_budget}
                     onChange={handleChange}
                     min="0"
                     step="any"
@@ -170,19 +163,19 @@ const SignupVendor = () => {
                 </div>
                 <div>
                   <label className="block font-medium mb-1">
-                    Min Budget (in your currency)
+                    Minimum Budget
                   </label>
                   <input
                     type="number"
-                    name="budget"
-                    value={vendorData.budget}
+                    name="min_budget"
+                    value={vendorData.min_budget}
                     onChange={handleChange}
-                    min="0"
-                    step="any"
+                    min="1"
                     className="w-full p-3 border border-gray-300 rounded-lg"
-                    placeholder="e.g., 50000"
+                    placeholder="e.g., 200"
                   />
                 </div>
+                
                 <div>
                   <label className="block font-medium mb-1">
                     Capacity (number of people)

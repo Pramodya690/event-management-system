@@ -59,7 +59,7 @@ app.post('/api/auth/attendee/signup', async (req, res) => {
 // Endpoint to register vendor
 app.post('/api/vendors', async (req, res) => {
   try {
-    const { name, category, email, phone, address, cities, password, capacity, budget } = req.body;
+    const { name, category, email, phone, address, cities, password, capacity, min_budget, max_budget } = req.body;
 
     //Validate password presence
     if (!password) {
@@ -76,8 +76,8 @@ app.post('/api/vendors', async (req, res) => {
     }
 
     const result = await pool.query(
-      'INSERT INTO vendor (name, category, email, phone, address, cities, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *',
-      [name, category, email, phone, address, cities, hashedPassword, capacity, budget]
+      'INSERT INTO vendor (name, category, email, phone, address, cities, password, capacity, min_budget, max_budget) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
+      [name, category, email, phone, address, cities, hashedPassword, capacity, min_budget, max_budget]
     );
 
     res.status(201).json({ message: 'Vendor registered successfully', vendor: result.rows[0] });
@@ -357,6 +357,75 @@ app.get("/api/filterByCategoryAndLocation", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+// to fetch organizer data from db to Organizer profile
+app.get('/api/organizers/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query('SELECT * FROM organizer WHERE id = $1', [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Organizer not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Database error' });
+  }
+});
+
+
+// // update organizer profile 
+// app.put('/api/organizers/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const {
+//       username,
+//       email,
+//       phone,
+//       address,
+//       categories,
+//       profile_image,  
+//       bio,
+//       organization,
+//       position,
+//       social_twitter,
+//       social_linkedin
+//     } = req.body;
+
+//     const result = await pool.query(
+//       `UPDATE organizer
+//        SET username = $1, email = $2, phone = $3, address = $4,
+//            categories = $5, profile_image = $6, bio = $7,
+//            organization = $8, position = $9,
+//            social_twitter = $10, social_linkedin = $11
+//        WHERE id = $12
+//        RETURNING *`,
+//       [
+//         username,
+//         email,
+//         phone,
+//         address,
+//         categories,
+//         profile_image,
+//         bio,
+//         organization,
+//         position,
+//         social_twitter,
+//         social_linkedin,
+//         id
+//       ]
+//     );
+
+//     res.json(result.rows[0]);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).json({ error: 'Update failed' });
+//   }
+// });
+
 
 
 app.listen(port, () => {

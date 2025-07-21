@@ -10,6 +10,9 @@ import {
   FiHome,
   FiClock,
 } from "react-icons/fi";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 
 const OrganizerProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
