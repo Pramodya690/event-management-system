@@ -1,79 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-// Sample Events Data
-const events = [
-  {
-    id: 1,
-    name: "Book Club Gathering",
-    date: "2025-07-03",
-    startTime: "10:00 AM",
-    endTime: "11:30 AM",
-    timezone: "PDT",
-    ticketsSold: 3,
-    capacity: 100,
-    gross: "$0.00",
-    status: "On Sale",
-    type: "Online event",
-    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id: 2,
-    name: "Tech Conference 2025",
-    date: "2025-07-14",
-    startTime: "10:00 AM",
-    endTime: "05:30 PM",
-    timezone: "PDT",
-    ticketsSold: 14,
-    capacity: 0,
-    gross: "$1,400.00",
-    status: "Draft",
-    type: "Online event",
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id: 3,
-    name: "Art Exhibition: Modern Perspectives",
-    date: "2025-07-14",
-    startTime: "10:00 AM",
-    endTime: "05:30 PM",
-    timezone: "PDT",
-    ticketsSold: 14,
-    capacity: 200,
-    gross: "$2,800.00",
-    status: "On Sale",
-    type: "In-person event",
-    image: "https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id: 4,
-    name: "Music Festival",
-    date: "2025-07-21",
-    startTime: "12:00 PM",
-    endTime: "10:00 PM",
-    timezone: "PDT",
-    ticketsSold: 245,
-    capacity: 500,
-    gross: "$12,250.00",
-    status: "On Sale",
-    type: "In-person event",
-    image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-  },
-  {
-    id: 5,
-    name: "Workshop: Digital Marketing",
-    date: "2025-07-08",
-    startTime: "02:00 PM",
-    endTime: "04:30 PM",
-    timezone: "PDT",
-    ticketsSold: 18,
-    capacity: 30,
-    gross: "$900.00",
-    status: "On Sale",
-    type: "Online event",
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-  }
-];
-
 // Utility to build calendar grid
 const buildCalendarWeeks = (monthDate, eventList) => {
   const start = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
@@ -129,35 +55,6 @@ const EventsSummary = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showEventModal, setShowEventModal] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchEvents = async () => {
-  //     try {
-  //       const res = await fetch("http://localhost:5000/api/events");
-  //       const data = await res.json();
-  //       const transformed = data.map((e) => ({
-  //         id: e._id,
-  //         name: e.event_title,
-  //         date: e.date,
-  //         startTime: e.time,
-  //         endTime: e.time,
-  //         timezone: "PDT",
-  //         ticketsSold: e.ticketsSold || 0,
-  //         capacity: e.capacity || 100,
-  //         gross: e.gross || "$0.00",
-  //         status: `On Sale`,
-  //         type: e.location?.toLowerCase().includes("online")
-  //           ? "Online event"
-  //           : "In-person event",
-  //         image: e.image || "https://source.unsplash.com/random/500x300",
-  //       }));
-  //       setEvents(transformed);
-  //     } catch (err) {
-  //       console.error("Error fetching events:", err);
-  //     }
-  //   };
-  //   fetchEvents();
-  // }, []);
-
   useEffect(() => {
   const fetchEvents = async () => {
     try {
@@ -165,21 +62,30 @@ const EventsSummary = () => {
       const data = await res.json();
 
       const transformed = data.map((e) => ({
-        id: e.id, // or e.event_id, if that's your column
-        name: e.event_title,
-        date: e.date,
-        startTime: e.time,
-        endTime: e.time,
-        timezone: "PDT",
-        ticketsSold: 0,
-        capacity: 100,
-        gross: "$0.00",
-        status: "On Sale",
-        type: e.location.toLowerCase().includes("online")
-          ? "Online event"
-          : "In-person event",
-        image: "https://source.unsplash.com/random/500x300",
-      }));
+  id: e.id,
+  name: e.event_title,
+  date: e.date,
+  startTime: e.time,
+  endTime: e.time, // Optional: add a real `end_time` field to DB later
+  timezone: "GMT+5:30", // Or dynamically fetch user's timezone
+  ticketsSold: 0, // Hardcoded until ticket tracking is implemented
+  capacity: e.headcount || 0,
+  gross: "LKR 0.00", // Placeholder until real data is available
+  status: "On Sale", // Or fetch from a `status` field if added
+  type: e.location?.toLowerCase().includes("online")
+    ? "Online event"
+    : "In-person event",
+  image: e.banner_image
+    ? `data:image/jpeg;base64,${btoa(
+        new Uint8Array(e.banner_image.data).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ""
+        )
+      )}`
+    : "https://source.unsplash.com/random/500x300",
+}));
+
+
 
       setEvents(transformed);
     } catch (error) {
@@ -189,10 +95,6 @@ const EventsSummary = () => {
 
   fetchEvents();
 }, []);
-
-
-
-
 
   useEffect(() => {
     setCalendarWeeks(buildCalendarWeeks(currentMonth, events));
