@@ -19,8 +19,6 @@ import VendorProfile from "../pages/VendorProfile";
 import SignupAttendee from "../pages/Signup/SignupAttendee";
 import EventAnalytics from "../pages/OrganizerDashboard/EventAnalytics";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
-import StallAllocationPage from "../pages/OrganizerDashboard/BuildEventPage/StallAllocationPage";
-import SeatAllocationPage from "../pages/OrganizerDashboard/BuildEventPage/SeatAllocationPage";
 import Marketing from "../pages/OrganizerDashboard/Marketing";
 
 export const routes = [

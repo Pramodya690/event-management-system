@@ -1,234 +1,371 @@
-// import { useLocation, useNavigate } from 'react-router-dom';
-
-// const OrganizerProfile = () => {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-
-//   const organizer = location.state;
-
-//   if (!organizer) {
-//     return (
-//       <div className="min-h-screen flex items-center justify-center text-center">
-//         <div>
-//           <h1 className="text-2xl font-bold text-gray-800">No Profile Data Found</h1>
-//           <p className="text-gray-600 mt-2">Please complete the sign-up process first.</p>
-//           <button
-//             onClick={() => navigate('/signup/organizer')}
-//             className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-//           >
-//             Go to Sign Up
-//           </button>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 p-6">
-//       <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
-//         <h2 className="text-2xl font-bold text-gray-800 mb-6">Organizer Profile</h2>
-
-//         <div className="space-y-4 text-gray-700">
-//           <p><strong>Full Name:</strong> {organizer.name}</p>
-//           <p><strong>Email:</strong> {organizer.email}</p>
-//           <p><strong>Event Types:</strong> {organizer.selected.join(', ')}</p>
-//           <p><strong>Events Next Year:</strong> {organizer.numEvents}</p>
-//           <p><strong>Average Event Size:</strong> {organizer.eventSize}</p>
-//           <p><strong>Goal:</strong> {
-//             {
-//               easy: 'Budget-friendly and easy to use',
-//               reach: 'Reach more people and keep them coming back',
-//               tools: 'More customer support and tools for professionals'
-//             }[organizer.goal]
-//           }</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default OrganizerProfile;
-
-import { useLocation, useNavigate } from 'react-router-dom';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
+import React, { useState } from "react";
+import {
+  FiEdit,
+  FiSave,
+  FiX,
+  FiUpload,
+  FiCalendar,
+  FiDollarSign,
+  FiUsers,
+  FiHome,
+  FiClock,
+} from "react-icons/fi";
 
 const OrganizerProfile = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const organizer = location.state;
+  const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState({
+    name: "Pramodya Piyumanthi",
+    email: "pramodya@example.com",
+    phone: "+94 76 123 4567",
+    organization: "CodeFest Ltd.",
+    position: "Event Director",
+    bio: "Passionate about creating engaging tech conferences and fostering developer communities. With over 5 years of experience in event management, I specialize in large-scale tech conferences with 1000+ attendees.",
+    profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
+    eventsCreated: 12,
+    revenueGenerated: 125000,
+    ticketsSold: 4300,
+    stallCount: 32,
+    seatCount: 1210,
+    memberSince: "2018-06-15",
+    rating: 4.8,
+    socialMedia: {
+      twitter: "@pramodya",
+      linkedin: "pramodya-piyumanthi",
+    },
+  });
 
-  if (!organizer) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navigation />
-        <div className="flex-grow flex items-center justify-center text-center px-4">
-          <div className="max-w-md bg-white p-8 rounded-xl shadow-lg">
-            <div className="text-blue-600 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-            </div>
-            <h1 className="text-2xl font-bold text-gray-800">Profile Incomplete</h1>
-            <p className="text-gray-600 mt-2 mb-6">Please complete the organizer sign-up process to access your profile.</p>
-            <button
-              onClick={() => navigate('/signup/organizer')}
-              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200 shadow-md"
-            >
-              Complete Sign Up
-            </button>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
+  const handleChange = (field, value) => {
+    setProfile((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSocialMediaChange = (platform, value) => {
+    setProfile((prev) => ({
+      ...prev,
+      socialMedia: {
+        ...prev.socialMedia,
+        [platform]: value,
+      },
+    }));
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfile((prev) => ({ ...prev, profileImage: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSave = () => {
+    // TODO: Add API call here
+    setIsEditing(false);
+  };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      <Navigation />
-      
-      <main className="flex-grow p-6">
-        <div className="max-w-4xl mx-auto">
-          {/* Profile Section */}
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800">Organizer Profile</h1>
-            <button
-              onClick={() => navigate('/organizer-dashboard')}
-              className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-              </svg>
-              <span>Dashboard</span>
-            </button>
+    <div className="max-w-6xl mx-auto my-10 p-8 bg-white rounded-xl shadow-lg">
+      {/* Header with edit button */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">Organizer Profile</h1>
+        {!isEditing && (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg transition-colors"
+          >
+            <FiEdit /> Edit Profile
+          </button>
+        )}
+      </div>
+
+      {/* Main profile section */}
+      <div className="flex flex-col md:flex-row gap-8">
+        {/* Left column - Profile image and stats */}
+        <div className="md:w-1/3 space-y-6">
+          <div className="relative">
+            <img
+              src={profile.profileImage}
+              alt="Profile"
+              className="w-40 h-40 rounded-full object-cover border-4 border-white shadow-lg mx-auto"
+            />
+            {isEditing && (
+              <div className="mt-4 text-center">
+                <label className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg cursor-pointer transition-colors">
+                  <FiUpload /> Change Photo
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+            )}
           </div>
 
-          <div className="bg-white rounded-xl shadow-md overflow-hidden mb-12">
-            <div className="p-6 sm:p-8">
-              <div className="flex flex-col sm:flex-row gap-8">
-                <div className="sm:w-1/3">
-                  <div className="bg-gray-100 rounded-lg h-48 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                  </div>
-                </div>
-                
-                <div className="sm:w-2/3 space-y-6">
-                  <div>
-                    <h2 className="text-xl font-semibold text-gray-800">{organizer.name}</h2>
-                    <p className="text-blue-600">{organizer.email}</p>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h3 className="text-sm font-medium text-gray-500 mb-1">EVENT TYPES</h3>
-                      <p className="font-medium">{organizer.selected.join(', ')}</p>
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h3 className="text-sm font-medium text-gray-500 mb-1">EVENTS NEXT YEAR</h3>
-                      <p className="font-medium">{organizer.numEvents}</p>
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h3 className="text-sm font-medium text-gray-500 mb-1">AVERAGE EVENT SIZE</h3>
-                      <p className="font-medium">{organizer.eventSize}</p>
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h3 className="text-sm font-medium text-gray-500 mb-1">PRIMARY GOAL</h3>
-                      <p className="font-medium">
-                        {
-                          {
-                            easy: 'Budget-friendly events',
-                            reach: 'Expand audience reach',
-                            tools: 'Professional tools'
-                          }[organizer.goal]
-                        }
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 px-6 py-4 sm:px-8 border-t border-gray-200">
-              <button
-                onClick={() => navigate('/organizer-dashboard/profile/edit')}
-                className="text-blue-600 hover:text-blue-800 font-medium transition duration-200"
-              >
-                Edit Profile
-              </button>
+          {/* Stats card */}
+          <div className="bg-gradient-to-br from-sky-50 to-blue-50 p-6 rounded-xl shadow-sm border border-blue-100">
+            <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
+              <FiCalendar /> Event Statistics
+            </h3>
+            <div className="space-y-4">
+              <ProfileStat
+                label="Events Created"
+                value={profile.eventsCreated}
+                icon={<FiCalendar className="text-sky-500" />}
+              />
+              <ProfileStat
+                label="Revenue Generated"
+                value={`LKR ${profile.revenueGenerated.toLocaleString()}`}
+                icon={<FiDollarSign className="text-green-500" />}
+              />
+              <ProfileStat
+                label="Tickets Sold"
+                value={profile.ticketsSold.toLocaleString()}
+                icon={<FiUsers className="text-purple-500" />}
+              />
+              <ProfileStat
+                label="Stalls Allocated"
+                value={profile.stallCount}
+                icon={<FiHome className="text-amber-500" />}
+              />
+              <ProfileStat
+                label="Seats Allocated"
+                value={profile.seatCount.toLocaleString()}
+                icon={<FiClock className="text-red-500" />}
+              />
             </div>
           </div>
 
-          {/* Added Welcome Cards Section */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Quick Actions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Card 1 - Create Event */}
-              <div className="bg-white rounded-lg shadow-md flex flex-col items-center p-6 transition-transform hover:scale-[1.02]">
-                <img
-                  src="/create.jpg"
-                  alt="Create event"
-                  className="w-full h-40 object-cover rounded-md mb-4"
-                />
-                <h3 className="text-xl font-semibold mb-2">Create New Event</h3>
-                <p className="text-gray-600 mb-4 text-center">
-                  Start building your next event
-                </p>
-                <button
-                  onClick={() => navigate('/create-event-form')}
-                  className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          {/* Member since */}
+          <div className="text-center text-sm text-gray-500">
+            <p>
+              Member since {new Date(profile.memberSince).toLocaleDateString()}
+            </p>
+            <div className="flex items-center justify-center mt-1">
+              {[...Array(5)].map((_, i) => (
+                <svg
+                  key={i}
+                  className={`w-4 h-4 ${
+                    i < Math.floor(profile.rating)
+                      ? "text-yellow-400"
+                      : "text-gray-300"
+                  }`}
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
                 >
-                  Get Started
-                </button>
-              </div>
-
-              {/* Card 2 - Discover */}
-              <div className="bg-white rounded-lg shadow-md flex flex-col items-center p-6 transition-transform hover:scale-[1.02]">
-                <img
-                  src="/explore.jpg"
-                  alt="Discover features"
-                  className="w-full h-40 object-cover rounded-md mb-4"
-                />
-                <h3 className="text-xl font-semibold mb-2">Explore Features</h3>
-                <p className="text-gray-600 mb-4 text-center">
-                  Learn how to make the most of our platform
-                </p>
-                <button
-                  onClick={() => navigate('/features')}
-                  className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-                >
-                  Learn More
-                </button>
-              </div>
-
-              {/* Card 3 - Organizer Dashboard */}
-              <div className="bg-white rounded-lg shadow-md flex flex-col items-center p-6 transition-transform hover:scale-[1.02]">
-                <img
-                  src="/dashboard.jpg"
-                  alt="Organizer Dashboard"
-                  className="w-full h-40 object-cover rounded-md mb-4"
-                />
-                <h3 className="text-xl font-semibold mb-2">View Dashboard</h3>
-                <p className="text-gray-600 mb-4 text-center">
-                  Manage all your events in one place
-                </p>
-                <button
-                  onClick={() => navigate('/organizer-dashboard')}
-                  className="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-                >
-                  Go to Dashboard
-                </button>
-              </div>
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+              <span className="ml-1 text-gray-600">{profile.rating}</span>
             </div>
           </div>
         </div>
-      </main>
-      
-      <Footer />
+
+        {/* Right column - Profile details */}
+        <div className="md:w-2/3 space-y-6">
+          {isEditing ? (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name
+                  </label>
+                  <input
+                    value={profile.name}
+                    onChange={(e) => handleChange("name", e.target.value)}
+                    className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Position
+                  </label>
+                  <input
+                    value={profile.position}
+                    onChange={(e) => handleChange("position", e.target.value)}
+                    className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                  </label>
+                  <input
+                    value={profile.email}
+                    onChange={(e) => handleChange("email", e.target.value)}
+                    className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone
+                  </label>
+                  <input
+                    value={profile.phone}
+                    onChange={(e) => handleChange("phone", e.target.value)}
+                    className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Organization
+                </label>
+                <input
+                  value={profile.organization}
+                  onChange={(e) => handleChange("organization", e.target.value)}
+                  className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Twitter
+                  </label>
+                  <div className="flex">
+                    <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 bg-gray-100 text-gray-500 text-sm">
+                      @
+                    </span>
+                    <input
+                      value={profile.socialMedia.twitter.replace("@", "")}
+                      onChange={(e) =>
+                        handleSocialMediaChange("twitter", `@${e.target.value}`)
+                      }
+                      className="flex-1 min-w-0 block w-full border rounded-r-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    LinkedIn
+                  </label>
+                  <div className="flex">
+                    <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 bg-gray-100 text-gray-500 text-sm">
+                      linkedin.com/in/
+                    </span>
+                    <input
+                      value={profile.socialMedia.linkedin}
+                      onChange={(e) =>
+                        handleSocialMediaChange("linkedin", e.target.value)
+                      }
+                      className="flex-1 min-w-0 block w-full border rounded-r-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Bio
+                </label>
+                <textarea
+                  value={profile.bio}
+                  onChange={(e) => handleChange("bio", e.target.value)}
+                  rows="4"
+                  className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
+                />
+              </div>
+
+              <div className="flex gap-4 pt-2">
+                <button
+                  onClick={handleSave}
+                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors"
+                >
+                  <FiSave /> Save Changes
+                </button>
+                <button
+                  onClick={() => setIsEditing(false)}
+                  className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 px-6 py-2 rounded-lg transition-colors"
+                >
+                  <FiX /> Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  {profile.name}
+                </h2>
+                <p className="text-lg text-sky-600 font-medium">
+                  {profile.position}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-500">
+                    Organization
+                  </h3>
+                  <p className="text-gray-800">{profile.organization}</p>
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium text-gray-500">Contact</h3>
+                  <p className="text-gray-800">{profile.email}</p>
+                  <p className="text-gray-800">{profile.phone}</p>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">
+                  Social Media
+                </h3>
+                <div className="flex gap-4 mt-1">
+                  {profile.socialMedia.twitter && (
+                    <a
+                      href={`https://twitter.com/${profile.socialMedia.twitter.replace(
+                        "@",
+                        ""
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:text-blue-600"
+                    >
+                      Twitter: {profile.socialMedia.twitter}
+                    </a>
+                  )}
+                  {profile.socialMedia.linkedin && (
+                    <a
+                      href={`https://linkedin.com/in/${profile.socialMedia.linkedin}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-700 hover:text-blue-900"
+                    >
+                      LinkedIn
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-sm font-medium text-gray-500">About</h3>
+                <p className="text-gray-700 mt-1 leading-relaxed">
+                  {profile.bio}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
+
+const ProfileStat = ({ label, value, icon }) => (
+  <div className="flex items-center gap-3">
+    <div className="p-2 bg-white rounded-lg shadow-sm">{icon}</div>
+    <div>
+      <p className="text-xs text-gray-500">{label}</p>
+      <p className="text-lg font-semibold text-gray-800">{value}</p>
+    </div>
+  </div>
+);
 
 export default OrganizerProfile;
