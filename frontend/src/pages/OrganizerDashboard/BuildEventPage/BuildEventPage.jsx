@@ -89,10 +89,10 @@ const BuildEventPage = ({ form, setForm, tagInput, setTagInput, bannerImage, set
         <label className="font-semibold block mb-1">Category of the Event</label>
         <input
           type="text"
-          name="eventCategory"
-          value={form.eventCategory}
-          onChange={(e) => setForm((prev) => ({ ...prev, eventCategory: e.target.value }))}
-          placeholder="Enter event title"
+          name="category"
+          value={form.category}
+          onChange={(e) => setForm((prev) => ({ ...prev, category: e.target.value }))}
+          placeholder="Enter event category"
           className="w-full border px-3 py-2 rounded"
           required
         />

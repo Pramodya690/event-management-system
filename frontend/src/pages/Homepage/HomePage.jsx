@@ -18,29 +18,207 @@ const HomePage = () => {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
 
-  const filteredByCategory =
-    selectedCategory === "All"
-      ? events
-      : events.filter((event) => event.category === selectedCategory);
+  // const filteredByCategory =
+  //   selectedCategory === "All"
+  //     ? events
+  //     : events.filter((event) => event.category === selectedCategory);
+  
+  const filteredByCategory = events;
 
   const filteredByLocation = events;
 
   const featuredEvents = events.filter((event) => event.featured);
 
-// useEffect hook to fetch from the API when the component mounts & to filter events according to the location
+// // useEffect hook to fetch from the API when the component mounts & to filter events according to the location
+// useEffect(() => {
+//   const fetchEvents = async () => {
+//     try {
+//       const url =
+//         selectedLocation === "All"
+//           ? "http://localhost:5000/api/events"
+          // : `http://localhost:5000/api/filterByLocation?city=${encodeURIComponent(
+          //   // .trim() ensures that the page doesnt refresh during each location filter
+          //     selectedLocation.trim()   
+          //   )}`;
+          
+
+//       const response = await fetch(url);
+//       if (!response.ok) throw new Error("Network response was not ok");
+
+//       const data = await response.json();
+
+//       const transformed = data.map((e) => ({
+//         ...e,
+//         image: e.banner_image
+//           ? `data:image/jpeg;base64,${btoa(
+//               new Uint8Array(e.banner_image.data).reduce(
+//                 (data, byte) => data + String.fromCharCode(byte),
+//                 ""
+//               )
+//             )}`
+//           : "https://source.unsplash.com/random/500x300",
+//       }));
+
+//       setEvents(transformed);
+//       setError(null); // reset any previous errors
+//     } catch (err) {
+//       setError(err.message);
+//       setEvents([]);  // clear events on error
+//     } 
+//   };
+
+//   fetchEvents();
+// }, [selectedLocation]); 
+
+// // // filtering based on the category
+// // useEffect(() => {
+// //   const fetchCategoryEvents = async () => {
+// //     try {
+// //       const url = `http://localhost:5000/api/filterByCategory?category=${encodeURIComponent(
+// //         selectedCategory.trim()
+// //       )}`;
+
+// //       const response = await fetch(url);
+// //       if (!response.ok) throw new Error("Failed to fetch category events");
+
+// //       const data = await response.json();
+
+// //       const transformed = data.map((e) => ({
+// //         ...e,
+// //         image: e.banner_image
+// //           ? `data:image/jpeg;base64,${btoa(
+// //               new Uint8Array(e.banner_image.data).reduce(
+// //                 (data, byte) => data + String.fromCharCode(byte),
+// //                 ""
+// //               )
+// //             )}`
+// //           : "https://source.unsplash.com/random/500x300",
+// //       }));
+
+// //       setSelectedLocation(transformed);
+// //     } catch (err) {
+// //       console.error(err.message);
+// //       setSelectedLocation([]);
+// //     }
+// //   };
+
+// //   fetchCategoryEvents();
+// // }, [selectedCategory]);
+
+// useEffect(() => {
+//   const fetchEvents = async () => {
+//     try {
+//       const url =
+//         selectedCategory === "All"
+//           ? "http://localhost:5000/api/events"
+//           : `http://localhost:5000/api/filterByCategory?category=${encodeURIComponent(
+//             // .trim() ensures that the page doesnt refresh during each location filter
+//               selectedCategory.trim()   
+//             )}`;
+          
+
+//       const response = await fetch(url);
+//       if (!response.ok) throw new Error("Network response was not ok");
+
+//       const data = await response.json();
+
+//       const transformed = data.map((e) => ({
+//         ...e,
+//         image: e.banner_image
+//           ? `data:image/jpeg;base64,${btoa(
+//               new Uint8Array(e.banner_image.data).reduce(
+//                 (data, byte) => data + String.fromCharCode(byte),
+//                 ""
+//               )
+//             )}`
+//           : "https://source.unsplash.com/random/500x300",
+//       }));
+
+//       setEvents(transformed);
+//       setError(null); // reset any previous errors
+//     } catch (err) {
+//       setError(err.message);
+//       setEvents([]);  // clear events on error
+//     } 
+//   };
+
+//   fetchEvents();
+// }, [selectedCategory]);
+
+
+
+
+// useEffect(() => {
+//   const fetchFilteredEvents = async () => {
+//     try {
+//       let url = "http://localhost:5000/api/events"; // base fallback
+
+//       const safeCategory = (selectedCategory || "").trim();
+//       const safeLocation = (selectedLocation || "").trim();
+
+//       if (safeCategory !== "All" && safeLocation !== "All") {
+//         url = `http://localhost:5000/api/filterByCategoryAndLocation?category=${encodeURIComponent(
+//           safeCategory
+//         )}&city=${encodeURIComponent(safeLocation)}`;
+//       } else if (safeCategory !== "All") {
+//         url = `http://localhost:5000/api/filterByCategory?category=${encodeURIComponent(
+//           safeCategory
+//         )}`;
+//       } else if (safeLocation !== "All") {
+//         url = `http://localhost:5000/api/filterByLocation?city=${encodeURIComponent(
+//           safeLocation
+//         )}`;
+//       }
+
+//       const response = await fetch(url);
+//       if (!response.ok) throw new Error("Failed to fetch filtered events");
+
+//       const data = await response.json();
+
+//       const transformed = data.map((e) => ({
+//         ...e,
+//         image: e.banner_image
+//           ? `data:image/jpeg;base64,${btoa(
+//               new Uint8Array(e.banner_image.data).reduce(
+//                 (data, byte) => data + String.fromCharCode(byte),
+//                 ""
+//               )
+//             )}`
+//           : "https://source.unsplash.com/random/500x300",
+//       }));
+
+//       setEvents(transformed);
+//       setError(null);
+//     } catch (err) {
+//       console.error("Fetch error:", err.message);
+//       setEvents([]);
+//       setError(err.message);
+//     }
+//   };
+
+//   fetchFilteredEvents();
+// }, [selectedCategory, selectedLocation]);
+
+
 useEffect(() => {
   const fetchEvents = async () => {
     try {
-      const url =
-        selectedLocation === "All"
-          ? "http://localhost:5000/api/events"
-          : `http://localhost:5000/api/filterByLocation?city=${encodeURIComponent(
-            // .trim() ensures that the page doesnt refresh during each location filter
-              selectedLocation.trim()   
-            )}`;
+      let url = "http://localhost:5000/api/events"; // default
+
+      const safeCategory = (selectedCategory || "").trim();
+      const safeLocation = (selectedLocation || "").trim();
+
+      if (safeCategory !== "All" && safeLocation === "All") {
+        url = `http://localhost:5000/api/filterByCategory?category=${encodeURIComponent(safeCategory)}`;
+      } else if (safeLocation !== "All" && safeCategory === "All") {
+        url = `http://localhost:5000/api/filterByLocation?city=${encodeURIComponent(safeLocation)}`;
+      } else if (safeCategory !== "All" && safeLocation !== "All") {
+        // optional: create a new backend API for both filters, or fallback to frontend filtering
+        url = "http://localhost:5000/api/events"; // fallback to client filtering
+      }
 
       const response = await fetch(url);
-      if (!response.ok) throw new Error("Network response was not ok");
+      if (!response.ok) throw new Error("Failed to fetch events");
 
       const data = await response.json();
 
@@ -56,16 +234,26 @@ useEffect(() => {
           : "https://source.unsplash.com/random/500x300",
       }));
 
-      setEvents(transformed);
-      setError(null); // reset any previous errors
+      // Client-side filtering if both filters are applied
+      const finalFiltered =
+        safeCategory !== "All" && safeLocation !== "All"
+          ? transformed.filter(
+              (e) =>
+                e.category === safeCategory && e.city === safeLocation
+            )
+          : transformed;
+
+      setEvents(finalFiltered);
+      setError(null);
     } catch (err) {
+      console.error("Error fetching events:", err.message);
+      setEvents([]);
       setError(err.message);
-      setEvents([]);  // clear events on error
-    } 
+    }
   };
 
   fetchEvents();
-}, [selectedLocation]); 
+}, [selectedCategory, selectedLocation]);
 
 
   //message while the data is been loaded onto the page

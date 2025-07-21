@@ -15,6 +15,7 @@ const ConferenceForm = () => {
     date: "",
     time: "",
     location: "",
+    category: " ",
     description: "",
     stalls: "",
     hasAuthorMeet: false,
@@ -46,6 +47,7 @@ const ConferenceForm = () => {
       formData.append("event_title", form.eventName);
       formData.append("date", form.date);
       formData.append("time", form.time);
+      formData.append("category", form.category);
       formData.append("location", form.location);
       formData.append("description", form.description);
       formData.append("tags", JSON.stringify(form.tags));
@@ -73,6 +75,7 @@ const ConferenceForm = () => {
           eventName: data.event_title,
           date: data.date,
           time: data.time,
+          category: data.category,
           location: data.location,
           venue_id: data.venue_id,
           description: data.description,

@@ -189,7 +189,6 @@ app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
   ]
 );
 
-
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error('Error saving event:', err.message);
@@ -319,6 +318,45 @@ app.get('/api/filterByLocation', async (req, res) => {
   }
 });
 
+//to filter according to the category in the homepage
+app.get('/api/filterBycategory', async (req, res) => {
+  const { category } = req.query;
+  console.log("Filtering by category:", category);
+
+  try {
+    let result;
+    if (category && category.toLowerCase() !== "all") {
+      result = await pool.query(
+        `SELECT * FROM event WHERE LOWER(TRIM(category)) = LOWER(TRIM($1)) ORDER BY date ASC`,
+        [category]
+      );
+    } else {
+      result = await pool.query('SELECT * FROM event ORDER BY date ASC');
+    }
+
+    console.log("Events returned by filtered according to category:", result.rows.length);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching events:", err);
+    res.status(500).json({ error: 'Failed to fetch events' });
+  }
+});
+
+// filters both category & location
+app.get("/api/filterByCategoryAndLocation", async (req, res) => {
+  const { category, city } = req.query;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM event WHERE category = $1 AND city = $2 ORDER BY date ASC",
+      [category, city]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error filtering by category and location:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 app.listen(port, () => {
