@@ -154,6 +154,7 @@ app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
       event_title,
       date,
       time,
+      category,
       location,
       venue_id,
       description,
@@ -168,13 +169,14 @@ app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
 
     const result = await pool.query(
   `INSERT INTO event 
-  (event_title, date, time, location, venue_id, description, tags, faqs, banner_image, city, headcount, coordinates)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+  (event_title, date, time, category, location, venue_id, description, tags, faqs, banner_image, city, headcount, coordinates)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
   RETURNING *`,
   [
     event_title,                           
     date,                                  
-    time,                                  
+    time,   
+    category,                               
     location,                             
     venue_id || null,                      
     description,                           

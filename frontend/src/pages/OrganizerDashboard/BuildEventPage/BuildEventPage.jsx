@@ -84,6 +84,20 @@ const BuildEventPage = ({ form, setForm, tagInput, setTagInput, bannerImage, set
         />
       </div>
 
+      {/* Event Category */}
+      <div className="p-4 border border-sky-300 rounded-lg">
+        <label className="font-semibold block mb-1">Category of the Event</label>
+        <input
+          type="text"
+          name="eventCategory"
+          value={form.eventCategory}
+          onChange={(e) => setForm((prev) => ({ ...prev, eventCategory: e.target.value }))}
+          placeholder="Enter event title"
+          className="w-full border px-3 py-2 rounded"
+          required
+        />
+      </div>
+
       {/* Date & Time */}
       <div className="p-4 border border-sky-300 rounded-lg">
         <label className="font-semibold block mb-1">Date & Time</label>
