@@ -19,6 +19,7 @@ import VendorProfile from "../pages/VendorProfile";
 import SignupAttendee from "../pages/Signup/SignupAttendee";
 import EventAnalytics from "../pages/OrganizerDashboard/EventAnalytics";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
+import Marketing from "../pages/OrganizerDashboard/Marketing";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
@@ -68,6 +69,10 @@ export const routes = [
         path: "event-analytics",
         element: <EventAnalytics />,
       },
+      {
+        path: "marketing",
+        element: <Marketing />,
+      }
     ],
   },
 ];

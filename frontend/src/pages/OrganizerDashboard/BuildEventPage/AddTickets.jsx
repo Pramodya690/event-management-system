@@ -1,6 +1,21 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 
 const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
+  // Ensure ticket object is initialized for the selected tab
+  useEffect(() => {
+    setForm((prev) => {
+      const updated = { ...prev };
+      if (!updated.tickets) updated.tickets = {};
+      if (!updated.tickets[ticketTypeTab]) {
+        updated.tickets[ticketTypeTab] = [
+          { name: "", quantity: "", price: "" },
+        ];
+      }
+      return updated;
+    });
+  }, [ticketTypeTab]);
+
   return (
     <motion.div
       key="step2"
@@ -13,16 +28,19 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
       {/* Left: Ticket Type Selection */}
       <div className="w-full lg:w-1/2 space-y-4">
         <h2 className="text-3xl font-bold text-gray-900">Create tickets</h2>
-        <p className="text-gray-600">Choose a ticket type or build a section with multiple ticket types.</p>
+        <p className="text-gray-600">
+          Choose a ticket type or build a section with multiple ticket types.
+        </p>
 
         {["paid", "free", "donation"].map((tab) => (
           <button
             key={tab}
             onClick={() => setTicketTypeTab(tab)}
             className={`w-full flex items-center justify-between p-4 border rounded-lg shadow-sm transition 
-              ${ticketTypeTab === tab
-                ? "border-sky-600 bg-sky-50 text-sky-700"
-                : "border-gray-300 hover:border-sky-400 text-gray-700 hover:text-sky-600"
+              ${
+                ticketTypeTab === tab
+                  ? "border-sky-600 bg-sky-50 text-sky-700"
+                  : "border-gray-300 hover:border-sky-400 text-gray-700 hover:text-sky-600"
               }`}
           >
             <div className="flex items-center space-x-3">
@@ -32,9 +50,12 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
               <div>
                 <div className="font-semibold capitalize">{tab}</div>
                 <div className="text-sm text-gray-500">
-                  {tab === "paid" && "Create a ticket that people have to pay for."}
-                  {tab === "free" && "Create a ticket that no one has to pay for."}
-                  {tab === "donation" && "Let people pay any amount for their ticket."}
+                  {tab === "paid" &&
+                    "Create a ticket that people have to pay for."}
+                  {tab === "free" &&
+                    "Create a ticket that no one has to pay for."}
+                  {tab === "donation" &&
+                    "Let people pay any amount for their ticket."}
                 </div>
               </div>
             </div>
@@ -72,13 +93,19 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
         {/* Ticket Form Fields */}
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-sky-800">Name</label>
+            <label className="block text-sm font-medium text-sky-800">
+              Name
+            </label>
             <input
               type="text"
               value={form.tickets?.[ticketTypeTab]?.[0]?.name || ""}
               onChange={(e) => {
                 const updated = { ...form.tickets };
-                updated[ticketTypeTab][0].name = e.target.value;
+                if (!updated[ticketTypeTab]) updated[ticketTypeTab] = [{}];
+                updated[ticketTypeTab][0] = {
+                  ...updated[ticketTypeTab][0],
+                  name: e.target.value,
+                };
                 setForm((prev) => ({ ...prev, tickets: updated }));
               }}
               placeholder="General Admission"
@@ -89,14 +116,20 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-sky-800">Available quantity</label>
+            <label className="block text-sm font-medium text-sky-800">
+              Available quantity
+            </label>
             <input
               type="number"
               min="1"
               value={form.tickets?.[ticketTypeTab]?.[0]?.quantity || ""}
               onChange={(e) => {
                 const updated = { ...form.tickets };
-                updated[ticketTypeTab][0].quantity = e.target.value;
+                if (!updated[ticketTypeTab]) updated[ticketTypeTab] = [{}];
+                updated[ticketTypeTab][0] = {
+                  ...updated[ticketTypeTab][0],
+                  quantity: e.target.value,
+                };
                 setForm((prev) => ({ ...prev, tickets: updated }));
               }}
               className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
@@ -106,14 +139,20 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
 
           {ticketTypeTab === "paid" && (
             <div>
-              <label className="block text-sm font-medium text-sky-800">Price ($)</label>
+              <label className="block text-sm font-medium text-sky-800">
+                Price ($)
+              </label>
               <input
                 type="number"
                 min="0"
                 value={form.tickets?.[ticketTypeTab]?.[0]?.price || ""}
                 onChange={(e) => {
                   const updated = { ...form.tickets };
-                  updated[ticketTypeTab][0].price = e.target.value;
+                  if (!updated[ticketTypeTab]) updated[ticketTypeTab] = [{}];
+                  updated[ticketTypeTab][0] = {
+                    ...updated[ticketTypeTab][0],
+                    price: e.target.value,
+                  };
                   setForm((prev) => ({ ...prev, tickets: updated }));
                 }}
                 className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
@@ -124,7 +163,9 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-sky-800">Sales start</label>
+              <label className="block text-sm font-medium text-sky-800">
+                Sales start
+              </label>
               <input
                 type="date"
                 className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
@@ -135,7 +176,9 @@ const AddTickets = ({ form, setForm, ticketTypeTab, setTicketTypeTab }) => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-sky-800">Sales end</label>
+              <label className="block text-sm font-medium text-sky-800">
+                Sales end
+              </label>
               <input
                 type="date"
                 className="w-full border border-sky-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
