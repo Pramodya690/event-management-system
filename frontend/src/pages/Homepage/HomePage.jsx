@@ -16,30 +16,34 @@ const HomePage = () => {
 
   // new states to fetch data from db
   const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
 
   const filteredByCategory =
     selectedCategory === "All"
       ? events
       : events.filter((event) => event.category === selectedCategory);
 
-  const filteredByLocation =
-    selectedLocation === "All"
-      ? events
-      : events.filter((event) => event.location.toLowerCase().includes(selectedLocation.toLowerCase()));
+  const filteredByLocation = events;
 
   const featuredEvents = events.filter((event) => event.featured);
 
-  // useEffect hook to fetch from the API when the component mounts
-  useEffect(() => {
+// useEffect hook to fetch from the API when the component mounts & to filter events according to the location
+useEffect(() => {
   const fetchEvents = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/events");
+      const url =
+        selectedLocation === "All"
+          ? "http://localhost:5000/api/events"
+          : `http://localhost:5000/api/filterByLocation?city=${encodeURIComponent(
+            // .trim() ensures that the page doesnt refresh during each location filter
+              selectedLocation.trim()   
+            )}`;
+
+      const response = await fetch(url);
       if (!response.ok) throw new Error("Network response was not ok");
+
       const data = await response.json();
-      // convert the binary image in the db to a base64 URL
+
       const transformed = data.map((e) => ({
         ...e,
         image: e.banner_image
@@ -49,28 +53,22 @@ const HomePage = () => {
                 ""
               )
             )}`
-          : "https://source.unsplash.com/random/500x300", // fallback
+          : "https://source.unsplash.com/random/500x300",
       }));
+
       setEvents(transformed);
+      setError(null); // reset any previous errors
     } catch (err) {
       setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+      setEvents([]);  // clear events on error
+    } 
   };
 
   fetchEvents();
-}, []);
+}, [selectedLocation]); 
 
-  // loading spinner or a message while the data is been loaded onto the page
-    if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl text-gray-600">Loading events...</p>
-      </div>
-    );
-  }
 
+  //message while the data is been loaded onto the page
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -78,11 +76,6 @@ const HomePage = () => {
       </div>
     );
   }
-
-
-  // console.log("eventList:", eventList);
-  // console.log("filteredByCategory:", filteredByCategory);
-  // console.log("filteredByLocation:", filteredByLocation);
 
   return (
     <div className="min-h-screen bg-gray-50">

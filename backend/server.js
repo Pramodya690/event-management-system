@@ -281,8 +281,6 @@ app.post("/api/tickets", async (req, res) => {
   }
 });
 
-
-
 // Fetch all created events
 app.get('/api/events', async (req, res) => {
   try {
@@ -293,6 +291,33 @@ app.get('/api/events', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch events' });
   }
 });
+
+
+//to filter according to the city in the homepage
+app.get('/api/filterByLocation', async (req, res) => {
+  const { city } = req.query;
+  console.log("Filtering by city:", city);
+
+  try {
+    let result;
+    if (city && city.toLowerCase() !== "all") {
+      result = await pool.query(
+        `SELECT * FROM event WHERE LOWER(TRIM(city)) = LOWER(TRIM($1)) ORDER BY date ASC`,
+        [city]
+      );
+    } else {
+      result = await pool.query('SELECT * FROM event ORDER BY date ASC');
+    }
+
+    console.log("Events returned:", result.rows.length);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching events:", err);
+    res.status(500).json({ error: 'Failed to fetch events' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

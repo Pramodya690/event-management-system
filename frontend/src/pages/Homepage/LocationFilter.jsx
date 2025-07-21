@@ -1,10 +1,13 @@
 const popularLocations = [
   { name: "All", image: "/Images/all.jpg" },
   { name: "Colombo", image: "/Images/colombo.jpg" },
-  // { name: "Cinnamon Gardens", image: "/Images/cinnamon-garden.jpeg" },
-  // { name: "Colombo Fort", image: "/Images/colombo-fort.jpeg" },
   { name: "Kandy", image: "/Images/kandy.jpg" },
   { name: "Galle", image: "/Images/galle.jpeg" },
+  { name: "Jaffna", image: "/Images/Jaffna.jpg" },
+  { name: "Negombo", image: "/Images/Negombo.jpg" },
+  { name: "Nuwara Eliya", image: "/Images/NuwareEliya.jpg" },
+  { name: "Anuradhapura", image: "/Images/Anuradhapura.jpeg" },
+
 ];
 
 const LocationFilter = ({ selectedLocation, setSelectedLocation }) => (
