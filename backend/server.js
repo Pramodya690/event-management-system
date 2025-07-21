@@ -161,27 +161,49 @@ app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
 
     const bannerImage = req.file ? req.file.buffer : null;
 
+    // const result = await pool.query(
+    //   `INSERT INTO event 
+    //   (event_title, date, time, location, venue_id, description, tags, faqs, banner_image, city, headcount, coordinates)
+    //   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    //   RETURNING *`,
+    //   [
+    //     event_title,
+    //     date,
+    //     time,
+    //     location,
+    //     description,
+    //     tags,
+    //     faqs,
+    //     bannerImage,
+    //     city || null,
+    //     headcount || null,
+    //     venue_id,
+    //     coordinates ? `(${coordinates[0]},${coordinates[1]})` : null
+    //   ]
+    //   // [event_title, date, time, location, description, tags, faqs, bannerImage]
+    // ); 
+
     const result = await pool.query(
-      `INSERT INTO event 
-      (event_title, date, time, location, venue_id, description, tags, faqs, banner_image, city, headcount, coordinates)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-      RETURNING *`,
-      [
-        event_title,
-        date,
-        time,
-        location,
-        description,
-        tags,
-        faqs,
-        bannerImage,
-        city || null,
-        headcount || null,
-        venue_id,
-        coordinates ? `(${coordinates[0]},${coordinates[1]})` : null
-      ]
-      // [event_title, date, time, location, description, tags, faqs, bannerImage]
-    ); 
+  `INSERT INTO event 
+  (event_title, date, time, location, venue_id, description, tags, faqs, banner_image, city, headcount, coordinates)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+  RETURNING *`,
+  [
+    event_title,                           // $1
+    date,                                  // $2
+    time,                                  // $3
+    location,                              // $4
+    venue_id || null,                      // $5 ✅ FIXED
+    description,                           // $6 ✅ FIXED
+    tags,                                  // $7
+    faqs,                                  // $8
+    bannerImage,                           // $9
+    city || null,                          // $10
+    headcount || null,                     // $11
+    coordinates ? `(${coordinates[0]},${coordinates[1]})` : null // $12
+  ]
+);
+
 
     res.status(201).json(result.rows[0]);
   } catch (err) {

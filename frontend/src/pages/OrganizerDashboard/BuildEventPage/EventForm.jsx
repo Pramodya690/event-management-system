@@ -9,6 +9,7 @@ const steps = ["Build Event Page", "Add Tickets", "Publish"];
 
 const ConferenceForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
+
   const [form, setForm] = useState({
     eventName: "",
     date: "",
@@ -29,16 +30,51 @@ const ConferenceForm = () => {
       seatCols: "",
       generatedSeating: "",
     },
+    city: "",
+    headcount: "",
+    venue_id: null,
   });
 
-  // In ConferenceForm.jsx
-  // const [bannerImage, setBannerImage] = useState(null);
+  const [bannerImage, setBannerImage] = useState(null);
   const [bannerImagePreview, setBannerImagePreview] = useState(null);
-  // const [stallMapPreview, setStallMapPreview] = useState(null);
   const [tagInput, setTagInput] = useState("");
   const [ticketTypeTab, setTicketTypeTab] = useState("paid");
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if (currentStep === 0) {
+      // Step 0: Submit data to backend with FormData (includes image)
+      const formData = new FormData();
+      formData.append("event_title", form.eventName);
+      formData.append("date", form.date);
+      formData.append("time", form.time);
+      formData.append("location", form.location);
+      formData.append("description", form.description);
+      formData.append("tags", JSON.stringify(form.tags));
+      formData.append("faqs", form.faqs);
+      if (form.city) formData.append("city", form.city);
+      if (form.headcount) formData.append("headcount", form.headcount);
+      if (form.venue_id) formData.append("venue_id", form.venue_id);
+      if (bannerImage) formData.append("bannerImage", bannerImage);
+
+      try {
+        const response = await fetch("http://localhost:5000/api/createEvent", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) throw new Error("Failed to save");
+
+        const data = await response.json();
+        console.log("Event saved:", data);
+        alert("Event data saved successfully!");
+      } catch (err) {
+        console.error("Save failed:", err);
+        alert("Failed to save event.");
+        return; // Prevent moving to next step on failure
+      }
+    }
+
+    // Move to next step
     if (currentStep < steps.length - 1) setCurrentStep((prev) => prev + 1);
   };
 
@@ -46,53 +82,37 @@ const ConferenceForm = () => {
     if (currentStep > 0) setCurrentStep((prev) => prev - 1);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log("Final Submission:", form);
-  // };
-
-
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  // const organizerId = localStorage.getItem("organizerId");
-  // if (!organizerId) {
-  //   alert("Organizer not logged in.");
-  //   return;
-  // }
+    const data = {
+      event_title: form.eventName,
+      date: form.date,
+      time: form.time,
+      location: form.location,
+      description: form.description,
+      tags: form.tags,
+      faqs: form.faqs,
+      tickets: form.tickets,
+    };
 
-  const data = {
-    // organizer_id: organizerId,
-    event_title: form.eventName,
-    date: form.date,
-    time: form.time,
-    location: form.location,
-    description: form.description,
-    tags: form.tags,
-    faqs: form.faqs,
-    tickets: form.tickets,
-  };
+    try {
+      const response = await fetch("http://localhost:5000/api/createEvent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-  try {
-    const response = await fetch("http://localhost:5000/api/createEvent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (response.ok) {
-      alert("Event created!");
-      // optionally redirect or clear form
-    } else {
-      alert("Event creation failed.");
+      if (response.ok) {
+        alert("Event created!");
+      } else {
+        alert("Event creation failed.");
+      }
+    } catch (err) {
+      console.error("Error during event creation:", err);
+      alert("Something went wrong.");
     }
-  } catch (err) {
-    console.error("Error during event creation:", err);
-    alert("Something went wrong.");
-  }
-};
-
-  
+  };
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -137,6 +157,8 @@ const ConferenceForm = () => {
               <BuildEventPage
                 form={form}
                 setForm={setForm}
+                bannerImage={bannerImage}
+                setBannerImage={setBannerImage}
                 bannerImagePreview={bannerImagePreview}
                 setBannerImagePreview={setBannerImagePreview}
                 tagInput={tagInput}
@@ -181,7 +203,6 @@ const ConferenceForm = () => {
                 className="bg-sky-600 text-white px-6 py-2 rounded hover:bg-sky-700"
               >
                 save eventtt
-                {/* Save & Continue → */}
               </button>
             ) : (
               <button
