@@ -556,29 +556,23 @@ const SignUpOrganizer = () => {
               Event Metrics
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                "eventsCreated",
-                "revenueGenerated",
-                "ticketsSold",
-                "stallCount",
-                "seatCount",
-                "memberSince",
-                "rating",
-              ].map((field) => (
-                <div key={field} className="relative">
-                  <label className="block text-sm font-medium text-gray-700 mb-2 capitalize">
-                    {field.replace(/([A-Z])/g, " $1")}
-                  </label>
-                  <input
-                    type={field === "rating" ? "number" : "text"}
-                    name={field}
-                    value={form[field]}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                    placeholder={`Enter ${field.replace(/([A-Z])/g, " $1")}`}
-                  />
-                </div>
-              ))}
+              {["eventsCreated", "revenueGenerated", "ticketsSold"].map(
+                (field) => (
+                  <div key={field} className="relative">
+                    <label className="block text-sm font-medium text-gray-700 mb-2 capitalize">
+                      {field.replace(/([A-Z])/g, " $1")}
+                    </label>
+                    <input
+                      type={field === "rating" ? "number" : "text"}
+                      name={field}
+                      value={form[field]}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                      placeholder={`Enter ${field.replace(/([A-Z])/g, " $1")}`}
+                    />
+                  </div>
+                )
+              )}
             </div>
           </div>
 
