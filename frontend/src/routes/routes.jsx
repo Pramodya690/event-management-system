@@ -21,6 +21,7 @@ import EventAnalytics from "../pages/OrganizerDashboard/EventAnalytics";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 import Marketing from "../pages/OrganizerDashboard/Marketing";
 
+
 export const routes = [
   { path: "/", element: <HomePage /> },
   { path: "/find-events", element: <FilterEvents /> },

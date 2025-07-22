@@ -8,6 +8,7 @@ import LocationFilter from "./LocationFilter.jsx";
 import FeaturedEvents from "./FeaturedEvents.jsx";
 import NewsletterSignup from "./NewsletterSignup.jsx";
 import Testimonials from "./Testimonials.jsx";
+// import EventDetails from "./EventDetails.jsx";
 import { useEffect } from "react";
 
 const HomePage = () => {
@@ -37,7 +38,6 @@ useEffect(() => {
       } else if (safeLocation !== "All" && safeCategory === "All") {
         url = `http://localhost:5000/api/filterByLocation?city=${encodeURIComponent(safeLocation)}`;
       } else if (safeCategory !== "All" && safeLocation !== "All") {
-        // optional: create a new backend API for both filters, or fallback to frontend filtering
         url = "http://localhost:5000/api/events"; // fallback to client filtering
       }
 

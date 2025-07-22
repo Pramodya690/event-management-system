@@ -272,22 +272,25 @@ app.get('/api/events', async (req, res) => {
   }
 });
 
-// Example with Express and PostgreSQL
-app.get('/api/events/:eventId', async (req, res) => {
-  const { eventId } = req.params;
-  try {
-    const eventResult = await pool.query('SELECT * FROM event WHERE id = $1', [eventId]);
-    if (eventResult.rows.length === 0) {
-      return res.status(404).json({ error: 'Event not found' });
-    }
 
-    const event = eventResult.rows[0];
-    res.json(event);
-  } catch (err) {
-    console.error('Failed to fetch event:', err);
-    res.status(500).json({ error: 'Server error' });
-  }
-});
+// // to get events by id
+// app.get('/api/events/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const result = await pool.query('SELECT * FROM event WHERE id = $1', [id]);
+
+//     if (result.rows.length === 0) {
+//       return res.status(404).json({ error: 'Event not found' });
+//     }
+
+//     res.json(result.rows[0]);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).json({ error: 'Failed to fetch event' });
+//   }
+// });
+
+
 
 // find vendors
 app.get('/api/findVendors', async (req, res) => {
