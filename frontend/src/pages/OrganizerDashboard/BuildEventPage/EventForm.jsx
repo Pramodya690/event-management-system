@@ -34,6 +34,7 @@ const ConferenceForm = () => {
     city: "",
     headcount: "",
     venue_id: null,
+    event_id: null,
   });
 
   const [bannerImage, setBannerImage] = useState(null);
@@ -52,6 +53,8 @@ const ConferenceForm = () => {
       formData.append("description", form.description);
       formData.append("tags", JSON.stringify(form.tags));
       formData.append("faqs", form.faqs);
+      formData.append("tickets", JSON.stringify(form.tickets));
+
       if (form.city) formData.append("city", form.city);
       if (form.headcount) formData.append("headcount", form.headcount);
       if (form.venue_id) formData.append("venue_id", form.venue_id);
@@ -72,6 +75,7 @@ const ConferenceForm = () => {
 
         setForm((prev) => ({
           ...prev,
+          event_id: data.id,
           eventName: data.event_title,
           date: data.date,
           time: data.time,
@@ -109,7 +113,7 @@ const ConferenceForm = () => {
 
         for (const ticket of tickets[type]) {
           const payload = {
-            eventId: form.eventId,
+            event_id: form.event_id,
             type,
             name: ticket.name,
             quantity: ticket.quantity,

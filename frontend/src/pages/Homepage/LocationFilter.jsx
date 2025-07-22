@@ -7,7 +7,6 @@ const popularLocations = [
   { name: "Negombo", image: "/Images/Negombo.jpg" },
   { name: "Nuwara Eliya", image: "/Images/NuwareEliya.jpg" },
   { name: "Anuradhapura", image: "/Images/Anuradhapura.jpeg" },
-
 ];
 
 const LocationFilter = ({ selectedLocation, setSelectedLocation }) => (

@@ -36,7 +36,7 @@ const PublishEvent = ({ form, bannerImagePreview }) => {
         {/* Right Metadata Section */}
         <div className="w-full md:w-1/2 space-y-6">
 
-          {/* Type & Category */}
+          {/* Type & Category
           <div>
             <h4 className="font-semibold text-gray-700 mb-1">Event type and category</h4>
             <p className="text-sm text-gray-500 mb-2">Your type and category help your event appear in more searches.</p>
@@ -44,7 +44,7 @@ const PublishEvent = ({ form, bannerImagePreview }) => {
               <span className="px-3 py-2 border rounded bg-gray-100 text-gray-700 w-1/2">{form.type || "Not selected"}</span>
               <span className="px-3 py-2 border rounded bg-gray-100 text-gray-700 w-1/2">{form.category || "Not selected"}</span>
             </div>
-          </div>
+          </div> */}
 
           {/* Tags */}
           <div>

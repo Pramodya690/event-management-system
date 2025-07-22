@@ -153,11 +153,7 @@ app.post('/api/login', async (req, res) => {
 });
 
 
-
-
-
-// ENDPOINTS RELATED TO EVENT CREATION, 
-
+// ENDPOINTS RELATED TO EVENT CREATION
 //save event data to db, with images
 app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
   try {
@@ -178,7 +174,7 @@ app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
       faqs,
       city,
       headcount,
-      coordinates
+      coordinates,
     } = req.body;
 
     const bannerImage = req.file ? req.file.buffer : null;
@@ -212,7 +208,7 @@ app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
   }
 });
 
-//suggestion venues to the event creation
+//venue suggestion to the event creation
 app.get('/api/venues', async (req, res) => {
   const { city, headcount } = req.query;
 
@@ -238,6 +234,7 @@ app.get('/api/venues', async (req, res) => {
   }
 });
 
+
 // to serve the binary image saved in the db as a real image to be fetched onto the publish event page of the eventform
 app.get('/api/eventBanner/:eventId', async (req, res) => {
   try {
@@ -261,6 +258,7 @@ app.get('/api/eventBanner/:eventId', async (req, res) => {
   }
 });
 
+
 // Fetch all created events
 app.get('/api/events', async (req, res) => {
   try {
@@ -271,25 +269,6 @@ app.get('/api/events', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch events' });
   }
 });
-
-
-// // to get events by id
-// app.get('/api/events/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const result = await pool.query('SELECT * FROM event WHERE id = $1', [id]);
-
-//     if (result.rows.length === 0) {
-//       return res.status(404).json({ error: 'Event not found' });
-//     }
-
-//     res.json(result.rows[0]);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).json({ error: 'Failed to fetch event' });
-//   }
-// });
-
 
 
 // find vendors
@@ -353,28 +332,50 @@ app.get('/api/findVendors', async (req, res) => {
 
 
 //saving tickets to db
-app.post("/api/tickets", async (req, res) => {
-  const { eventId, type, name, quantity, price, sales_start, sales_end } = req.body;
+// app.post("/api/tickets", async (req, res) => {
+//   const { eventId, type, name, quantity, price, sales_start, sales_end } = req.body;
+
+//   try {
+//     const result = await pool.query(
+//       `INSERT INTO tickets 
+//        (event_id, type, name, quantity, price, sales_start, sales_end)
+//        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+//        RETURNING *`,
+//       [eventId, type, name, quantity, price || 0, sales_start, sales_end, start_time, end_time]
+//     );
+
+//     res.status(201).json({ ticket: result.rows[0] });
+//   } catch (err) {
+//     console.error("Error inserting ticket:", err);
+//     res.status(500).json({ error: "Failed to create ticket" });
+//   }
+// });
+
+// saving tickets
+app.post('/api/tickets', async (req, res) => {
+  const { event_id, type, name, quantity, price, sales_start, sales_end } = req.body;
 
   try {
-    const result = await pool.query(
-      `INSERT INTO tickets 
-       (event_id, type, name, quantity, price, sales_start, sales_end)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
-       RETURNING *`,
-      [eventId, type, name, quantity, price || 0, sales_start, sales_end]
-    );
+    const query = `
+      INSERT INTO tickets (event_id, type, name, quantity, price, sales_start, sales_end)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *;
+    `;
+    const values = [event_id, type, name, quantity, price, sales_start, sales_end];
 
-    res.status(201).json({ ticket: result.rows[0] });
-  } catch (err) {
-    console.error("Error inserting ticket:", err);
-    res.status(500).json({ error: "Failed to create ticket" });
+    const result = await pool.query(query, values);
+    console.log("Received event_id:", event_id);
+    console.log("Received ticket:", req.body);
+    res.status(200).json({ ticket: result.rows[0] });
+  } catch (error) {
+    console.error('Ticket insert error:', error);
+    res.status(500).json({ error: 'Ticket insert failed' });
   }
 });
 
 
 
-// HOMEPAGE ENDPOINTS
+//HOMEPAGE ENDPOINTS
 //to filter according to the city in the homepage
 app.get('/api/filterByLocation', async (req, res) => {
   const { city } = req.query;
@@ -456,6 +457,11 @@ app.get('/api/organizers/:id', async (req, res) => {
     res.status(500).json({ error: 'Database error' });
   }
 });
+
+
+// ENDPOINTS OF AI(DILEE'S CODE)
+
+
 
 
 app.listen(port, () => {

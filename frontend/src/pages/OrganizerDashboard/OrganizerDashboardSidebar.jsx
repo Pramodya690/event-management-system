@@ -34,8 +34,7 @@ const OrganizerDashboardSidebar = () => {
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
 
-
-
+  
   return (
     <div className="flex bg-sky-100 text-gray-800">
       {/* Fixed Sidebar */}

@@ -510,9 +510,10 @@ const EventsSummary = () => {
                   <div className="mt-4">
                     <h3 className="text-lg font-semibold text-gray-800">Event Description</h3>
                     <p className="text-gray-600 mt-2">
-                      This is a detailed description of the event. It should provide all the necessary information 
+                      {/* This is a detailed description of the event. It should provide all the necessary information 
                       attendees might need, including what to expect, any special guests or features, and what they 
-                      should bring or prepare for the event.
+                      should bring or prepare for the event. */}
+                      {selectedEvent.description || "Not specified"}
                     </p>
                   </div>
                 </div>
@@ -573,17 +574,7 @@ const EventsSummary = () => {
                       </div>
                     )}
 
-                    <div className="mt-6 space-y-3">
-                      <button className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition">
-                        View Event Page
-                      </button>
-                      <button className="w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 transition">
-                        Edit Event
-                      </button>
-                      <button className="w-full bg-white border border-red-300 text-red-600 py-2 px-4 rounded-lg hover:bg-red-50 transition">
-                        Cancel Event
-                      </button>
-                    </div>
+                    /
                   </div>
                 </div>
               </div>
