@@ -26,6 +26,7 @@ import PrivacyPolicy from "../pages/PrivacyPolicy";
 import ProfileCreating from "../pages/Signup/ProfileCreating";
 import Pricing from "../pages/Pricing";
 import ContactUs from "../pages/ContactUs";
+import PaymentPage from "../pages/PaymentPage";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
@@ -47,6 +48,7 @@ export const routes = [
   { path: "/profile-creating", element: <ProfileCreating /> },
   { path: "/pricing", element: <Pricing /> },
   { path: "/contact", element: <ContactUs /> },
+  { path: "/payment", element: <PaymentPage /> },
 
   {
     path: "/organizer-dashboard",
