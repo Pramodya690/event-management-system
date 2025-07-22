@@ -321,14 +321,24 @@ app.get('/api/findVendors', async (req, res) => {
 
     const result = await pool.query(query, values);
 
-    //Format budgetRange for frontend
-    const formattedVendors = result.rows.map(vendor => ({
-      ...vendor,
-      budgetRange: {
-        min: vendor.min_budget,
-        max: vendor.max_budget
+    // Format budgetRange and convert image buffer to base64 data URL
+    const formattedVendors = result.rows.map(vendor => {
+      let imageUrl = null;
+      if (vendor.banner_image) {
+        const base64Image = vendor.banner_image.toString('base64');
+        // Adjust mime type if needed (jpeg/png/gif)
+        imageUrl = `data:image/jpeg;base64,${base64Image}`;
       }
-    }));
+
+      return {
+        ...vendor,
+        budgetRange: {
+          min: vendor.min_budget,
+          max: vendor.max_budget,
+        },
+        image: imageUrl, // Add image data URL for frontend
+      };
+    });
 
     res.json({ vendors: formattedVendors });
 
@@ -337,6 +347,7 @@ app.get('/api/findVendors', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 //saving tickets to db
 app.post("/api/tickets", async (req, res) => {
