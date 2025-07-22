@@ -426,6 +426,56 @@ app.get('/api/organizers/:id', async (req, res) => {
 //   }
 // });
 
+// find vendors
+app.get('/api/findVendors', async (req, res) => {
+  try {
+    let { category = '', location = '', minBudget, maxBudget, capacity } = req.query;
+
+    // Parse numbers or set to null
+    const minBudgetNum = minBudget ? parseInt(minBudget, 10) : null;
+    const maxBudgetNum = maxBudget ? parseInt(maxBudget, 10) : null;
+    const capacityNum = capacity ? parseInt(capacity, 10) : null;
+
+    const query = `
+      SELECT *
+      FROM vendor
+      WHERE
+        ($1 = '' OR category = $1)
+        AND (
+          $2 = '' OR EXISTS (
+            SELECT 1 FROM unnest(cities) AS c WHERE LOWER(c) = LOWER($2)
+          )
+        )
+        AND ($3::int IS NULL OR capacity >= $3::int)
+        AND (
+          ($4::int IS NULL OR max_budget >= $4::int)
+          AND
+          ($5::int IS NULL OR min_budget <= $5::int)
+        )
+    `;
+
+    const values = [category, location, capacityNum, minBudgetNum, maxBudgetNum];
+
+    const result = await pool.query(query, values);
+
+    // Optional: Format budgetRange for frontend
+    const formattedVendors = result.rows.map(vendor => ({
+      ...vendor,
+      budgetRange: {
+        min: vendor.min_budget,
+        max: vendor.max_budget
+      }
+    }));
+
+    res.json({ vendors: formattedVendors });
+
+  } catch (error) {
+    console.error('Error fetching vendors:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 
 
 app.listen(port, () => {

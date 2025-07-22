@@ -10,30 +10,7 @@ const OrganizerDashboardFindVendors = () => {
     capacity: ''
   });
 
-  const [vendors, setVendors] = useState([
-    // Mock data for demonstration
-    {
-      id: 1,
-      name: "Premium Catering Services",
-      category: "Catering",
-      location: "Mumbai",
-      budgetRange: { min: 50000, max: 200000 },
-      capacity: 500,
-      rating: 4.8,
-      image: "/Images/catering.jpeg"
-    },
-    {
-      id: 2,
-      name: "Luxury Event Decorators",
-      category: "Decoration",
-      location: "Delhi",
-      budgetRange: { min: 30000, max: 150000 },
-      capacity: 300,
-      rating: 4.5,
-      image: "/Images/decor.jpeg"
-    }
-  ]);
-  
+  const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [expandedFilter, setExpandedFilter] = useState(false);
 
@@ -41,13 +18,29 @@ const OrganizerDashboardFindVendors = () => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
 
+
   const handleSearch = async () => {
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
+  setLoading(true);
+  try {
+    const params = new URLSearchParams();
+
+    if (filters.category) params.append('category', filters.category);
+    if (filters.location) params.append('location', filters.location);
+    if (filters.minBudget) params.append('minBudget', filters.minBudget);
+    if (filters.maxBudget) params.append('maxBudget', filters.maxBudget);
+    if (filters.capacity) params.append('capacity', filters.capacity);
+
+    const response = await fetch(`http://localhost:5000/api/findVendors?${params.toString()}`);
+    const data = await response.json();
+
+    setVendors(data.vendors);
+  } catch (error) {
+    console.error('Failed to fetch vendors:', error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const resetFilters = () => {
     setFilters({
@@ -79,7 +72,9 @@ const OrganizerDashboardFindVendors = () => {
       <div className={`bg-white rounded-xl shadow-md p-6 mb-8 transition-all duration-300 ${expandedFilter ? 'block' : 'hidden md:block'}`}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Search Vendors</label>
+            <label 
+            // onClick={handleSearch}
+            className="block text-sm font-medium text-gray-700 mb-1">Search Vendors</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FiSearch className="text-gray-400" />
@@ -229,7 +224,10 @@ const OrganizerDashboardFindVendors = () => {
                 <div className="flex justify-between items-center">
                   <div className="text-gray-800 font-medium">
                     <FiDollarSign className="inline mr-1" />
-                    <span>₹{vendor.budgetRange.min.toLocaleString()} - ₹{vendor.budgetRange.max.toLocaleString()}</span>
+                    <span>
+                      {vendor.min_budget.toLocaleString()} - {vendor.max_budget.toLocaleString()}
+                    </span>
+
                   </div>
                   <button className="text-sky-600 hover:text-sky-800 font-medium text-sm">
                     View Details
