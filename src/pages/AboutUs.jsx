@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { FiCheck, FiUsers, FiCalendar, FiGlobe } from "react-icons/fi";
@@ -30,7 +31,7 @@ const AboutUs = () => {
                 Our Story
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                Founded in 2023, Eventsphere began with a simple idea: to make
+                Founded in 2025, Eventsphere began with a simple idea: to make
                 event discovery and management effortless for both attendees and
                 organizers.
               </p>
@@ -144,7 +145,7 @@ const AboutUs = () => {
                   Browse Events
                 </button>
               </Link>
-              <Link to="/signup/organizer">
+              <Link to="/signup-role-selector">
                 <button className="px-6 py-3 border-2 border-white text-white rounded-lg font-medium hover:bg-sky-800 transition">
                   List Your Event
                 </button>

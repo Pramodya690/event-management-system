@@ -21,6 +21,7 @@ import EventAnalytics from "../pages/OrganizerDashboard/EventAnalytics";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 import Marketing from "../pages/OrganizerDashboard/Marketing";
 import AboutUs from "../pages/AboutUs";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
@@ -38,6 +39,7 @@ export const routes = [
   { path: "/signup/attendee", element: <SignupAttendee /> },
   { path: "/admin-dashboard", element: <AdminDashboard /> },
   { path: "/about-us", element: <AboutUs /> },
+  { path: "/privacy", element: <PrivacyPolicy /> },
 
   {
     path: "/organizer-dashboard",
