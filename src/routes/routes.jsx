@@ -2,6 +2,7 @@ import HomePage from "../pages/Homepage/HomePage";
 import AllEvents from "../pages/AllEvents";
 import EventPage from "../pages/EventPage";
 import Login from "../pages/Login";
+
 import OrganizerWelcome from "../pages/OrganizerWelcome";
 import CreateEventForm from "../pages/CreateEventForm/CreateEventForm";
 import HelpCentre from "../pages/HelpCentre";
@@ -22,6 +23,9 @@ import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 import Marketing from "../pages/OrganizerDashboard/Marketing";
 import AboutUs from "../pages/AboutUs";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
+import ProfileCreating from "../pages/Signup/ProfileCreating";
+import Pricing from "../pages/Pricing";
+import ContactUs from "../pages/ContactUs";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
@@ -40,6 +44,9 @@ export const routes = [
   { path: "/admin-dashboard", element: <AdminDashboard /> },
   { path: "/about-us", element: <AboutUs /> },
   { path: "/privacy", element: <PrivacyPolicy /> },
+  { path: "/profile-creating", element: <ProfileCreating /> },
+  { path: "/pricing", element: <Pricing /> },
+  { path: "/contact", element: <ContactUs /> },
 
   {
     path: "/organizer-dashboard",

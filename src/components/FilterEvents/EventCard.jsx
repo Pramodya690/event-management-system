@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 //   date: "June 15, 2025",
 //   time: "10:00 AM",
 //   location: "Expo Center, New York",
-//   category: "Misic",
+//   category: "Music",
 // };
 
 // const EventCard = () => {
