@@ -62,30 +62,32 @@ const EventsSummary = () => {
       const data = await res.json();
 
       const transformed = data.map((e) => ({
-  id: e.id,
-  name: e.event_title,
-  date: e.date,
-  startTime: e.time,
-  endTime: e.time, // Optional: add a real `end_time` field to DB later
-  timezone: "GMT+5:30", // Or dynamically fetch user's timezone
-  ticketsSold: 0, // Hardcoded until ticket tracking is implemented
-  capacity: e.headcount || 0,
-  gross: "LKR 0.00", // Placeholder until real data is available
-  status: "On Sale", // Or fetch from a `status` field if added
-  type: e.location?.toLowerCase().includes("online")
-    ? "Online event"
-    : "In-person event",
-  image: e.banner_image
-    ? `data:image/jpeg;base64,${btoa(
-        new Uint8Array(e.banner_image.data).reduce(
-          (data, byte) => data + String.fromCharCode(byte),
-          ""
-        )
-      )}`
-    : "https://source.unsplash.com/random/500x300",
-}));
-
-
+        id: e.id,
+        name: e.event_title,
+        date: e.date,
+        time: e.time,
+        // startTime: e.time || "10:00 AM", 
+        // endTime: e.time || "12:00 PM",   
+        // timezone: "GMT+5:30",            
+        ticketsSold: e.tickets_sold || 0, 
+        capacity: e.headcount || 0,
+        gross: `LKR ${e.revenue || 0}`,   
+        status: e.status || "On Sale",
+        type: e.location?.toLowerCase().includes("online") ? "Online event" : "In-person event",
+        image: e.banner_image
+          ? `data:image/jpeg;base64,${btoa(
+              new Uint8Array(e.banner_image.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ""
+              )
+            )}`
+          : "https://source.unsplash.com/random/500x300",
+          organizer: e.organizer,
+        email: e.email,
+        contact_number: e.contact_number,
+        description: e.description,
+        location: e.location,
+      }));
 
       setEvents(transformed);
     } catch (error) {
@@ -100,6 +102,18 @@ const EventsSummary = () => {
     setCalendarWeeks(buildCalendarWeeks(currentMonth, events));
   }, [currentMonth, events]);
 
+  //when an event card is been clicked, it sets the selected event & opens the modal
+  const handleEventClick = (event) => {
+  setSelectedEvent(event);
+  setShowEventModal(true);
+};
+
+  const closeEventModal = () => {
+    setSelectedEvent(null);
+    setShowEventModal(false);
+  };
+
+
   const filteredEvents = events.filter((event) =>
     event.name.toLowerCase().includes(search.toLowerCase())
   );
@@ -112,7 +126,8 @@ const EventsSummary = () => {
       month: "long",
       day: "numeric",
     });
-    return `${dateString} at ${event.startTime} - ${event.endTime} ${event.timezone}`;
+    // return `${dateString} at ${event.startTime} - ${event.endTime} ${event.timezone}`;
+    return `${dateString} at ${event.time}`;
   };
 
   const prevMonth = () => {
@@ -132,9 +147,8 @@ const EventsSummary = () => {
     setShowEventModal(true);
   };
 
-  const closeEventModal = () => {
-    setShowEventModal(false);
-  };
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 font-sans">
@@ -526,7 +540,7 @@ const EventsSummary = () => {
                       <div>
                         <h4 className="text-sm font-medium text-gray-500">Location</h4>
                         <p className="mt-1 font-medium">
-                          {selectedEvent.type === "Online event" ? "Virtual Event" : "Venue Name, City, State"}
+                          {selectedEvent.location || "Not specified"}
                         </p>
                       </div>
 
@@ -545,10 +559,19 @@ const EventsSummary = () => {
                         </div>
                         <div>
                           <h4 className="text-sm font-medium text-gray-500">Timezone</h4>
-                          <p className="mt-1 font-medium">{selectedEvent.timezone}</p>
+                          <p className="mt-1 font-medium">{selectedEvent.time}</p>
                         </div>
                       </div>
                     </div>
+
+                    {/* Organizer Info */}
+                    {selectedEvent.organizer && (
+                      <div className="mt-4 text-gray-700">
+                        <p><span className="font-semibold">Organizer:</span> {selectedEvent.organizer}</p>
+                        <p><span className="font-semibold">Email:</span> {selectedEvent.email}</p>
+                        <p><span className="font-semibold">Contact:</span> {selectedEvent.contact_number}</p>
+                      </div>
+                    )}
 
                     <div className="mt-6 space-y-3">
                       <button className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition">

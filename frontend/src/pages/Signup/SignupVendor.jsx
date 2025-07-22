@@ -16,9 +16,11 @@ const SignupVendor = () => {
     capacity:'',
     min_budget:'',
     max_budget:'',
+    banner_image: '',
   });
 
   const [submitting, setSubmitting] = useState(false);
+  const [bannerImagePreview, setBannerImagePreview] = useState(null);
   const navigate = useNavigate();
 
   const availableCities = [
@@ -137,6 +139,26 @@ const SignupVendor = () => {
                     className="w-full p-3 border border-gray-300 rounded-lg"
                   />
                 </div>
+
+                      {/* Upload Banner Image */}
+      <div className="p-4 border border-sky-300 rounded-lg">
+        <label className="font-semibold block mb-1">Upload Banner Image</label>
+        <p className="text-sm text-gray-500 mb-2">Upload a high-quality banner that represents your event.</p>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            if (file) {
+              setBannerImage(file);
+              setBannerImagePreview(URL.createObjectURL(file));
+            }
+          }}
+        />
+        {bannerImagePreview && (
+          <img src={bannerImagePreview} alt="Preview" className="mt-4 max-h-48 rounded shadow" />
+        )}
+      </div>
 
               </div>
             </section>

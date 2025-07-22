@@ -11,24 +11,63 @@ app.use(cors());
 app.use(express.json());
 
 // Endpoint to register organizer
-app.post('/api/organizers', async (req, res) => {
-  try {
-    const { username, password, email, phone, address, categories } = req.body;
+// app.post('/api/organizers', async (req, res) => {
+//   try {
+//     const { username, password, email, phone, address, categories } = req.body;
 
-    // ✅ Hash the password before storing it
-    const hashedPassword = await bcrypt.hash(password, 10);
+//     // ✅ Hash the password before storing it
+//     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const result = await pool.query(
-      'INSERT INTO organizer (username, password, email, phone, address, categories) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [username, hashedPassword, email, phone, address, categories] // ✅ Use hashedPassword here!
-    );
+//     const result = await pool.query(
+//       'INSERT INTO organizer (username, password, email, phone, address, categories) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+//       [username, hashedPassword, email, phone, address, categories] // ✅ Use hashedPassword here!
+//     );
 
-    res.status(201).json(result.rows[0]);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ error: 'Database error' });
-  }
-});
+//     res.status(201).json(result.rows[0]);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).json({ error: 'Database error' });
+//   }
+// });
+// const uploadVendor = multer({ storage: multer.memoryStorage() });
+// app.post('/api/vendors', uploadVendor.single('bannerImage'), async (req, res) => {
+//   try {
+// console.log('req.file:', req.file); // ✅ See if file is received
+//     console.log("BODY:", req.body);           // Text fields
+//     console.log("FILE:", req.file);           // Uploaded file
+
+//     const { name, category, email, phone, address, cities, password, capacity, min_budget, max_budget } = req.body;
+
+// 	//image
+// const bannerImage = req.file ? req.file.buffer : null;
+
+
+//     //Validate password presence
+//     if (!password) {
+//       return res.status(400).json({ message: 'Password is required.' });
+//     }
+
+//     //Hash the password before storing it
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     //check if vendor already exists
+//     const existingVendor = await pool.query('SELECT * FROM vendor WHERE email = $1', [email]);
+//     if (existingVendor.rows.length > 0) {
+//       return res.status(400).json({ message: 'Vendor with this email already exists.' });
+//     }
+
+//     const result = await pool.query(
+//       'INSERT INTO vendor (name, category, email, phone, address, cities, password, capacity, min_budget, max_budget, banner_image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *',
+//       [name, category, email, phone, address, cities, hashedPassword, capacity, min_budget, max_budget, banner_image]
+//     );
+
+//     res.status(201).json({ message: 'Vendor registered successfully', vendor: result.rows[0] });
+
+//   } catch (err) {
+//     console.error('Vendor Registration Error:', err.message);
+//     res.status(500).json({ message: 'Server error during vendor registration' });
+//   }
+// });
 
 // Endpoint to register attendee
 app.post('/api/auth/attendee/signup', async (req, res) => {
@@ -474,8 +513,6 @@ app.get('/api/findVendors', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
 
 
 app.listen(port, () => {
