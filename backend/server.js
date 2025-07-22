@@ -10,64 +10,28 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const upload = multer({ storage: multer.memoryStorage() });
+
+// REGISTRATION ENDPOINTS
 // Endpoint to register organizer
-// app.post('/api/organizers', async (req, res) => {
-//   try {
-//     const { username, password, email, phone, address, categories } = req.body;
+app.post('/api/organizers', async (req, res) => {
+  try {
+    const { username, password, email, phone, address, categories } = req.body;
 
-//     // ✅ Hash the password before storing it
-//     const hashedPassword = await bcrypt.hash(password, 10);
+    // ✅ Hash the password before storing it
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-//     const result = await pool.query(
-//       'INSERT INTO organizer (username, password, email, phone, address, categories) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-//       [username, hashedPassword, email, phone, address, categories] // ✅ Use hashedPassword here!
-//     );
+    const result = await pool.query(
+      'INSERT INTO organizer (username, password, email, phone, address, categories) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [username, hashedPassword, email, phone, address, categories] // ✅ Use hashedPassword here!
+    );
 
-//     res.status(201).json(result.rows[0]);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).json({ error: 'Database error' });
-//   }
-// });
-// const uploadVendor = multer({ storage: multer.memoryStorage() });
-// app.post('/api/vendors', uploadVendor.single('bannerImage'), async (req, res) => {
-//   try {
-// console.log('req.file:', req.file); // ✅ See if file is received
-//     console.log("BODY:", req.body);           // Text fields
-//     console.log("FILE:", req.file);           // Uploaded file
-
-//     const { name, category, email, phone, address, cities, password, capacity, min_budget, max_budget } = req.body;
-
-// 	//image
-// const bannerImage = req.file ? req.file.buffer : null;
-
-
-//     //Validate password presence
-//     if (!password) {
-//       return res.status(400).json({ message: 'Password is required.' });
-//     }
-
-//     //Hash the password before storing it
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     //check if vendor already exists
-//     const existingVendor = await pool.query('SELECT * FROM vendor WHERE email = $1', [email]);
-//     if (existingVendor.rows.length > 0) {
-//       return res.status(400).json({ message: 'Vendor with this email already exists.' });
-//     }
-
-//     const result = await pool.query(
-//       'INSERT INTO vendor (name, category, email, phone, address, cities, password, capacity, min_budget, max_budget, banner_image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *',
-//       [name, category, email, phone, address, cities, hashedPassword, capacity, min_budget, max_budget, banner_image]
-//     );
-
-//     res.status(201).json({ message: 'Vendor registered successfully', vendor: result.rows[0] });
-
-//   } catch (err) {
-//     console.error('Vendor Registration Error:', err.message);
-//     res.status(500).json({ message: 'Server error during vendor registration' });
-//   }
-// });
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Database error' });
+  }
+});
 
 // Endpoint to register attendee
 app.post('/api/auth/attendee/signup', async (req, res) => {
@@ -95,10 +59,17 @@ app.post('/api/auth/attendee/signup', async (req, res) => {
   }
 });
 
-// Endpoint to register vendor
-app.post('/api/vendors', async (req, res) => {
+// Endpoint to register vendor with the image as well
+app.post('/api/vendors', upload.single('bannerImage'), async (req, res) => {
   try {
+
+    console.log('req.file:', req.file); //check if file is received
+    console.log("BODY:", req.body);           
+    console.log("FILE:", req.file);           
     const { name, category, email, phone, address, cities, password, capacity, min_budget, max_budget } = req.body;
+
+    // for the image
+    const bannerImage = req.file ? req.file.buffer : null;
 
     //Validate password presence
     if (!password) {
@@ -115,8 +86,8 @@ app.post('/api/vendors', async (req, res) => {
     }
 
     const result = await pool.query(
-      'INSERT INTO vendor (name, category, email, phone, address, cities, password, capacity, min_budget, max_budget) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
-      [name, category, email, phone, address, cities, hashedPassword, capacity, min_budget, max_budget]
+      'INSERT INTO vendor (name, category, email, phone, address, cities, password, capacity, min_budget, max_budget, banner_image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *',
+      [name, category, email, phone, address, cities, hashedPassword, capacity, min_budget, max_budget, bannerImage]
     );
 
     res.status(201).json({ message: 'Vendor registered successfully', vendor: result.rows[0] });
@@ -127,6 +98,7 @@ app.post('/api/vendors', async (req, res) => {
   }
 });
 
+// LOGIN ENDPOINT
 //login
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
@@ -180,13 +152,18 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+
+
+
+
+// ENDPOINTS RELATED TO EVENT CREATION, 
+
 //save event data to db, with images
-const upload = multer({ storage: multer.memoryStorage() });
 app.post('/api/createEvent', upload.single('bannerImage'), async (req, res) => {
   try {
-    console.log('req.file:', req.file); // ✅ See if file is received
-    console.log("BODY:", req.body);           // Text fields
-    console.log("FILE:", req.file);           // Uploaded file
+    console.log('req.file:', req.file); // check if file is received
+    console.log("BODY:", req.body);           
+    console.log("FILE:", req.file);           
     console.log("VENUE ID:", req.body.venue_id);
 
     const {
@@ -284,6 +261,17 @@ app.get('/api/eventBanner/:eventId', async (req, res) => {
   }
 });
 
+// Fetch all created events
+app.get('/api/events', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM event ORDER BY date ASC');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Failed to fetch events' });
+  }
+});
+
 // Example with Express and PostgreSQL
 app.get('/api/events/:eventId', async (req, res) => {
   const { eventId } = req.params;
@@ -298,6 +286,55 @@ app.get('/api/events/:eventId', async (req, res) => {
   } catch (err) {
     console.error('Failed to fetch event:', err);
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// find vendors
+app.get('/api/findVendors', async (req, res) => {
+  try {
+    let { category = '', location = '', minBudget, maxBudget, capacity } = req.query;
+
+    // Parse numbers or set to null
+    const minBudgetNum = minBudget ? parseInt(minBudget, 10) : null;
+    const maxBudgetNum = maxBudget ? parseInt(maxBudget, 10) : null;
+    const capacityNum = capacity ? parseInt(capacity, 10) : null;
+
+    const query = `
+      SELECT *
+      FROM vendor
+      WHERE
+        ($1 = '' OR category = $1)
+        AND (
+          $2 = '' OR EXISTS (
+            SELECT 1 FROM unnest(cities) AS c WHERE LOWER(c) = LOWER($2)
+          )
+        )
+        AND ($3::int IS NULL OR capacity >= $3::int)
+        AND (
+          ($4::int IS NULL OR max_budget >= $4::int)
+          AND
+          ($5::int IS NULL OR min_budget <= $5::int)
+        )
+    `;
+
+    const values = [category, location, capacityNum, minBudgetNum, maxBudgetNum];
+
+    const result = await pool.query(query, values);
+
+    //Format budgetRange for frontend
+    const formattedVendors = result.rows.map(vendor => ({
+      ...vendor,
+      budgetRange: {
+        min: vendor.min_budget,
+        max: vendor.max_budget
+      }
+    }));
+
+    res.json({ vendors: formattedVendors });
+
+  } catch (error) {
+    console.error('Error fetching vendors:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -321,18 +358,9 @@ app.post("/api/tickets", async (req, res) => {
   }
 });
 
-// Fetch all created events
-app.get('/api/events', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM event ORDER BY date ASC');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ error: 'Failed to fetch events' });
-  }
-});
 
 
+// HOMEPAGE ENDPOINTS
 //to filter according to the city in the homepage
 app.get('/api/filterByLocation', async (req, res) => {
   const { city } = req.query;
@@ -412,105 +440,6 @@ app.get('/api/organizers/:id', async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: 'Database error' });
-  }
-});
-
-
-// // update organizer profile 
-// app.put('/api/organizers/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const {
-//       username,
-//       email,
-//       phone,
-//       address,
-//       categories,
-//       profile_image,  
-//       bio,
-//       organization,
-//       position,
-//       social_twitter,
-//       social_linkedin
-//     } = req.body;
-
-//     const result = await pool.query(
-//       `UPDATE organizer
-//        SET username = $1, email = $2, phone = $3, address = $4,
-//            categories = $5, profile_image = $6, bio = $7,
-//            organization = $8, position = $9,
-//            social_twitter = $10, social_linkedin = $11
-//        WHERE id = $12
-//        RETURNING *`,
-//       [
-//         username,
-//         email,
-//         phone,
-//         address,
-//         categories,
-//         profile_image,
-//         bio,
-//         organization,
-//         position,
-//         social_twitter,
-//         social_linkedin,
-//         id
-//       ]
-//     );
-
-//     res.json(result.rows[0]);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).json({ error: 'Update failed' });
-//   }
-// });
-
-// find vendors
-app.get('/api/findVendors', async (req, res) => {
-  try {
-    let { category = '', location = '', minBudget, maxBudget, capacity } = req.query;
-
-    // Parse numbers or set to null
-    const minBudgetNum = minBudget ? parseInt(minBudget, 10) : null;
-    const maxBudgetNum = maxBudget ? parseInt(maxBudget, 10) : null;
-    const capacityNum = capacity ? parseInt(capacity, 10) : null;
-
-    const query = `
-      SELECT *
-      FROM vendor
-      WHERE
-        ($1 = '' OR category = $1)
-        AND (
-          $2 = '' OR EXISTS (
-            SELECT 1 FROM unnest(cities) AS c WHERE LOWER(c) = LOWER($2)
-          )
-        )
-        AND ($3::int IS NULL OR capacity >= $3::int)
-        AND (
-          ($4::int IS NULL OR max_budget >= $4::int)
-          AND
-          ($5::int IS NULL OR min_budget <= $5::int)
-        )
-    `;
-
-    const values = [category, location, capacityNum, minBudgetNum, maxBudgetNum];
-
-    const result = await pool.query(query, values);
-
-    // Optional: Format budgetRange for frontend
-    const formattedVendors = result.rows.map(vendor => ({
-      ...vendor,
-      budgetRange: {
-        min: vendor.min_budget,
-        max: vendor.max_budget
-      }
-    }));
-
-    res.json({ vendors: formattedVendors });
-
-  } catch (error) {
-    console.error('Error fetching vendors:', error);
-    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

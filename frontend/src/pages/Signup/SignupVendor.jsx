@@ -16,11 +16,13 @@ const SignupVendor = () => {
     capacity:'',
     min_budget:'',
     max_budget:'',
-    banner_image: '',
+    // banner_image: '',
   });
 
   const [submitting, setSubmitting] = useState(false);
   const [bannerImagePreview, setBannerImagePreview] = useState(null);
+  const [bannerImage, setBannerImage] = useState(null);
+
   const navigate = useNavigate();
 
   const availableCities = [
@@ -44,26 +46,39 @@ const SignupVendor = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+
+const handleSubmit = async (e) => {
   e.preventDefault();
   setSubmitting(true);
 
   try {
+    const formData = new FormData();
+
+    for (const key in vendorData) {
+      if (key === 'cities') {
+        vendorData.cities.forEach(city => formData.append('cities', city)); // handle array
+      } else {
+        formData.append(key, vendorData[key]);
+      }
+    }
+
+    // append image
+    if (bannerImage) {
+      formData.append('bannerImage', bannerImage);
+    }
+
     const response = await fetch('http://localhost:5000/api/vendors', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(vendorData)
+      body: formData,
     });
 
     const data = await response.json();
 
+    
+
     if (!response.ok) throw new Error(data.message || 'Failed to register vendor');
 
-    //vendor is directed to the home page after he registers himself
     navigate('/');
-
   } catch (error) {
     console.error('Error submitting vendor data:', error.message);
     alert(error.message || 'Error submitting form. Please try again.');
@@ -71,6 +86,7 @@ const SignupVendor = () => {
     setSubmitting(false);
   }
 };
+
 
   return (
     <div className="min-h-screen flex flex-col">
