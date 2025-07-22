@@ -154,14 +154,7 @@ const OrganizerDashboardSidebar = () => {
         {/* Bottom Navigation */}
         <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 p-2 bg-white">
           <NavItem
-            to="/settings"
-            icon={<MdSettings size={20} />}
-            expanded={expanded}
-          >
-            Settings
-          </NavItem>
-          <NavItem
-            to="/help"
+            to="/help-centre"
             icon={<MdHelpOutline size={20} />}
             expanded={expanded}
           >
@@ -187,14 +180,14 @@ const OrganizerDashboardSidebar = () => {
               "Dashboard"}
           </h1>
 
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
                 <MdPerson size={18} />
               </div>
               <span className="hidden md:inline font-medium">John Doe</span>
             </div>
-          </div>
+          </div> */}
         </header>
 
         {/* Content Area */}
