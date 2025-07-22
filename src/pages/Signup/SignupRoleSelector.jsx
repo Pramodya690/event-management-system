@@ -238,33 +238,6 @@ function SignupRoleSelector() {
       color: "bg-sky-400 hover:bg-sky-500",
       recommended: false,
     },
-    {
-      name: "Admin",
-      description: "Manage platform settings, users, and advanced features.",
-      icon: (
-        <svg
-          className="w-12 h-12 mb-4 text-sky-300"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-        </svg>
-      ),
-      color: "bg-sky-300 hover:bg-sky-400",
-      recommended: false,
-    },
   ];
 
   const testimonials = [
@@ -317,7 +290,7 @@ function SignupRoleSelector() {
             <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
               Select Your Role
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {roles.map((role) => (
                 <div
                   key={role.name}
@@ -371,9 +344,6 @@ function SignupRoleSelector() {
                     <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">
                       Organizer
                     </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase">
-                      Admin
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
@@ -383,42 +353,36 @@ function SignupRoleSelector() {
                       attendee: true,
                       vendor: true,
                       organizer: true,
-                      admin: true,
                     },
                     {
                       feature: "Purchase Tickets",
                       attendee: true,
                       vendor: false,
                       organizer: false,
-                      admin: false,
                     },
                     {
                       feature: "Sell Products/Services",
                       attendee: false,
                       vendor: true,
                       organizer: false,
-                      admin: false,
                     },
                     {
                       feature: "Create Events",
                       attendee: false,
                       vendor: false,
                       organizer: true,
-                      admin: true,
                     },
                     {
                       feature: "Manage Users",
                       attendee: false,
                       vendor: false,
                       organizer: false,
-                      admin: true,
                     },
                     {
                       feature: "Access Analytics",
                       attendee: false,
                       vendor: true,
                       organizer: true,
-                      admin: true,
                     },
                   ].map((row, index) => (
                     <tr key={index}>
@@ -465,25 +429,6 @@ function SignupRoleSelector() {
                       </td>
                       <td className="px-4 py-3 text-center">
                         {row.organizer ? (
-                          <svg
-                            className="h-5 w-5 text-sky-600 mx-auto"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                        ) : (
-                          <span className="text-gray-400">—</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        {row.admin ? (
                           <svg
                             className="h-5 w-5 text-sky-600 mx-auto"
                             fill="none"
