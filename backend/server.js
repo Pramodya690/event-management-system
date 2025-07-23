@@ -534,7 +534,7 @@ app.post('/api/purchaseTicket', async (req, res) => {
 
     // Update available tickets
     await pool.query(
-      `UPDATE tickets SET quantity = quantity - $1 WHERE id = $2`,
+      `UPDATE tickets SET availabe_quantity = quantity - $1 WHERE id = $2`,
       [quantity, ticketId]
     );
 
