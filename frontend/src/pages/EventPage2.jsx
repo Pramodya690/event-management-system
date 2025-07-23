@@ -253,7 +253,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 
             {/* Right: Sidebar */}
             {/* get tickets section */}
-            <div className="w-1/3">
+            {/* <div className="w-1/3">
                     <div className="sticky top-4 bg-sky-50 border border-sky-200 rounded-lg p-6 shadow-sm">
                         <h2 className="text-xl font-bold mb-4 text-gray-900">Get Tickets</h2>
 
@@ -376,7 +376,8 @@ const user = JSON.parse(localStorage.getItem("user"));
                         </button>
                         </div>
                     </div>
-            </div>      
+            </div>       */}
+              
               </div>
             </div>
       </main>
@@ -386,7 +387,3 @@ const user = JSON.parse(localStorage.getItem("user"));
 };
 
 export default EventPage;
-
-
-
-

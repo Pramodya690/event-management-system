@@ -1,4 +1,5 @@
 import HomePage from "../pages/Homepage/HomePage";
+import HomePageGeneral from "../pages/Homepage/HomePage2";
 import FilterEvents from "../pages/FilterEvents";
 import EventPage from "../pages/EventPage";
 import Login from "../pages/Login";
@@ -26,6 +27,7 @@ import VendorHomePage from "../pages/VendorHomePage";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
+  { path: "/homepage", element: <HomePageGeneral />},
   { path: "/find-events", element: <FilterEvents /> },
   { path: "/events/:id", element: <EventPage /> },
   { path: "/login", element: <Login /> },

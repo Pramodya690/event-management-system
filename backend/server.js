@@ -220,7 +220,8 @@ app.get('/api/venues', async (req, res) => {
     // Query venues in city with capacity >= headcount, sorted by capacity ascending
     const result = await pool.query(
       `SELECT * FROM venues
-       WHERE LOWER(city) = LOWER($1)
+       WHERE  available = true
+       AND LOWER(city) = LOWER($1)
        AND capacity >= $2
        ORDER BY capacity ASC
        LIMIT 10`, // Return top 5 matches
@@ -586,6 +587,395 @@ app.get('/api/eventanalytics', async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+
+// Example with Express and PostgreSQL
+app.get('/api/events/:eventId', async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const eventResult = await pool.query('SELECT * FROM event WHERE id = $1', [eventId]);
+    if (eventResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    const event = eventResult.rows[0];
+    res.json(event);
+  } catch (err) {
+    console.error('Failed to fetch event:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+// Save seating layout image to db
+app.post(
+  '/api/saveLayout/:eventId',
+  upload.single('layoutImage'),
+  async (req, res) => {
+    console.log('req.params.eventId:', req.params.eventId);
+    console.log('req.file present:', !!req.file);
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ error: 'No file received—check your form-data key!' });
+    }
+
+    const layoutImage = req.file.buffer;
+    console.log('layoutImage byte length:', layoutImage.length);
+
+    try {
+      // Make sure your eventId is the right type
+      const eventId = parseInt(req.params.eventId, 10);
+      console.log('parsed eventId:', eventId);
+
+      console.log('running UPDATE query...');
+      const result = await pool.query(
+        `UPDATE event
+         SET seat_arrangement = $1
+         WHERE id = $2
+         RETURNING id, seat_arrangement IS NOT NULL AS saved`,
+        [layoutImage, eventId]
+      );
+      console.log('query result rows:', result.rows);
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Event not found' });
+      }
+      if (!result.rows[0].saved) {
+        return res
+          .status(500)
+          .json({ error: 'Layout image column stayed NULL' });
+      }
+
+      res
+        .status(200)
+        .json({ message: 'Layout image saved successfully', event: result.rows[0] });
+    } catch (err) {
+      // Print the full error so we know exactly what’s going on
+      console.error('Error saving layout image:', err);
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+
+// save agenda
+// Save generated agenda
+app.post(
+  "/api/saveAgenda/:eventId",
+  async (req, res) => {
+    const { eventId } = req.params;
+    const { agenda } = req.body;
+
+    console.log("🔍 Saving agenda for eventId:", eventId);
+    if (!agenda || typeof agenda !== "string") {
+      return res.status(400).json({ error: "Agenda text is required" });
+    }
+
+    try {
+      const result = await pool.query(
+        `UPDATE event
+           SET agenda = $1
+         WHERE id = $2
+         RETURNING id, agenda IS NOT NULL AS saved`,
+        [agenda, parseInt(eventId, 10)]
+      );
+      console.log("saveAgenda result:", result.rows);
+
+      if (!result.rows.length) {
+        return res.status(404).json({ error: "Event not found" });
+      }
+      if (!result.rows[0].saved) {
+        return res
+          .status(500)
+          .json({ error: "Agenda column stayed NULL" });
+      }
+
+      res.json({ message: "Agenda saved successfully" });
+    } catch (err) {
+      console.error("saveAgenda error:", err);
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
+
+
+
+
+// Fetch or create reservation for event and venue
+app.post('/api/reservations', async (req, res) => {
+  const { event_id, venue_id, user_email, message } = req.body;
+  try {
+    // Check if reservation exists
+    let result = await pool.query(
+      `SELECT rr.id, rr.event_id, rr.venue_id, rr.user_email, rr.message, rr.status, rr.request_id,
+              e.event_title, e.date, e.description,
+              v.venue_name, v.email, v.address
+       FROM public.reservation_requests rr
+       JOIN public.event e ON rr.event_id = e.id
+       JOIN public.venues v ON rr.venue_id = v.id
+       WHERE rr.event_id = $1 AND rr.venue_id = $2`,
+      [event_id, venue_id]
+    );
+
+    if (result.rows.length === 0) {
+      // Create new reservation
+      const requestId = uuidv4();
+      result = await pool.query(
+        `INSERT INTO public.reservation_requests (event_id, venue_id, user_email, message, status, request_id)
+         VALUES ($1, $2, $3, $4, 'pending', $5)
+         RETURNING id, event_id, venue_id, user_email, message, status, request_id`,
+        [event_id, venue_id, user_email || 'user@example.com', message || 'Reservation request', requestId]
+      );
+
+      // Fetch full details after insertion
+      result = await pool.query(
+        `SELECT rr.id, rr.event_id, rr.venue_id, rr.user_email, rr.message, rr.status, rr.request_id,
+                e.event_title, e.date, e.description,
+              v.venue_name, v.email, v.address
+         FROM public.reservation_requests rr
+         JOIN public.event e ON rr.event_id = e.id
+         JOIN public.venues v ON rr.venue_id = v.id
+         WHERE rr.id = $1`,
+        [result.rows[0].id]
+      );
+    }
+
+    const reservation = result.rows[0];
+    reservation.venue = {
+      venue_name: reservation.venue_name || 'Unknown Venue',
+      email: reservation.email || 'unknown@eventsphere.lk',
+      address: reservation.address || 'N/A',
+      contact_person: reservation.contact_person || 'N/A'
+    };
+    delete reservation.venue_name;
+    delete reservation.email;
+    delete reservation.address;
+    delete reservation.contact_person;
+    res.json(reservation);
+  } catch (err) {
+    console.error('Error fetching/creating reservation:', err);
+    res.status(500).json({ error: 'Server error: Unable to fetch or create reservation' });
+  }
+});
+
+
+// Generate email content
+app.get('/api/generateEmail/:reservationId', async (req, res) => {
+  try {
+    const { reservationId } = req.params;
+    const result = await pool.query(
+      `SELECT rr.id, rr.event_id, rr.venue_id, rr.user_email, rr.message, rr.status, rr.request_id,
+              e.event_title, e.date,  e.description,
+              v.venue_name, v.email, v.address
+       FROM public.reservation_requests rr
+       JOIN public.event e ON rr.event_id = e.id
+       JOIN public.venues v ON rr.venue_id = v.id
+       WHERE rr.id = $1`,
+      [reservationId]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Reservation not found' });
+    }
+    const reservation = result.rows[0];
+
+    // Generate or update request_id
+    let requestId = reservation.request_id;
+    if (!requestId) {
+      requestId = uuidv4();
+      await pool.query(
+        'UPDATE public.reservation_requests SET request_id = $1 WHERE id = $2',
+        [requestId, reservationId]
+      );
+    }
+
+    const emailContent = `
+      <h3>Venue Reservation Request</h3>
+      <p>Dear ${reservation.contact_person || 'Venue Manager'},</p>
+      <p>We are interested in booking <strong>${reservation.venue_name || 'N/A'}</strong> for the event: <strong>${reservation.event_title || 'N/A'}</strong>.</p>
+      <p><strong>Event Details:</strong></p>
+      <ul>
+        <li><strong>Date:</strong> ${new Date(reservation.date).toLocaleDateString()}</li>
+        <li><strong>Details:</strong> ${reservation.description || 'N/A'}</li>
+        <li><strong>Time:</strong> ${reservation.message || 'N/A'}</li>
+      </ul>
+      <p>Please confirm or reject this request using the links below:</p>
+      <p>
+        <a href="http://localhost:5000/api/confirm/${requestId}?status=confirmed">Confirm</a> |
+        <a href="http://localhost:5000/api/confirm/${requestId}?status=rejected">Reject</a>
+      </p>
+      <p>Thank you,<br>EventSphere</p>
+    `;
+
+    res.json({ email: emailContent });
+  } catch (err) {
+    console.error('Error generating email:', err);
+    res.status(500).json({ error: 'Failed to generate email' });
+  }
+});
+
+
+// Send email to the selected venue
+app.post('/api/sendEmail/:reservationId', async (req, res) => {
+  const { email } = req.body;
+  try {
+    const { reservationId } = req.params;
+    const result = await pool.query(
+      `SELECT rr.id, rr.event_id, rr.venue_id, rr.user_email, rr.message, rr.status, rr.request_id,
+              v.email AS venue_email, v.venue_name, e.event_title
+       FROM public.reservation_requests rr
+       JOIN public.venues v ON rr.venue_id = v.id
+       JOIN public.event e ON rr.event_id = e.id
+       WHERE rr.id = $1`,
+      [reservationId]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Reservation not found' });
+    }
+    const reservation = result.rows[0];
+    if (reservation.status !== 'pending') {
+      return res.status(400).json({ error: 'Request already processed' });
+    }
+
+    await transporter.sendMail({
+      from: 'your-email@gmail.com',
+      to: reservation.venue_email,
+      subject: `Venue Reservation Request for ${reservation.venue_name}`,
+      html: email
+    });
+
+    res.json({ message: 'Email sent successfully to the venue.' });
+  } catch (err) {
+    console.error('Error sending email:', err);
+    res.status(500).json({ error: 'Failed to send email' });
+  }
+});
+
+// Handle venue confirmation/rejection
+app.get('/api/confirm/:requestId', async (req, res) => {
+  const { requestId } = req.params;
+  const { status } = req.query;
+
+  try {
+    const result = await pool.query(
+      `SELECT rr.id, rr.status, rr.user_email, e.event_title, v.venue_name, rr.venue_id
+       FROM public.reservation_requests rr
+       JOIN public.event e ON rr.event_id = e.id
+       JOIN public.venues v ON rr.venue_id = v.id
+       WHERE rr.request_id = $1`,
+      [requestId]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Request not found' });
+    }
+    const reservation = result.rows[0];
+    console.log(result.rows[0])
+    if (reservation.status !== 'pending') {
+      return res.status(400).json({ error: 'Request already processed' });
+    }
+
+    await pool.query(
+      `UPDATE public.reservation_requests
+       SET status = $1, updated_at = NOW()
+       WHERE request_id = $2`,
+      [status === 'confirmed' ? 'confirmed' : 'rejected', requestId]
+    );
+console.log(`Updated reservation_requests status to ${status} for requestId: ${requestId}`);
+
+    // If confirmed and venue_id exists, mark venue as unavailable
+    if (status === 'confirmed' || reservation.venue_id) {
+      console.log(`Updating venue availability for venue_id: ${reservation.venue_id}`);
+      const updateResult = await pool.query(
+        `UPDATE public.venues
+         SET available = FALSE
+         WHERE id = $1
+         RETURNING id, venue_name, available`,
+        [reservation.venue_id]
+      );
+      if (updateResult.rows.length === 0) {
+        console.error(`Failed to update venue availability for venue_id: ${reservation.venue_id}`);
+      } else {
+        console.log(`Venue updated:`, updateResult.rows[0]);
+      }
+    }
+
+    await transporter.sendMail({
+      from: 'eventsphere.application@gmail.com',
+      to: reservation.user_email,
+      subject: `Venue Request for ${reservation.event_title} ${status === 'confirmed' ? 'Confirmed' : 'Rejected'}`,
+      html: `<p>Your reservation request for ${reservation.venue_name} has been ${status}.</p>`
+    });
+
+    res.send(`Request ${status} successfully`);
+  } catch (err) {
+    console.error('Error processing confirmation:', err);
+    res.status(500).json({ error: 'Failed to process confirmation' });
+  }
+});
+
+// Infer tasks from event description
+app.post('/api/infer-tasks', async (req, res) => {
+  const { description } = req.body;
+  if (!description) {
+    return res.status(400).json({ error: 'Event description is required' });
+  }
+  try {
+    // Placeholder: Replace with actual task inference logic (e.g., AI service)
+    const tasks = [
+      `Plan logistics for ${description.slice(0, 20)}...`,
+      `Coordinate with vendors`,
+      `Confirm event schedule`
+    ];
+    res.json({ tasks });
+  } catch (err) {
+    console.error('Error inferring tasks:', err);
+    res.status(500).json({ error: 'Failed to infer tasks' });
+  }
+});
+
+
+// Save vendors for an event
+app.post('/api/saveEventVendors', async (req, res) => {
+  const { event_id, vendor_ids } = req.body;
+  if (!event_id || !Array.isArray(vendor_ids) || vendor_ids.length === 0) {
+    return res.status(400).json({ error: 'Event ID and at least one vendor ID are required' });
+  }
+  try {
+    const values = vendor_ids.map((_, i) => `($1, $${i + 2}, 'pending')`).join(', ');
+    const query = `INSERT INTO public.event_vendors (event_id, vendor_id, status) 
+                   VALUES ${values} 
+                   ON CONFLICT ON CONSTRAINT unique_event_vendor 
+                   DO UPDATE SET status = 'pending', created_at = NOW() 
+                   RETURNING id, event_id, vendor_id, status`;
+    const result = await pool.query(query, [event_id, ...vendor_ids]);
+    res.status(201).json({ message: 'Vendors saved successfully', insertedVendors: result.rows });
+  } catch (err) {
+    console.error('Error saving event vendors:', err.message);
+    res.status(500).json({ error: 'Failed to save event vendors' });
+  }
+});
+
+// Get vendors for an event
+app.get('/api/getEventVendors/:eventId', async (req, res) => {
+  const { eventId } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT v.id, v.name, v.email, v.address, v.category, v.capacity, 
+    v.min_budget, ev.status
+       FROM public.event_vendors ev
+       JOIN public.vendor v ON ev.vendor_id = v.id
+       WHERE ev.event_id = $1`,
+      [eventId]
+    );
+    res.json({ vendors: result.rows });
+  } catch (err) {
+    console.error('Error fetching event vendors:', err);
+    res.status(500).json({ error: 'Failed to fetch event vendors' });
+  }
+});
+
+
+
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

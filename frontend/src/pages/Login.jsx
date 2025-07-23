@@ -46,8 +46,10 @@ function Login() {
       navigate('/organizer-dashboard');
     } else if (user.role === 'vendor') {
       navigate("/vendor-home-page");
-    } else {
+    } else if (user.role === 'attendee') {
       navigate('/'); // or home
+    } else {
+      navigate('/homepage')
     }
 
   } catch (err) {

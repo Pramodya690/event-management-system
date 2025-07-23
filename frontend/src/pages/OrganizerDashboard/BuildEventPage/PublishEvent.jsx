@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const PublishEvent = ({ form, bannerImagePreview }) => {
+const PublishEvent = ({ form, bannerImagePreview, previewURL,stallMapPreview, layoutURL,seatMapPreview,agenda }) => {
   return (
     <motion.div
       key="step3"
@@ -31,12 +31,31 @@ const PublishEvent = ({ form, bannerImagePreview }) => {
           <p className="text-sm text-gray-500 mt-1">{form.location || "To be announced"}</p>
           <p className="text-sm text-gray-500 mt-1">{form.mode || "Event mode not selected"}</p>
           <a href="#" className="text-sm text-sky-600 mt-2 inline-block">Preview</a>
+            <h4 className="font-semibold text-gray-700 mb-1">Stall Map Preview</h4>
+
+          <div className="w-full h-40 bg-gray-200 flex items-center justify-center rounded mb-4">
+            {stallMapPreview ? (
+              <img src={stallMapPreview} alt="stall" className="object-contain max-h-40 rounded" />
+            ) : (
+              <span className="text-gray-500">No Image</span>
+            )}
+          </div>
+            <h4 className="font-semibold text-gray-700 mb-1">Seat Map Preview</h4>
+
+          <div className="w-full h-40 bg-gray-200 flex items-center justify-center rounded mb-4">
+            {seatMapPreview ? (
+              <img src={seatMapPreview} alt="seat" className="object-contain max-h-40 rounded" />
+            ) : (
+              <span className="text-gray-500">No Image</span>
+            )}
+          </div>
+          
         </div>
 
         {/* Right Metadata Section */}
         <div className="w-full md:w-1/2 space-y-6">
 
-          {/* Type & Category
+          {/* Type & Category */}
           <div>
             <h4 className="font-semibold text-gray-700 mb-1">Event type and category</h4>
             <p className="text-sm text-gray-500 mb-2">Your type and category help your event appear in more searches.</p>
@@ -44,7 +63,7 @@ const PublishEvent = ({ form, bannerImagePreview }) => {
               <span className="px-3 py-2 border rounded bg-gray-100 text-gray-700 w-1/2">{form.type || "Not selected"}</span>
               <span className="px-3 py-2 border rounded bg-gray-100 text-gray-700 w-1/2">{form.category || "Not selected"}</span>
             </div>
-          </div> */}
+          </div>
 
           {/* Tags */}
           <div>
@@ -87,6 +106,16 @@ const PublishEvent = ({ form, bannerImagePreview }) => {
             <p className="text-sm text-gray-600">
               {form.registrationLimit ? `${form.registrationLimit} people` : "No limit specified"}
             </p>
+          </div>
+          {/* Agenda*/}
+          <div>
+            <h4 className="font-semibold text-gray-700 mb-1">Agenda</h4>
+            {agenda && (
+              <div className="mt-4 bg-gray-50 p-4 rounded border border-gray-200">
+                <h4 className="font-semibold mb-2">Generated Agenda</h4>
+                <pre className="whitespace-pre-line text-sm text-gray-700">{agenda}</pre>
+              </div>
+            )}
           </div>
         </div>
       </div>
