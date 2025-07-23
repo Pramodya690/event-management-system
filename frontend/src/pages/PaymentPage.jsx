@@ -36,14 +36,58 @@ const PaymentPage = () => {
     return newErrors;
   };
 
-  const handleConfirm = () => {
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-      return;
+  // when attendee clicks on the confirm payment
+  const handleConfirm = async () => {
+  const formErrors = validateForm();
+  if (Object.keys(formErrors).length > 0) {
+    setErrors(formErrors);
+    return;
+  }
+
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    alert("User is not logged in.");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:5000/api/purchaseTicket", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        // attendeeId: 1, // Replace with actual logged-in user ID
+        // const attendeeId = localStorage.getItem("attendeeId") || 1;
+        attendeeId: parseInt(userId), // user ID from localStorage
+        eventId: event.id,
+        ticketId: ticket.id,
+        quantity: quantity,
+        totalAmount: parseFloat(totalCost)
+      })
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      alert(`Error: ${data.error}`);
+    } else {
+      console.error("direct to payment gateway");
+      alert(`success`);
+      // navigate("/payment-success"); // or to the gateway
     }
-    alert("Payment confirmed (mock action).");
-  };
+  } catch (err) {
+    console.error("Payment error:", err);
+    alert("Something went wrong");
+  }
+};
+
+
+  // const handleConfirm = () => {
+  //   const formErrors = validateForm();
+  //   if (Object.keys(formErrors).length > 0) {
+  //     setErrors(formErrors);
+  //     return;
+  //   }
+  //   alert("Payment confirmed (mock action).");
+  // };
 
   const totalCost =
     ticket.type === "paid"

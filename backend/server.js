@@ -330,27 +330,6 @@ app.get('/api/findVendors', async (req, res) => {
   }
 });
 
-
-//saving tickets to db
-// app.post("/api/tickets", async (req, res) => {
-//   const { eventId, type, name, quantity, price, sales_start, sales_end } = req.body;
-
-//   try {
-//     const result = await pool.query(
-//       `INSERT INTO tickets 
-//        (event_id, type, name, quantity, price, sales_start, sales_end)
-//        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-//        RETURNING *`,
-//       [eventId, type, name, quantity, price || 0, sales_start, sales_end, start_time, end_time]
-//     );
-
-//     res.status(201).json({ ticket: result.rows[0] });
-//   } catch (err) {
-//     console.error("Error inserting ticket:", err);
-//     res.status(500).json({ error: "Failed to create ticket" });
-//   }
-// });
-
 // saving tickets
 app.post('/api/tickets', async (req, res) => {
   const { event_id, type, name, quantity, price, sales_start, sales_end } = req.body;
@@ -372,7 +351,6 @@ app.post('/api/tickets', async (req, res) => {
     res.status(500).json({ error: 'Ticket insert failed' });
   }
 });
-
 
 
 //HOMEPAGE ENDPOINTS
@@ -502,66 +480,70 @@ if (typeof row.tags === "string") {
 });
 
 
-// app.get('api/event/:id', async (req, res) => {
-//   const eventId = req.params.id;
+// purchasing a ticket from the paymentpage
+// app.post('/api/purchaseTicket', async (req, res) => {
+//   const { attendeeId, eventId, ticketId, quantity, totalAmount } = req.body;
 
 //   try {
-//     const eventQuery = `
-//       SELECT *, encode(banner_image, 'base64') as banner_image
-//       FROM event WHERE id = $1
-//     `;
-//     const ticketsQuery = `SELECT * FROM tickets WHERE event_id = $1`;
-
-//     const eventResult = await pool.query(eventQuery, [eventId]);
-//     const ticketsResult = await pool.query(ticketsQuery, [eventId]);
-
-//     if (eventResult.rows.length === 0) {
-//       return res.status(404).json({ message: 'Event not found' });
+//     // 1. Check ticket availability
+//     const ticket = await db.query("SELECT quantity FROM tickets WHERE id = $1", [ticketId]);
+//     if (!ticket.rows.length || ticket.rows[0].quantity < quantity) {
+//       return res.status(400).json({ error: 'Not enough tickets available' });
 //     }
 
-//     const event = eventResult.rows[0];
+//     // 2. Insert into ticket_sales
+//     await db.query(
+//       `INSERT INTO ticket_sales (attendee_id, event_id, ticket_id, quantity, total_amount) 
+//        VALUES ($1, $2, $3, $4, $5)`,
+//       [attendeeId, eventId, ticketId, quantity, totalAmount]
+//     );
 
-//     // Organize tickets by type
-//     const ticketGroups = {
-//       paid: [],
-//       free: [],
-//       donation: [],
-//     };
+//     // 3. Update ticket quantity
+//     await db.query(
+//       "UPDATE tickets SET quantity = quantity - $1 WHERE id = $2",
+//       [quantity, ticketId]
+//     );
 
-//     for (const ticket of ticketsResult.rows) {
-//       ticketGroups[ticket.type]?.push(ticket);
-//     }
-
-//     const data = {
-//       id: event.id,
-//       eventName: event.event_title,
-//       date: {
-//         day: new Date(event.date).getDate(),
-//         month: new Date(event.date).toLocaleString('default', { month: 'long' }),
-//         year: new Date(event.date).getFullYear(),
-//         fullDate: event.date,
-//       },
-//       time: event.time,
-//       location: event.location,
-//       description: event.description,
-//       // stalls: event.headcount,
-//       // hasAuthorMeet: false, // You can replace this with a real flag if needed
-//       // coordinates: [event.coordinates.x, event.coordinates.y],
-//       tags: event.tags?.split(',') || [],
-//       faqs: event.faqs,
-//       bannerImage: `data:image/jpeg;base64,${event.banner_image}`,
-//       tickets: ticketGroups,
-//     };
-
-//     res.json(data);
+//     res.status(200).json({ message: "Purchase recorded successfully" });
 //   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Server Error' });
+//     console.error("Purchase error:", error);
+//     res.status(500).json({ error: "Internal server error" });
 //   }
 // });
 
+// POST /api/purchaseTicket
+app.post('/api/purchaseTicket', async (req, res) => {
+  const { attendeeId, ticketId, quantity, purchase_time } = req.body;
 
+  try {
+    // Get ticket info
+    const ticketRes = await pool.query("SELECT price, quantity FROM tickets WHERE id = $1", [ticketId]);
+    const ticket = ticketRes.rows[0];
 
+    if (!ticket) return res.status(404).json({ error: "Ticket not found" });
+    if (ticket.quantity < quantity) return res.status(400).json({ error: "Not enough tickets available" });
+
+    const totalPrice = ticket.price * quantity;
+
+    // Insert into ticket_orders
+    await pool.query(
+      `INSERT INTO ticket_orders (attendee_id, ticket_id, quantity, total_price, purchase_time)
+       VALUES ($1, $2, $3, $4, COALESCE($5, NOW()) )`,
+      [attendeeId, ticketId, quantity, totalPrice, purchase_time]
+    );
+
+    // Update available tickets
+    await pool.query(
+      `UPDATE tickets SET quantity = quantity - $1 WHERE id = $2`,
+      [quantity, ticketId]
+    );
+
+    res.json({ success: true, message: "Ticket purchased successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 
 
