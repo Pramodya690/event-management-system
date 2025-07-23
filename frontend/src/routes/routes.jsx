@@ -20,7 +20,7 @@ import SignupAttendee from "../pages/Signup/SignupAttendee";
 import EventAnalytics from "../pages/OrganizerDashboard/EventAnalytics";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 import Marketing from "../pages/OrganizerDashboard/Marketing";
-
+import PaymentPage from "../pages/PaymentPage";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
@@ -37,6 +37,7 @@ export const routes = [
   { path: "/vendor-profile", element: <VendorProfile /> },
   { path: "/signup/attendee", element: <SignupAttendee /> },
   { path: "/admin-dashboard", element: <AdminDashboard /> },
+  { path: "/payment", element: <PaymentPage />},
 
   {
     path: "/organizer-dashboard",

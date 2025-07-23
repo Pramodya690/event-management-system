@@ -462,6 +462,104 @@ app.get('/api/organizers/:id', async (req, res) => {
 // ENDPOINTS OF AI(DILEE'S CODE)
 
 
+// for those pop ups
+//to fetch data to the EventPage, in the homepage
+// Fetch event by ID
+app.get('/api/events/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query('SELECT * FROM event WHERE id = $1', [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    const row = result.rows[0];
+
+// Parse tags before sending
+if (typeof row.tags === "string") {
+  row.tags = row.tags.split(",").map((tag) => tag.trim());
+}
+
+ //Ensure tickets is a valid object
+    if (!row.tickets || typeof row.tickets !== 'object') {
+      row.tickets = {
+        paid: [],
+        free: [],
+        donation: [],
+      };
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Failed to fetch event' });
+  }
+});
+
+
+
+
+
+// app.get('api/event/:id', async (req, res) => {
+//   const eventId = req.params.id;
+
+//   try {
+//     const eventQuery = `
+//       SELECT *, encode(banner_image, 'base64') as banner_image
+//       FROM event WHERE id = $1
+//     `;
+//     const ticketsQuery = `SELECT * FROM tickets WHERE event_id = $1`;
+
+//     const eventResult = await pool.query(eventQuery, [eventId]);
+//     const ticketsResult = await pool.query(ticketsQuery, [eventId]);
+
+//     if (eventResult.rows.length === 0) {
+//       return res.status(404).json({ message: 'Event not found' });
+//     }
+
+//     const event = eventResult.rows[0];
+
+//     // Organize tickets by type
+//     const ticketGroups = {
+//       paid: [],
+//       free: [],
+//       donation: [],
+//     };
+
+//     for (const ticket of ticketsResult.rows) {
+//       ticketGroups[ticket.type]?.push(ticket);
+//     }
+
+//     const data = {
+//       id: event.id,
+//       eventName: event.event_title,
+//       date: {
+//         day: new Date(event.date).getDate(),
+//         month: new Date(event.date).toLocaleString('default', { month: 'long' }),
+//         year: new Date(event.date).getFullYear(),
+//         fullDate: event.date,
+//       },
+//       time: event.time,
+//       location: event.location,
+//       description: event.description,
+//       // stalls: event.headcount,
+//       // hasAuthorMeet: false, // You can replace this with a real flag if needed
+//       // coordinates: [event.coordinates.x, event.coordinates.y],
+//       tags: event.tags?.split(',') || [],
+//       faqs: event.faqs,
+//       bannerImage: `data:image/jpeg;base64,${event.banner_image}`,
+//       tickets: ticketGroups,
+//     };
+
+//     res.json(data);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Server Error' });
+//   }
+// });
+
+
 
 
 app.listen(port, () => {
