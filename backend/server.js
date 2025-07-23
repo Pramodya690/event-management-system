@@ -36,7 +36,7 @@ app.post('/api/organizers', async (req, res) => {
 // Endpoint to register attendee
 app.post('/api/auth/attendee/signup', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, gender, age, city, password } = req.body;
 
     // ✅ Hash the password before storing it
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -49,7 +49,7 @@ app.post('/api/auth/attendee/signup', async (req, res) => {
 
     const result = await pool.query(
       'INSERT INTO attendee (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-      [name, email, hashedPassword] // ✅ Use hashedPassword here!
+      [name, email, gender, age, city, hashedPassword] // ✅ Use hashedPassword here!
     );
 
     res.status(201).json({ message: 'Attendee registered successfully', attendee: result.rows[0] });

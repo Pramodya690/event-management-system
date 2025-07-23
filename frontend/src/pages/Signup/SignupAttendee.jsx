@@ -8,11 +8,25 @@ const SignupAttendee = () => {
   const [form, setForm] = useState({
     name: '',
     email: '',
+    gender: '',
+    age: '',
+    city: '',
     password: '',
     confirmPassword: ''
   });
 
   const [error, setError] = useState('');
+
+  const ageGroups = [
+    'under 18', '18 - 24', '25 - 34', '35 - 44', '45 - 54', 'over 55'  
+  ];
+
+    const availableCities = [
+    'Colombo', 'Kandy', 'Galle', 'Jaffna', 'Negombo',
+    'Trincomalee', 'Batticaloa', 'Anuradhapura', 'Polonnaruwa', 'Matara',
+    'Ratnapura', 'Badulla', 'Kurunegala', 'Kalutara', 'Matale',
+    'Hambantota', 'Ampara', 'Nuwara Eliya', 'Puttalam', 'Mannar'
+  ];
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -31,7 +45,10 @@ const SignupAttendee = () => {
       const response = await axios.post('http://localhost:5000/api/auth/attendee/signup', {
         name: form.name,
         email: form.email,
-        password: form.password
+        password: form.password,
+        age: form.age,
+        city:form.city,
+        gender: form.gender
       });
 
       if (response.status === 201 || response.status === 200) {
@@ -76,6 +93,61 @@ const SignupAttendee = () => {
                 className="w-full mt-1 p-2 border rounded-md"
               />
             </div>
+
+            <div>
+  <label className="block text-sm font-medium text-gray-700">Gender</label>
+  <select
+    name="gender"
+    value={form.gender}
+    onChange={handleChange}
+    required
+    className="w-full mt-1 p-2 border rounded-md"
+  >
+    <option value="">Select gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Other">Other</option>
+    <option value="Prefer not to say">Prefer not to say</option>
+  </select>
+</div>
+
+<div>
+  <label className="block text-sm font-medium text-gray-700">Age Group</label>
+  <select
+    name="age"
+    value={form.age}
+    onChange={handleChange}
+    required
+    className="w-full mt-1 p-2 border rounded-md"
+  >
+    <option value="">Select age group</option>
+    {ageGroups.map((group) => (
+      <option key={group} value={group}>
+        {group}
+      </option>
+    ))}
+  </select>
+</div>
+
+
+<div>
+  <label className="block text-sm font-medium text-gray-700">Age Group</label>
+  <select
+    name="city"
+    value={form.city}
+    onChange={handleChange}
+    required
+    className="w-full mt-1 p-2 border rounded-md"
+  >
+    <option value="">Select your city</option>
+    {availableCities.map((group) => (
+      <option key={group} value={group}>
+        {group}
+      </option>
+    ))}
+  </select>
+</div>
+
 
             <div>
               <label className="block text-sm font-medium text-gray-700">Password</label>
