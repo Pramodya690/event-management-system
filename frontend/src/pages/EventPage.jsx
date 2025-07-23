@@ -14,6 +14,11 @@ const EventPage = ({ event }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+    // State for tickets selection & purchase flow
+  const [selectedTicket, setSelectedTicket] = useState(null);
+  const [ticketQuantity, setTicketQuantity] = useState(1);
+  const [confirmed, setConfirmed] = useState(false);
+
   useEffect(() => {
     const fetchEvent = async () => {
       try {
@@ -41,7 +46,6 @@ const EventPage = ({ event }) => {
           faqs: data.faqs || "",
         //   tickets data
           tickets: Array.isArray(data.tickets) ? data.tickets : [],
-
         //   organizer: data.organizer,
         //   email: data.email,
         //   contact_number: data.contact_number,
@@ -53,7 +57,6 @@ const EventPage = ({ event }) => {
                 )
               )}`
             : "https://via.placeholder.com/1200x300?text=Event+Banner",
-        //   tickets: data.tickets || { paid: [], free: [], donation: [] },
         };
 
         setEventData(transformed);
@@ -173,74 +176,160 @@ const EventPage = ({ event }) => {
             </div>
 
             {/* Right: Sidebar */}
+            {/* get tickets section */}
             <div className="w-1/3">
-              <div className="sticky top-4 bg-sky-50 border border-sky-200 rounded-lg p-6 shadow-sm">
-                
-                {/* tickets section */}
-                {/* Tickets */}
-                <h2 className="text-xl font-bold mb-4 text-gray-900">
-                  Get Tickets
-                </h2>
-{data.tickets && data.tickets.length > 0 && (
-  <div className="mb-8">
-    <h2 className="text-xl font-semibold mb-3 text-gray-800">Available Tickets</h2>
-    <div className="space-y-4">
-      {data.tickets.map((ticket, index) => (
-        <div
-          key={index}
-          className="border border-sky-100 rounded-lg p-4 bg-white shadow-sm"
-        >
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="font-medium text-gray-900">
-                🎟️ {ticket.name || "Untitled Ticket"}
-              </p>
-              <p className="text-sm text-gray-500 capitalize">
-                Type of ticket: {ticket.type}
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-gray-700">
-                Tickets available: <strong>{ticket.quantity}</strong>
-              </p>
-              <p className="text-gray-700">
-                Price:{" "}
-                <strong>
-                  {ticket.price > 0
-                    ? `$${Number(ticket.price).toFixed(2)}`
-                    : "Free"}
-                </strong>
-              </p>
+                    <div className="sticky top-4 bg-sky-50 border border-sky-200 rounded-lg p-6 shadow-sm">
+                        <h2 className="text-xl font-bold mb-4 text-gray-900">Get Tickets</h2>
 
-              
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
+                        {data.tickets && data.tickets.length > 0 ? (
+                        <div className="space-y-4">
+                            {data.tickets.map((ticket, index) => {
+                            const isSelected = selectedTicket?.name === ticket.name;
 
-                
-                
-                <h3 className="font-medium mb-2 text-gray-900">
-                  Share with friends
+                            return (
+                                <div
+                                key={index}
+                                className={`border rounded-lg p-4 transition-all duration-300 mb-4 ${
+                                    isSelected
+                                    ? "border-sky-500 bg-sky-100"
+                                    : "border-sky-300 hover:border-sky-400"
+                                }`}
+                                >
+                                <div className="flex justify-between items-start mb-2">
+                                    <div>
+                                    <h3 className="font-semibold text-gray-900">
+                                        🎟️ {ticket.name || "Untitled Ticket"}
+                                    </h3>
+                                    <p className="text-sm text-gray-500 capitalize">
+                                        Type of ticket: {ticket.type}
+                                    </p>
+                                    </div>
+                                    <div className="text-right">
+                                    <p className="text-sm text-gray-700">
+                                        Tickets available: <strong>{ticket.quantity}</strong>
+                                    </p>
+                                    <p className="text-sm text-gray-700 font-bold text-sky-600">
+                                        {ticket.price > 0
+                                        ? `$${Number(ticket.price).toFixed(2)}`
+                                        : "Free"}
+                                    </p>
+                                    </div>
+                                </div>
+
+                                {!isSelected ? (
+                                    <button
+                                    className="w-full bg-sky-600 hover:bg-sky-700 text-white py-2 rounded-lg font-medium"
+                                    onClick={() => {
+                                        setSelectedTicket(ticket);
+                                        setTicketQuantity(1);
+                                        setConfirmed(false);
+                                    }}
+                                    >
+                                    Buy Ticket
+                                    </button>
+                                ) : (
+                                    <>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        Quantity
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={ticketQuantity}
+                                        min={1}
+                                        max={ticket.quantity}
+                                        onChange={(e) =>
+                                        setTicketQuantity(
+                                            Math.min(
+                                            ticket.quantity,
+                                            Math.max(1, Number(e.target.value))
+                                            )
+                                        )
+                                        }
+                                        className="w-full p-2 mb-2 border border-sky-300 rounded focus:ring-2 focus:ring-sky-500"
+                                    />
+
+                                    {!confirmed ? (
+                                        <button
+                                        className="w-full bg-sky-600 text-white py-2 rounded-lg hover:bg-sky-700"
+                                        onClick={() => setConfirmed(true)}
+                                        >
+                                        Confirm
+                                        </button>
+                                    ) : (
+                                        <button
+                                        className="w-full bg-sky-600 text-white py-2 rounded-lg hover:bg-sky-700"
+                                        onClick={() =>
+                                            navigate("/payment", {
+                                            state: {
+                                                ticket: {
+                                                ...ticket,
+                                                quantity: ticketQuantity,
+                                                type: ticket.price > 0 ? "paid" : "free",
+                                                },
+                                            },
+                                            })
+                                        }
+                                        >
+                                        Proceed to Payment
+                                        </button>
+                                    )}
+                                    </>
+                                )}
+                                </div>
+                            );
+                            })}
+                        </div>
+                        ) : (
+                        <p>No tickets available at this time.</p>
+                        )}
+
+                        <h3 className="font-medium mb-2 text-gray-900">
+                            Share with friends
+                        </h3>
+                        <div className="flex gap-2">
+                        <button className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700">
+                            <FaFacebook size={16} />
+                        </button>
+                        <button className="w-8 h-8 rounded-full bg-blue-400 text-white flex items-center justify-center hover:bg-blue-500">
+                            <FaTwitter size={16} />
+                        </button>
+                        <button className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white flex items-center justify-center hover:from-purple-600 hover:to-pink-600">
+                            <FaInstagram size={16} />
+                        </button>
+                        </div>
+                    </div>
+            </div>      
+              </div>
+
+
+                        {/* Organizer */}
+          {/* <div className="p-8 border-t border-sky-200 bg-sky-50">
+            <h2 className="text-2xl font-bold mb-4 text-gray-900">Organizer</h2>
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-full bg-sky-200 flex items-center justify-center">
+                <svg
+                  className="w-8 h-8 text-sky-600"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg text-gray-900">
+                  Event Organizer
                 </h3>
-                <div className="flex gap-2">
-                  <button className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700">
-                    <FaFacebook size={16} />
-                  </button>
-                  <button className="w-8 h-8 rounded-full bg-blue-400 text-white flex items-center justify-center hover:bg-blue-500">
-                    <FaTwitter size={16} />
-                  </button>
-                  <button className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white flex items-center justify-center hover:from-purple-600 hover:to-pink-600">
-                    <FaInstagram size={16} />
-                  </button>
-                </div>
+                <p className="text-gray-600">
+                  Contact organizer for more information
+                </p>
               </div>
             </div>
-          </div>
-        </div>
+          </div> */}
+            </div>
       </main>
 
       <Footer />

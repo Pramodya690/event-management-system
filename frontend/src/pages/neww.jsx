@@ -340,7 +340,7 @@ const EventPage = ({ event }) => {
           </div>
 
           {/* Organizer */}
-          <div className="p-8 border-t border-sky-200 bg-sky-50">
+          {/* <div className="p-8 border-t border-sky-200 bg-sky-50">
             <h2 className="text-2xl font-bold mb-4 text-gray-900">Organizer</h2>
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-full bg-sky-200 flex items-center justify-center">
@@ -365,7 +365,7 @@ const EventPage = ({ event }) => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </main>
 
