@@ -58,36 +58,63 @@ const EventsSummary = () => {
   useEffect(() => {
   const fetchEvents = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/events");
+      const res = await fetch("http://localhost:5000/api/eventsummary");
       const data = await res.json();
 
+      // const transformed = data.map((e) => ({
+      //   id: e.id,
+      //   name: e.event_title,
+      //   date: e.date,
+      //   time: e.time,
+      //   // startTime: e.time || "10:00 AM", 
+      //   // endTime: e.time || "12:00 PM",   
+      //   // timezone: "GMT+5:30",            
+      //   ticketsSold: e.tickets_sold || 0, 
+      //   capacity: e.headcount || 0,
+      //   gross: `LKR ${e.revenue || 0}`,   
+      //   status: e.status || "On Sale",
+      //   type: e.location?.toLowerCase().includes("online") ? "Online event" : "In-person event",
+      //   image: e.banner_image
+      //     ? `data:image/jpeg;base64,${btoa(
+      //         new Uint8Array(e.banner_image.data).reduce(
+      //           (data, byte) => data + String.fromCharCode(byte),
+      //           ""
+      //         )
+      //       )}`
+      //     : "https://source.unsplash.com/random/500x300",
+      //     organizer: e.organizer,
+      //   email: e.email,
+      //   contact_number: e.contact_number,
+      //   description: e.description,
+      //   location: e.location,
+      // }));
+
+
       const transformed = data.map((e) => ({
-        id: e.id,
-        name: e.event_title,
-        date: e.date,
-        time: e.time,
-        // startTime: e.time || "10:00 AM", 
-        // endTime: e.time || "12:00 PM",   
-        // timezone: "GMT+5:30",            
-        ticketsSold: e.tickets_sold || 0, 
-        capacity: e.headcount || 0,
-        gross: `LKR ${e.revenue || 0}`,   
-        status: e.status || "On Sale",
-        type: e.location?.toLowerCase().includes("online") ? "Online event" : "In-person event",
-        image: e.banner_image
-          ? `data:image/jpeg;base64,${btoa(
-              new Uint8Array(e.banner_image.data).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ""
-              )
-            )}`
-          : "https://source.unsplash.com/random/500x300",
-          organizer: e.organizer,
-        email: e.email,
-        contact_number: e.contact_number,
-        description: e.description,
-        location: e.location,
-      }));
+  id: e.id,
+  name: e.event_title,
+  date: e.date,
+  time: e.time,
+  ticketsSold: Number(e.tickets_sold) || 0, // 👈 Make sure it's a number
+  capacity: e.headcount || 0,
+  gross: `LKR ${parseFloat(e.revenue).toFixed(2)}`, // 👈 Format to 2 decimal points
+  status: e.status || "On Sale",
+  type: e.location?.toLowerCase().includes("online") ? "Online event" : "In-person event",
+  image: e.banner_image
+    ? `data:image/jpeg;base64,${btoa(
+        new Uint8Array(e.banner_image.data).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ""
+        )
+      )}`
+    : "https://source.unsplash.com/random/500x300",
+  organizer: e.organizer,
+  email: e.email,
+  contact_number: e.contact_number,
+  description: e.description,
+  location: e.location,
+}));
+
 
       setEvents(transformed);
     } catch (error) {
@@ -233,7 +260,11 @@ const EventsSummary = () => {
         </div>
         <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
           <div className="text-gray-500 text-sm font-medium">Total Revenue</div>
-          <div className="text-2xl font-bold text-gray-800 mt-1">${events.reduce((sum, event) => sum + parseFloat(event.gross.replace(/[^0-9.]/g, '')), 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div>
+          {/* <div className="text-2xl font-bold text-gray-800 mt-1">${events.reduce((sum, event) => sum + parseFloat(event.gross.replace(/[^0-9.]/g, '')), 0).toLocaleString('en-US', {minimumFractionDigits: 2})}</div> */}
+          <div className="text-2xl font-bold text-gray-800 mt-1">
+            LKR {events.reduce((sum, event) => sum + parseFloat(event.gross.replace(/[^0-9.]/g, '')), 0).toLocaleString('en-US', {minimumFractionDigits: 2})}
+          </div>
+
           <div className="text-xs text-green-600 mt-1 flex items-center">
             <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />

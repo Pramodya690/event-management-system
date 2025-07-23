@@ -439,7 +439,6 @@ app.get('/api/organizers/:id', async (req, res) => {
 
 // ENDPOINTS OF AI(DILEE'S CODE)
 
-
 // for those pop ups
 //to fetch data to the EventPage, in the homepage
 // Fetch event by ID
@@ -479,38 +478,6 @@ if (typeof row.tags === "string") {
   }
 });
 
-
-// purchasing a ticket from the paymentpage
-// app.post('/api/purchaseTicket', async (req, res) => {
-//   const { attendeeId, eventId, ticketId, quantity, totalAmount } = req.body;
-
-//   try {
-//     // 1. Check ticket availability
-//     const ticket = await db.query("SELECT quantity FROM tickets WHERE id = $1", [ticketId]);
-//     if (!ticket.rows.length || ticket.rows[0].quantity < quantity) {
-//       return res.status(400).json({ error: 'Not enough tickets available' });
-//     }
-
-//     // 2. Insert into ticket_sales
-//     await db.query(
-//       `INSERT INTO ticket_sales (attendee_id, event_id, ticket_id, quantity, total_amount) 
-//        VALUES ($1, $2, $3, $4, $5)`,
-//       [attendeeId, eventId, ticketId, quantity, totalAmount]
-//     );
-
-//     // 3. Update ticket quantity
-//     await db.query(
-//       "UPDATE tickets SET quantity = quantity - $1 WHERE id = $2",
-//       [quantity, ticketId]
-//     );
-
-//     res.status(200).json({ message: "Purchase recorded successfully" });
-//   } catch (error) {
-//     console.error("Purchase error:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
-
 // POST /api/purchaseTicket
 app.post('/api/purchaseTicket', async (req, res) => {
   const { attendeeId, ticketId, quantity, purchase_time } = req.body;
@@ -542,6 +509,30 @@ app.post('/api/purchaseTicket', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Server error" });
+  }
+});
+
+//to display the events in the eventSummary page with teh revenue included 
+app.get('/api/eventsummary', async (req, res) => {
+  try {
+    const query = `
+      SELECT
+        e.*,
+        COALESCE(SUM(t_order.quantity), 0) AS tickets_sold,
+        COALESCE(SUM(t_order.quantity * t.price), 0) AS revenue
+      FROM event e
+      LEFT JOIN tickets t ON t.event_id = e.id
+      LEFT JOIN ticket_orders t_order ON t_order.ticket_id = t.id
+      GROUP BY e.id
+      ORDER BY e.date ASC
+    `;
+
+    const result = await pool.query(query);
+     console.log("DB result rows:", result.rows); 
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: 'Failed to fetch events' });
   }
 });
 

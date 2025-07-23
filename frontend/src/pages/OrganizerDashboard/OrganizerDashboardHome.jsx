@@ -8,15 +8,15 @@ import { FiPlus, FiZap, FiUser, FiCalendar, FiBarChart2, FiHelpCircle, FiArrowRi
 const OrganizerDashboardHome = () => {
   const navigate = useNavigate();
 
-  const [organizerId, setOrganizerId] = useState(null);
+  // const [organizerId, setOrganizerId] = useState(null);
   // localStorage.setItem("organizerId", organizer.id);
 
 
-  useEffect(() => {
-    const id = localStorage.getItem("organizerId");
-    console.log("Loaded organizerId:", id);
-    if (id) setOrganizerId(id);
-  }, []);
+  // useEffect(() => {
+  //   const id = localStorage.getItem("organizerId");
+  //   console.log("Loaded organizerId:", id);
+  //   if (id) setOrganizerId(id);
+  // }, []);
 
   const handleCreateEventClick = () => {
     navigate('/organizer-dashboard/create');
@@ -132,7 +132,7 @@ const OrganizerDashboardHome = () => {
             <FiArrowRight className="ml-2" />
           </a> */}
 
-          {organizerId && (
+          {/* {organizerId && (
             <Link
               to={`/organizer/${organizerId}`}
               className="inline-flex items-center text-sky-600 font-medium hover:text-sky-800 transition-colors duration-200"
@@ -140,7 +140,7 @@ const OrganizerDashboardHome = () => {
               Complete Profile
               <FiArrowRight className="ml-2" />
             </Link>
-          )}
+          )} */}
 
         </div>
       </div>

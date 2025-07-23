@@ -41,6 +41,8 @@ function Login() {
     localStorage.setItem("token", data.token);
 
     if (user.role === 'organizer') {
+      // localStorage.setItem("organizerId", user._id);
+      // console.log("Organizer ID:", user._id);
       navigate('/organizer-dashboard');
     } else if (user.role === 'vendor') {
       navigate("/vendor-home-page");
