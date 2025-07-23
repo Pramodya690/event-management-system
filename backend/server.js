@@ -538,6 +538,55 @@ app.get('/api/eventsummary', async (req, res) => {
 
 
 
+
+//analytics
+// Endpoint to get event analytics
+// Endpoint to get event analytics
+app.get('/api/eventanalytics', async (req, res) => {
+  try {
+    const eventRes = await pool.query(`SELECT * FROM event`);
+    const events = eventRes.rows;
+
+    const analytics = await Promise.all(events.map(async (event) => {
+      const ticketData = await pool.query(`
+        SELECT 
+          SUM(quantity) as tickets_sold,
+          SUM(total_price) as revenue
+        FROM ticket_orders
+        WHERE ticket_id IN (
+          SELECT id FROM tickets WHERE event_id = $1
+        )
+      `, [event.id]);
+
+      const ticketsSold = parseInt(ticketData.rows[0].tickets_sold || 0);
+      const revenue = parseFloat(ticketData.rows[0].revenue || 0);
+
+      return {
+        id: event.id,
+        name: event.event_title,
+        type: event.category,
+        date: event.date,
+        ticketsSold,
+        capacity: event.headcount,
+        revenue,
+        attendees: ticketsSold, // For now assume 1 ticket = 1 attendee
+        checkIns: [],           // Populate if you have check-in data
+        ticketTypes: [],        // Join with ticket table if you want breakdown
+        demographics: {
+          age: [],              // Join with attendees if stored
+          gender: [],
+          location: [{ city: event.city, attendees: ticketsSold }]
+        }
+      };
+    }));
+
+    res.json(analytics);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

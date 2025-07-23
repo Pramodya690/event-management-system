@@ -16,137 +16,140 @@ import {
 } from "recharts";
 
 // Sample event data
-const events = [
-  {
-    id: 1,
-    name: "Tech Conference 2025",
-    type: "Conference",
-    date: "2025-07-15",
-    ticketsSold: 310,
-    capacity: 500,
-    revenue: 15500,
-    attendees: 290,
-    checkIns: [
-      { hour: "9-10 AM", count: 45 },
-      { hour: "10-11 AM", count: 85 },
-      { hour: "11-12 PM", count: 70 },
-      { hour: "12-1 PM", count: 50 },
-      { hour: "1-2 PM", count: 25 },
-      { hour: "2-3 PM", count: 15 }
-    ],
-    ticketTypes: [
-      { name: "VIP", value: 35, price: 100 },
-      { name: "General", value: 55, price: 50 },
-      { name: "Student", value: 10, price: 25 }
-    ],
-    demographics: {
-      age: [
-        { name: "18-24", value: 25 },
-        { name: "25-34", value: 50 },
-        { name: "35-44", value: 15 },
-        { name: "45+", value: 10 }
-      ],
-      gender: [
-        { name: "Female", value: 35 },
-        { name: "Male", value: 60 },
-        { name: "Other", value: 5 }
-      ],
-      location: [
-        { city: "Colombo", attendees: 120 },
-        { city: "Kandy", attendees: 80 },
-        { city: "Galle", attendees: 50 },
-        { city: "Other", attendees: 40 }
-      ]
-    }
-  },
-  {
-    id: 2,
-    name: "Music Festival",
-    type: "Festival",
-    date: "2025-08-20",
-    ticketsSold: 1200,
-    capacity: 1500,
-    revenue: 36000,
-    attendees: 1150,
-    checkIns: [
-      { hour: "12-1 PM", count: 150 },
-      { hour: "1-2 PM", count: 250 },
-      { hour: "2-3 PM", count: 300 },
-      { hour: "3-4 PM", count: 250 },
-      { hour: "4-5 PM", count: 150 },
-      { hour: "5-6 PM", count: 50 }
-    ],
-    ticketTypes: [
-      { name: "VIP", value: 15, price: 150 },
-      { name: "General", value: 75, price: 30 },
-      { name: "Early Bird", value: 10, price: 20 }
-    ],
-    demographics: {
-      age: [
-        { name: "18-24", value: 60 },
-        { name: "25-34", value: 30 },
-        { name: "35-44", value: 8 },
-        { name: "45+", value: 2 }
-      ],
-      gender: [
-        { name: "Female", value: 55 },
-        { name: "Male", value: 42 },
-        { name: "Other", value: 3 }
-      ],
-      location: [
-        { city: "Colombo", attendees: 600 },
-        { city: "Kandy", attendees: 300 },
-        { city: "Galle", attendees: 150 },
-        { city: "Other", attendees: 100 }
-      ]
-    }
-  },
-  {
-    id: 3,
-    name: "Art Exhibition",
-    type: "Exhibition",
-    date: "2025-09-05",
-    ticketsSold: 180,
-    capacity: 200,
-    revenue: 3600,
-    attendees: 170,
-    checkIns: [
-      { hour: "10-11 AM", count: 30 },
-      { hour: "11-12 PM", count: 50 },
-      { hour: "12-1 PM", count: 40 },
-      { hour: "1-2 PM", count: 30 },
-      { hour: "2-3 PM", count: 20 }
-    ],
-    ticketTypes: [
-      { name: "General", value: 85, price: 20 },
-      { name: "Student", value: 15, price: 10 }
-    ],
-    demographics: {
-      age: [
-        { name: "18-24", value: 20 },
-        { name: "25-34", value: 35 },
-        { name: "35-44", value: 25 },
-        { name: "45+", value: 20 }
-      ],
-      gender: [
-        { name: "Female", value: 65 },
-        { name: "Male", value: 32 },
-        { name: "Other", value: 3 }
-      ],
-      location: [
-        { city: "Colombo", attendees: 100 },
-        { city: "Kandy", attendees: 40 },
-        { city: "Galle", attendees: 20 },
-        { city: "Other", attendees: 10 }
-      ]
-    }
-  }
-];
+// const events = [
+//   {
+//     id: 1,
+//     name: "Tech Conference 2025",
+//     type: "Conference",
+//     date: "2025-07-15",
+//     ticketsSold: 310,
+//     capacity: 500,
+//     revenue: 15500,
+//     attendees: 290,
+//     checkIns: [
+//       { hour: "9-10 AM", count: 45 },
+//       { hour: "10-11 AM", count: 85 },
+//       { hour: "11-12 PM", count: 70 },
+//       { hour: "12-1 PM", count: 50 },
+//       { hour: "1-2 PM", count: 25 },
+//       { hour: "2-3 PM", count: 15 }
+//     ],
+//     ticketTypes: [
+//       { name: "VIP", value: 35, price: 100 },
+//       { name: "General", value: 55, price: 50 },
+//       { name: "Student", value: 10, price: 25 }
+//     ],
+//     demographics: {
+//       age: [
+//         { name: "18-24", value: 25 },
+//         { name: "25-34", value: 50 },
+//         { name: "35-44", value: 15 },
+//         { name: "45+", value: 10 }
+//       ],
+//       gender: [
+//         { name: "Female", value: 35 },
+//         { name: "Male", value: 60 },
+//         { name: "Other", value: 5 }
+//       ],
+//       location: [
+//         { city: "Colombo", attendees: 120 },
+//         { city: "Kandy", attendees: 80 },
+//         { city: "Galle", attendees: 50 },
+//         { city: "Other", attendees: 40 }
+//       ]
+//     }
+//   },
+//   {
+//     id: 2,
+//     name: "Music Festival",
+//     type: "Festival",
+//     date: "2025-08-20",
+//     ticketsSold: 1200,
+//     capacity: 1500,
+//     revenue: 36000,
+//     attendees: 1150,
+//     checkIns: [
+//       { hour: "12-1 PM", count: 150 },
+//       { hour: "1-2 PM", count: 250 },
+//       { hour: "2-3 PM", count: 300 },
+//       { hour: "3-4 PM", count: 250 },
+//       { hour: "4-5 PM", count: 150 },
+//       { hour: "5-6 PM", count: 50 }
+//     ],
+//     ticketTypes: [
+//       { name: "VIP", value: 15, price: 150 },
+//       { name: "General", value: 75, price: 30 },
+//       { name: "Early Bird", value: 10, price: 20 }
+//     ],
+//     demographics: {
+//       age: [
+//         { name: "18-24", value: 60 },
+//         { name: "25-34", value: 30 },
+//         { name: "35-44", value: 8 },
+//         { name: "45+", value: 2 }
+//       ],
+//       gender: [
+//         { name: "Female", value: 55 },
+//         { name: "Male", value: 42 },
+//         { name: "Other", value: 3 }
+//       ],
+//       location: [
+//         { city: "Colombo", attendees: 600 },
+//         { city: "Kandy", attendees: 300 },
+//         { city: "Galle", attendees: 150 },
+//         { city: "Other", attendees: 100 }
+//       ]
+//     }
+//   },
+//   {
+//     id: 3,
+//     name: "Art Exhibition",
+//     type: "Exhibition",
+//     date: "2025-09-05",
+//     ticketsSold: 180,
+//     capacity: 200,
+//     revenue: 3600,
+//     attendees: 170,
+//     checkIns: [
+//       { hour: "10-11 AM", count: 30 },
+//       { hour: "11-12 PM", count: 50 },
+//       { hour: "12-1 PM", count: 40 },
+//       { hour: "1-2 PM", count: 30 },
+//       { hour: "2-3 PM", count: 20 }
+//     ],
+//     ticketTypes: [
+//       { name: "General", value: 85, price: 20 },
+//       { name: "Student", value: 15, price: 10 }
+//     ],
+//     demographics: {
+//       age: [
+//         { name: "18-24", value: 20 },
+//         { name: "25-34", value: 35 },
+//         { name: "35-44", value: 25 },
+//         { name: "45+", value: 20 }
+//       ],
+//       gender: [
+//         { name: "Female", value: 65 },
+//         { name: "Male", value: 32 },
+//         { name: "Other", value: 3 }
+//       ],
+//       location: [
+//         { city: "Colombo", attendees: 100 },
+//         { city: "Kandy", attendees: 40 },
+//         { city: "Galle", attendees: 20 },
+//         { city: "Other", attendees: 10 }
+//       ]
+//     }
+//   }
+// ];
+
+
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
 
 const EventAnalytics = () => {
-  const [selectedEvent, setSelectedEvent] = useState(events[0]);
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [compareMode, setCompareMode] = useState(false);
   const [comparedEvents, setComparedEvents] = useState([]);
   const [timeRange, setTimeRange] = useState("month");
@@ -160,6 +163,46 @@ const EventAnalytics = () => {
       }
     }
   };
+
+
+// useEffect(() => {
+//   const fetchEvents = async () => {
+//     try {
+//       const res = await fetch('http://localhost:5000/api/eventanalytics');
+//       const data = await res.json();
+//       setEvents(data);
+//       setSelectedEvent(data[0]);
+//     } catch (err) {
+//       console.error("Error fetching events:", err);
+//     }
+//   };
+
+//   fetchEvents();
+// }, []);
+
+useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/eventanalytics');
+        const data = await res.json();
+        setEvents(data);
+        setSelectedEvent(data[0]);
+      } catch (err) {
+        console.error("Error fetching events:", err);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+
+   if (!selectedEvent) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-gray-500 text-lg">
+        Loading event data...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 font-sans">
