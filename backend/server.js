@@ -354,6 +354,43 @@ app.post('/api/tickets', async (req, res) => {
 });
 
 
+// API route to fetch purchased tickets for a given attendee ID to the brought ticket page
+app.get("/api/:attendeeId", async (req, res) => {
+  const attendeeId = req.params.attendeeId;
+
+  try {
+    const query = `
+      SELECT 
+        ticket_orders.id AS order_id,
+        ticket_orders.quantity,
+        ticket_orders.total_price,
+        ticket_orders.purchase_time AS purchase_date,
+        tickets.id AS ticket_id,
+        tickets.price,
+        tickets.name AS ticket_name,
+        event.id AS event_id,
+        event.event_title AS event_name,
+        event.date AS event_date
+      FROM ticket_orders
+      JOIN tickets ON ticket_orders.ticket_id = tickets.id
+      JOIN event ON tickets.event_id = event.id
+      WHERE ticket_orders.attendee_id = $1
+    `;
+    const result = await pool.query(query, [attendeeId]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching tickets:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+
+
+
+
+
 //HOMEPAGE ENDPOINTS
 //to filter according to the city in the homepage
 app.get('/api/filterByLocation', async (req, res) => {

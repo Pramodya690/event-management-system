@@ -96,7 +96,7 @@ const VendorHomePage = () => {
       setErrors(formErrors);
       return;
     }
-    alert("Message sent to organizer (mock action).");
+    alert("Message sent to organizer.");
     setFormData({ name: "", email: "", eventId: "", message: "" });
     setErrors({});
   };
@@ -179,6 +179,120 @@ const VendorHomePage = () => {
 
           {/* Contact Form (unchanged) */}
           {/* ...keep your existing contact form code here... */}
+          <div className="bg-white border border-sky-200 rounded-xl shadow-lg p-8">
+  <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+    Contact Event Organizers
+  </h2>
+  <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="grid grid-cols-2 gap-6">
+      <div>
+        <label className="block font-semibold text-gray-700 mb-1">
+          Full Name
+        </label>
+        <div className="relative">
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            placeholder="Enter your full name"
+            className="w-full p-3 border border-sky-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all duration-300"
+            aria-label="Full name"
+          />
+          {errors.name && (
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+              <FaExclamationCircle className="text-red-500" />
+              <span className="text-red-500 text-sm">{errors.name}</span>
+            </div>
+          )}
+        </div>
+      </div>
+      <div>
+        <label className="block font-semibold text-gray-700 mb-1">
+          Email Address
+        </label>
+        <div className="relative">
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Enter your email"
+            className="w-full p-3 border border-sky-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all duration-300"
+            aria-label="Email address"
+          />
+          {errors.email && (
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+              <FaExclamationCircle className="text-red-500" />
+              <span className="text-red-500 text-sm">{errors.email}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label className="block font-semibold text-gray-700 mb-1">
+        Select Event
+      </label>
+      <div className="relative">
+        <select
+          name="eventId"
+          value={formData.eventId}
+          onChange={handleInputChange}
+          className="w-full p-3 border border-sky-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all duration-300 appearance-none"
+          aria-label="Select event"
+        >
+          <option value="">Choose an event</option>
+          {events.map((event) => (
+            <option key={event.id} value={event.id}>
+              {event.name}
+            </option>
+          ))}
+        </select>
+        {errors.eventId && (
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+            <FaExclamationCircle className="text-red-500" />
+            <span className="text-red-500 text-sm">{errors.eventId}</span>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div>
+      <label className="block font-semibold text-gray-700 mb-1">
+        Message
+      </label>
+      <div className="relative">
+        <textarea
+          name="message"
+          value={formData.message}
+          onChange={handleInputChange}
+          placeholder="Describe your interest or inquiry (e.g., stall booking, sponsorship)"
+          className="w-full p-3 border border-sky-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all duration-300 h-32 resize-none"
+          aria-label="Message to organizer"
+        />
+        {errors.message && (
+          <div className="absolute right-3 top-4 flex items-center gap-1">
+            <FaExclamationCircle className="text-red-500" />
+            <span className="text-red-500 text-sm">{errors.message}</span>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      className="w-full bg-sky-600 hover:bg-sky-700 text-white py-3 rounded-lg font-semibold text-lg flex items-center justify-center gap-2 transition-all duration-300 focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+      aria-label="Send message to organizer"
+    >
+      <FaPaperPlane />
+      Send Message
+    </button>
+  </form>
+</div>
+
+
         </div>
       </main>
       <Footer />

@@ -290,6 +290,7 @@ useEffect(() => {
 
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          {/* ticket sold */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
@@ -324,6 +325,74 @@ useEffect(() => {
             </p>
           </div>
 
+          {/* total tickets */}
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+  <div className="flex items-center justify-between">
+    <div>
+      <p className="text-sm font-medium text-gray-500">Capacity</p>
+      <p className="text-3xl font-bold text-gray-800 mt-1">
+        {selectedEvent.capacity}
+        {compareMode && comparedEvents.length > 0 && (
+          <span className="text-sm text-gray-500 ml-2">
+            (
+            {(
+              (selectedEvent.capacity /
+                comparedEvents.reduce((sum, e) => sum + e.capacity, 0)) *
+              100
+            ).toFixed(1)}
+            %)
+          </span>
+        )}
+      </p>
+
+      {/* ✅ Available Tickets */}
+      <p className="text-sm text-gray-500 mt-1">
+        Available Tickets: {selectedEvent.capacity - selectedEvent.ticketsSold}
+      </p>
+    </div>
+
+    <div className="p-3 bg-blue-50 rounded-lg">
+      <svg
+        className="w-6 h-6 text-blue-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+        />
+      </svg>
+    </div>
+  </div>
+
+  {/* ✅ Available Tickets Percentage */}
+  <p className="text-xs text-green-600 mt-2 flex items-center">
+    <svg
+      className="w-3 h-3 mr-1"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 15l7-7 7 7"
+      />
+    </svg>
+    {Math.round(
+      ((selectedEvent.capacity - selectedEvent.ticketsSold) /
+        selectedEvent.capacity) *
+        100
+    )}
+    % of capacity available
+  </p>
+</div>
+
+          {/* revenue */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
@@ -361,30 +430,6 @@ useEffect(() => {
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">Attendance Rate</p>
-                <p className="text-3xl font-bold text-gray-800 mt-1">
-                  {Math.round((selectedEvent.attendees / selectedEvent.ticketsSold) * 100)}%
-                  {compareMode && comparedEvents.length > 0 && (
-                    <span className="text-sm text-gray-500 ml-2">
-                      (vs {Math.round((comparedEvents.reduce((sum, e) => sum + e.attendees, 0) / comparedEvents.reduce((sum, e) => sum + e.ticketsSold, 0)) * 100)}%)
-                    </span>
-                  )}
-                </p>
-              </div>
-              <div className="p-3 bg-purple-50 rounded-lg">
-                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-xs text-gray-500 mt-2">
-              {selectedEvent.attendees} attended of {selectedEvent.ticketsSold} sold
-            </p>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div>
                 <p className="text-sm font-medium text-gray-500">Event Type</p>
                 <p className="text-3xl font-bold text-gray-800 mt-1">{selectedEvent.type}</p>
               </div>
@@ -397,52 +442,6 @@ useEffect(() => {
             <p className="text-xs text-gray-500 mt-2">
               {new Date(selectedEvent.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
-          </div>
-        </div>
-
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {/* Ticket Sales by Type */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Ticket Sales by Type</h2>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={selectedEvent.ticketTypes}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  >
-                    {selectedEvent.ticketTypes.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value, name, props) => [`${value} tickets ($${props.payload.price * value})`, name]} />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Check-in Times */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Check-in Times</h2>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={selectedEvent.checkIns}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="hour" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="count" fill="#4F46E5" name="Check-ins" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
           </div>
         </div>
 
@@ -509,7 +508,7 @@ useEffect(() => {
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={selectedEvent.demographics.location}
+                  data={selectedEvent.demographics.city}
                   layout="vertical"
                 >
                   <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />

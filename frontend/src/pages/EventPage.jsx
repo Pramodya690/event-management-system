@@ -55,46 +55,6 @@ const user = JSON.parse(localStorage.getItem("user"));
   }
 };
 
-// const handlePurchase = async () => {
-//   if (!user) {
-//     alert("You must be logged in to purchase tickets.");
-//     navigate("/login");
-//     return;
-//   }
-
-//   try {
-//     const res = await fetch("http://localhost:5000/api/purchaseTicket", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({
-//         attendeeId: user.id,
-//         ticketId: selectedTicket.id,
-//         quantity: ticketQuantity,
-//       }),
-//     });
-
-//     const result = await res.json();
-
-//     if (result.success) {
-//       navigate("/payment", {
-//         state: {
-//           ticket: {
-//             ...selectedTicket,
-//             quantity: ticketQuantity,
-//           },
-//         },
-//       });
-//     } else {
-//       alert(result.error);
-//     }
-//   } catch (error) {
-//     console.error("Purchase error:", error);
-//     alert("An error occurred while purchasing.");
-//   }
-// };
-
-
-
   useEffect(() => {
     const fetchEvent = async () => {
       try {
