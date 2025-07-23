@@ -468,7 +468,11 @@ app.get('/api/organizers/:id', async (req, res) => {
 app.get('/api/events/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await pool.query('SELECT * FROM event WHERE id = $1', [id]);
+    // this selects only from the event table
+    // const result = await pool.query('SELECT * FROM event WHERE id = $1', [id]);
+
+    // adding a left join to get ticket information from the ticket table & event table
+    const result = await pool.query(`SELECT e.*, json_agg(t.*) FILTER (WHERE t.id IS NOT NULL) AS tickets FROM event e LEFT JOIN tickets t ON t.event_id = e.id WHERE e.id = $1 GROUP BY e.id`, [id]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Event not found' });

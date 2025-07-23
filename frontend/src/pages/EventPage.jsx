@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MdCalendarMonth, MdShare, MdBookmarkBorder } from "react-icons/md";
@@ -46,9 +39,12 @@ const EventPage = ({ event }) => {
             ? data.tags.split(",").map((t) => t.trim())
             : [],
           faqs: data.faqs || "",
-          organizer: data.organizer,
-          email: data.email,
-          contact_number: data.contact_number,
+        //   tickets data
+          tickets: Array.isArray(data.tickets) ? data.tickets : [],
+
+        //   organizer: data.organizer,
+        //   email: data.email,
+        //   contact_number: data.contact_number,
           bannerImage: data.banner_image
             ? `data:image/jpeg;base64,${btoa(
                 new Uint8Array(data.banner_image.data).reduce(
@@ -57,7 +53,7 @@ const EventPage = ({ event }) => {
                 )
               )}`
             : "https://via.placeholder.com/1200x300?text=Event+Banner",
-          tickets: data.tickets || { paid: [], free: [], donation: [] },
+        //   tickets: data.tickets || { paid: [], free: [], donation: [] },
         };
 
         setEventData(transformed);
@@ -179,6 +175,54 @@ const EventPage = ({ event }) => {
             {/* Right: Sidebar */}
             <div className="w-1/3">
               <div className="sticky top-4 bg-sky-50 border border-sky-200 rounded-lg p-6 shadow-sm">
+                
+                {/* tickets section */}
+                {/* Tickets */}
+                <h2 className="text-xl font-bold mb-4 text-gray-900">
+                  Get Tickets
+                </h2>
+{data.tickets && data.tickets.length > 0 && (
+  <div className="mb-8">
+    <h2 className="text-xl font-semibold mb-3 text-gray-800">Available Tickets</h2>
+    <div className="space-y-4">
+      {data.tickets.map((ticket, index) => (
+        <div
+          key={index}
+          className="border border-sky-100 rounded-lg p-4 bg-white shadow-sm"
+        >
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="font-medium text-gray-900">
+                🎟️ {ticket.name || "Untitled Ticket"}
+              </p>
+              <p className="text-sm text-gray-500 capitalize">
+                Type of ticket: {ticket.type}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-gray-700">
+                Tickets available: <strong>{ticket.quantity}</strong>
+              </p>
+              <p className="text-gray-700">
+                Price:{" "}
+                <strong>
+                  {ticket.price > 0
+                    ? `$${Number(ticket.price).toFixed(2)}`
+                    : "Free"}
+                </strong>
+              </p>
+
+              
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
+                
+                
                 <h3 className="font-medium mb-2 text-gray-900">
                   Share with friends
                 </h3>
