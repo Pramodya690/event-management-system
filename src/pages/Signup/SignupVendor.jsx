@@ -756,7 +756,7 @@ const SignupVendor = () => {
       if (!response.ok)
         throw new Error(data.message || "Failed to register vendor");
 
-      navigate("/");
+      navigate("/vendor-home-page");
     } catch (error) {
       console.error("Error submitting vendor data:", error.message);
       alert(error.message || "Error submitting form. Please try again.");

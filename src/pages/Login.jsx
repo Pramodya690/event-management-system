@@ -42,6 +42,8 @@ function Login() {
         navigate("/admin-dashboard");
       } else if (mockUser.role === "organizer") {
         navigate("/");
+      } else if (mockUser.role === "vendor") {
+        navigate("/vendor-home-page");
       } else {
         navigate("/");
       }
