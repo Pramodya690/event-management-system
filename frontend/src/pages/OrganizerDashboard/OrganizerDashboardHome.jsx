@@ -1,10 +1,22 @@
 // export default OrganizerDashboardHome;
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FiPlus, FiZap, FiUser, FiCalendar, FiBarChart2, FiHelpCircle, FiArrowRight } from 'react-icons/fi';
 
 const OrganizerDashboardHome = () => {
   const navigate = useNavigate();
+
+  const [organizerId, setOrganizerId] = useState(null);
+  // localStorage.setItem("organizerId", organizer.id);
+
+
+  useEffect(() => {
+    const id = localStorage.getItem("organizerId");
+    console.log("Loaded organizerId:", id);
+    if (id) setOrganizerId(id);
+  }, []);
 
   const handleCreateEventClick = () => {
     navigate('/organizer-dashboard/create');
@@ -112,13 +124,24 @@ const OrganizerDashboardHome = () => {
           <p className="text-gray-700 text-sm mb-6">
             A complete profile increases event discoverability by 40% and builds attendee trust.
           </p>
-          <a
-            href="/organizer-profile"
+          {/* <a
+            href="/organizer/;"
             className="inline-flex items-center text-sky-600 font-medium hover:text-sky-800 transition-colors duration-200"
           >
             Complete Profile
             <FiArrowRight className="ml-2" />
-          </a>
+          </a> */}
+
+          {organizerId && (
+            <Link
+              to={`/organizer/${organizerId}`}
+              className="inline-flex items-center text-sky-600 font-medium hover:text-sky-800 transition-colors duration-200"
+            >
+              Complete Profile
+              <FiArrowRight className="ml-2" />
+            </Link>
+          )}
+
         </div>
       </div>
 

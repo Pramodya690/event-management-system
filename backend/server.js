@@ -502,9 +502,6 @@ if (typeof row.tags === "string") {
 });
 
 
-
-
-
 // app.get('api/event/:id', async (req, res) => {
 //   const eventId = req.params.id;
 
@@ -562,6 +559,8 @@ if (typeof row.tags === "string") {
 //     res.status(500).json({ message: 'Server Error' });
 //   }
 // });
+
+
 
 
 

@@ -21,6 +21,8 @@ import EventAnalytics from "../pages/OrganizerDashboard/EventAnalytics";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 import Marketing from "../pages/OrganizerDashboard/Marketing";
 import PaymentPage from "../pages/PaymentPage";
+import TicketsBought from "../pages/TicketsBought";
+import VendorHomePage from "../pages/VendorHomePage";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
@@ -32,12 +34,15 @@ export const routes = [
   { path: "/help-centre", element: <HelpCentre /> },
   { path: "/signup-role-selector", element: <SignupRoleSelector /> },
   { path: "/signup/organizer", element: <SignUpOrganizer /> },
-  { path: "/organizer-profile", element: <OrganizerProfile /> },
+  // { path: "/organizer-profile", element: <OrganizerProfile /> },
   { path: "/signup/vendor", element: <SignupVendor /> },
   { path: "/vendor-profile", element: <VendorProfile /> },
   { path: "/signup/attendee", element: <SignupAttendee /> },
   { path: "/admin-dashboard", element: <AdminDashboard /> },
   { path: "/payment", element: <PaymentPage />},
+   { path: "/tickets-bought", element: <TicketsBought /> },
+  { path: "/vendor-home-page", element: <VendorHomePage /> },
+  { path: "/organizer/:id",  element: <OrganizerProfile /> },
 
   {
     path: "/organizer-dashboard",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FiEdit,
   FiSave,
@@ -11,31 +11,50 @@ import {
   FiClock,
 } from "react-icons/fi";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 
 const OrganizerProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [profile, setProfile] = useState({
-    name: "Pramodya Piyumanthi",
-    email: "pramodya@example.com",
-    phone: "+94 76 123 4567",
-    organization: "CodeFest Ltd.",
-    position: "Event Director",
-    bio: "Passionate about creating engaging tech conferences and fostering developer communities. With over 5 years of experience in event management, I specialize in large-scale tech conferences with 1000+ attendees.",
-    profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
-    eventsCreated: 12,
-    revenueGenerated: 125000,
-    ticketsSold: 4300,
-    stallCount: 32,
-    seatCount: 1210,
-    memberSince: "2018-06-15",
-    rating: 4.8,
-    socialMedia: {
-      twitter: "@pramodya",
-      linkedin: "pramodya-piyumanthi",
-    },
-  });
+  const [profile, setProfile] = useState(null);
+  // const organizerId = 1; // Hardcoded; replace with dynamic ID (e.g., from auth or route)
+  const { id } = useParams();
+
+  console.log("Organizer ID from route:", id);
+
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/organizers/${id}`);
+        const data = res.data;
+
+        setProfile({
+          name: data.username,
+          email: data.email,
+          phone: data.phone,
+          organization: data.address || "Not specified",
+          position: "Organizer",
+          bio: "This organizer hasn't added a bio yet.",
+          profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
+          eventsCreated: 0,
+          revenueGenerated: 0,
+          ticketsSold: 0,
+          stallCount: 0,
+          seatCount: 0,
+          memberSince: "2020-01-01",
+          rating: 4.5,
+          socialMedia: {
+            twitter: "",
+            linkedin: "",
+          },
+        });
+      } catch (err) {
+        console.error("Error fetching organizer profile:", err);
+      }
+    };
+
+    fetchProfile();
+  }, [id]);
 
   const handleChange = (field, value) => {
     setProfile((prev) => ({ ...prev, [field]: value }));
@@ -62,14 +81,25 @@ const OrganizerProfile = () => {
     }
   };
 
-  const handleSave = () => {
-    // TODO: Add API call here
-    setIsEditing(false);
+  const handleSave = async () => {
+    try {
+      await axios.put(`http://localhost:5000/api/organizers/${id}`, {
+        username: profile.name,
+        email: profile.email,
+        phone: profile.phone,
+        address: profile.organization,
+      });
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Error updating organizer profile:", err);
+    }
   };
+
+  if (!profile) return <div className="text-center mt-10">Loading profile...</div>;
 
   return (
     <div className="max-w-6xl mx-auto my-10 p-8 bg-white rounded-xl shadow-lg">
-      {/* Header with edit button */}
+      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Organizer Profile</h1>
         {!isEditing && (
@@ -82,9 +112,8 @@ const OrganizerProfile = () => {
         )}
       </div>
 
-      {/* Main profile section */}
       <div className="flex flex-col md:flex-row gap-8">
-        {/* Left column - Profile image and stats */}
+        {/* Left column */}
         <div className="md:w-1/3 space-y-6">
           <div className="relative">
             <img
@@ -107,54 +136,26 @@ const OrganizerProfile = () => {
             )}
           </div>
 
-          {/* Stats card */}
           <div className="bg-gradient-to-br from-sky-50 to-blue-50 p-6 rounded-xl shadow-sm border border-blue-100">
             <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
               <FiCalendar /> Event Statistics
             </h3>
             <div className="space-y-4">
-              <ProfileStat
-                label="Events Created"
-                value={profile.eventsCreated}
-                icon={<FiCalendar className="text-sky-500" />}
-              />
-              <ProfileStat
-                label="Revenue Generated"
-                value={`LKR ${profile.revenueGenerated.toLocaleString()}`}
-                icon={<FiDollarSign className="text-green-500" />}
-              />
-              <ProfileStat
-                label="Tickets Sold"
-                value={profile.ticketsSold.toLocaleString()}
-                icon={<FiUsers className="text-purple-500" />}
-              />
-              <ProfileStat
-                label="Stalls Allocated"
-                value={profile.stallCount}
-                icon={<FiHome className="text-amber-500" />}
-              />
-              <ProfileStat
-                label="Seats Allocated"
-                value={profile.seatCount.toLocaleString()}
-                icon={<FiClock className="text-red-500" />}
-              />
+              <ProfileStat label="Events Created" value={profile.eventsCreated} icon={<FiCalendar className="text-sky-500" />} />
+              <ProfileStat label="Revenue Generated" value={`LKR ${profile.revenueGenerated.toLocaleString()}`} icon={<FiDollarSign className="text-green-500" />} />
+              <ProfileStat label="Tickets Sold" value={profile.ticketsSold.toLocaleString()} icon={<FiUsers className="text-purple-500" />} />
+              <ProfileStat label="Stalls Allocated" value={profile.stallCount} icon={<FiHome className="text-amber-500" />} />
+              <ProfileStat label="Seats Allocated" value={profile.seatCount.toLocaleString()} icon={<FiClock className="text-red-500" />} />
             </div>
           </div>
 
-          {/* Member since */}
           <div className="text-center text-sm text-gray-500">
-            <p>
-              Member since {new Date(profile.memberSince).toLocaleDateString()}
-            </p>
+            <p>Member since {new Date(profile.memberSince).toLocaleDateString()}</p>
             <div className="flex items-center justify-center mt-1">
               {[...Array(5)].map((_, i) => (
                 <svg
                   key={i}
-                  className={`w-4 h-4 ${
-                    i < Math.floor(profile.rating)
-                      ? "text-yellow-400"
-                      : "text-gray-300"
-                  }`}
+                  className={`w-4 h-4 ${i < Math.floor(profile.rating) ? "text-yellow-400" : "text-gray-300"}`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -166,108 +167,37 @@ const OrganizerProfile = () => {
           </div>
         </div>
 
-        {/* Right column - Profile details */}
+        {/* Right column */}
         <div className="md:w-2/3 space-y-6">
           {isEditing ? (
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    value={profile.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                    className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Position
-                  </label>
-                  <input
-                    value={profile.position}
-                    onChange={(e) => handleChange("position", e.target.value)}
-                    className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
-                  />
-                </div>
+                <InputField label="Full Name" value={profile.name} onChange={(val) => handleChange("name", val)} />
+                <InputField label="Position" value={profile.position} onChange={(val) => handleChange("position", val)} />
               </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <InputField label="Email" value={profile.email} onChange={(val) => handleChange("email", val)} />
+                <InputField label="Phone" value={profile.phone} onChange={(val) => handleChange("phone", val)} />
+              </div>
+              <InputField label="Organization" value={profile.organization} onChange={(val) => handleChange("organization", val)} />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                  </label>
-                  <input
-                    value={profile.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
-                    className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone
-                  </label>
-                  <input
-                    value={profile.phone}
-                    onChange={(e) => handleChange("phone", e.target.value)}
-                    className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Organization
-                </label>
-                <input
-                  value={profile.organization}
-                  onChange={(e) => handleChange("organization", e.target.value)}
-                  className="block w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
+                <InputField
+                  label="Twitter"
+                  value={profile.socialMedia.twitter.replace("@", "")}
+                  prefix="@"
+                  onChange={(val) => handleSocialMediaChange("twitter", `@${val}`)}
+                />
+                <InputField
+                  label="LinkedIn"
+                  value={profile.socialMedia.linkedin}
+                  prefix="linkedin.com/in/"
+                  onChange={(val) => handleSocialMediaChange("linkedin", val)}
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Twitter
-                  </label>
-                  <div className="flex">
-                    <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 bg-gray-100 text-gray-500 text-sm">
-                      @
-                    </span>
-                    <input
-                      value={profile.socialMedia.twitter.replace("@", "")}
-                      onChange={(e) =>
-                        handleSocialMediaChange("twitter", `@${e.target.value}`)
-                      }
-                      className="flex-1 min-w-0 block w-full border rounded-r-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    LinkedIn
-                  </label>
-                  <div className="flex">
-                    <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 bg-gray-100 text-gray-500 text-sm">
-                      linkedin.com/in/
-                    </span>
-                    <input
-                      value={profile.socialMedia.linkedin}
-                      onChange={(e) =>
-                        handleSocialMediaChange("linkedin", e.target.value)
-                      }
-                      className="flex-1 min-w-0 block w-full border rounded-r-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
-                    />
-                  </div>
-                </div>
-              </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Bio
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
                 <textarea
                   value={profile.bio}
                   onChange={(e) => handleChange("bio", e.target.value)}
@@ -277,16 +207,10 @@ const OrganizerProfile = () => {
               </div>
 
               <div className="flex gap-4 pt-2">
-                <button
-                  onClick={handleSave}
-                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors"
-                >
+                <button onClick={handleSave} className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors">
                   <FiSave /> Save Changes
                 </button>
-                <button
-                  onClick={() => setIsEditing(false)}
-                  className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 px-6 py-2 rounded-lg transition-colors"
-                >
+                <button onClick={() => setIsEditing(false)} className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300 px-6 py-2 rounded-lg transition-colors">
                   <FiX /> Cancel
                 </button>
               </div>
@@ -294,19 +218,13 @@ const OrganizerProfile = () => {
           ) : (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold text-gray-800">
-                  {profile.name}
-                </h2>
-                <p className="text-lg text-sky-600 font-medium">
-                  {profile.position}
-                </p>
+                <h2 className="text-2xl font-bold text-gray-800">{profile.name}</h2>
+                <p className="text-lg text-sky-600 font-medium">{profile.position}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-500">
-                    Organization
-                  </h3>
+                  <h3 className="text-sm font-medium text-gray-500">Organization</h3>
                   <p className="text-gray-800">{profile.organization}</p>
                 </div>
                 <div>
@@ -317,16 +235,11 @@ const OrganizerProfile = () => {
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-gray-500">
-                  Social Media
-                </h3>
+                <h3 className="text-sm font-medium text-gray-500">Social Media</h3>
                 <div className="flex gap-4 mt-1">
                   {profile.socialMedia.twitter && (
                     <a
-                      href={`https://twitter.com/${profile.socialMedia.twitter.replace(
-                        "@",
-                        ""
-                      )}`}
+                      href={`https://twitter.com/${profile.socialMedia.twitter.replace("@", "")}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-400 hover:text-blue-600"
@@ -349,9 +262,7 @@ const OrganizerProfile = () => {
 
               <div>
                 <h3 className="text-sm font-medium text-gray-500">About</h3>
-                <p className="text-gray-700 mt-1 leading-relaxed">
-                  {profile.bio}
-                </p>
+                <p className="text-gray-700 mt-1 leading-relaxed">{profile.bio}</p>
               </div>
             </div>
           )}
@@ -371,4 +282,28 @@ const ProfileStat = ({ label, value, icon }) => (
   </div>
 );
 
+const InputField = ({ label, value, onChange, prefix }) => (
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+    <div className="flex">
+      {prefix && (
+        <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 bg-gray-100 text-gray-500 text-sm">
+          {prefix}
+        </span>
+      )}
+      <input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={`flex-1 min-w-0 block w-full border rounded-${prefix ? "r" : ""}-lg px-4 py-2 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition`}
+      />
+    </div>
+  </div>
+);
+
 export default OrganizerProfile;
+
+
+
+
+
+

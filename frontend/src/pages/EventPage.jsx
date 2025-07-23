@@ -300,38 +300,8 @@ const EventPage = ({ event }) => {
                     </div>
             </div>      
               </div>
-
-
-                        {/* Organizer */}
-          {/* <div className="p-8 border-t border-sky-200 bg-sky-50">
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">Organizer</h2>
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-sky-200 flex items-center justify-center">
-                <svg
-                  className="w-8 h-8 text-sky-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg text-gray-900">
-                  Event Organizer
-                </h3>
-                <p className="text-gray-600">
-                  Contact organizer for more information
-                </p>
-              </div>
-            </div>
-          </div> */}
             </div>
       </main>
-
       <Footer />
     </div>
   );
